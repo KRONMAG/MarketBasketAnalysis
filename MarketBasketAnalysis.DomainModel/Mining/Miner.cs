@@ -31,19 +31,26 @@ public sealed class Miner : IMiner
         Contract.RequiresNotNull(itemsetConverter);
         Contract.RequiresNotNull(itemExcluder);
 
-        MiningStageChanged?.Invoke(this, MiningStage.FrequentItemSearch);
+        try
+        {
+            MiningStageChanged?.Invoke(this, MiningStage.FrequentItemSearch);
 
-        var frequentItems = SearchForFrequentItems(transactions, minSupport, itemsetConverter, itemExcluder, token,
-            out var transactionCount);
+            var frequentItems = SearchForFrequentItems(transactions, minSupport, itemsetConverter, itemExcluder, token,
+                out var transactionCount);
 
-        MiningStageChanged?.Invoke(this, MiningStage.FrequentItemsetSearch);
+            MiningStageChanged?.Invoke(this, MiningStage.FrequentItemsetSearch);
 
-        var frequentItemsets = SearchForFrequentItemsets(transactions, frequentItems, itemsetConverter, minSupport,
-            transactionCount, token);
+            var frequentItemsets = SearchForFrequentItemsets(transactions, frequentItems, itemsetConverter, minSupport,
+                transactionCount, token);
 
-        MiningStageChanged?.Invoke(this, MiningStage.AssociationRuleGeneration);
+            MiningStageChanged?.Invoke(this, MiningStage.AssociationRuleGeneration);
 
-        return GenerateAssociationRules(frequentItemsets, frequentItems, minConfidence, transactionCount, token);
+            return GenerateAssociationRules(frequentItemsets, frequentItems, minConfidence, transactionCount, token);
+        }
+        catch(Exception e)
+        {
+            throw new MinerException(Messages.Miner_MiningProcessFailed, e);
+        }
     }
 
     private static IReadOnlyDictionary<string, int> SearchForFrequentItems(IEnumerable<Transaction> transactions,
