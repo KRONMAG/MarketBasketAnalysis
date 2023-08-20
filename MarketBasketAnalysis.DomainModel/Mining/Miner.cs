@@ -1,5 +1,4 @@
 ﻿using ConcurrentCollections;
-using MarketBasketAnalysis.DomainModel.Mining;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static MarketBasketAnalysis.DomainModel.Mining.ItemsetConversionResult;
 
-namespace MarketBasketAnalysis.DomainModel.AssociationRules.Mining;
+namespace MarketBasketAnalysis.DomainModel.Mining;
 
 public sealed class Miner : IMiner
 {

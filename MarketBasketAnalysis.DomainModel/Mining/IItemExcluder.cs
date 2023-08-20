@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace MarketBasketAnalysis.DomainModel.Mining;
+﻿namespace MarketBasketAnalysis.DomainModel.Mining;
 
 public interface IItemExcluder
 {

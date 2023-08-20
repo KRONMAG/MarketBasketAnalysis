@@ -2,7 +2,7 @@
 using System.Diagnostics.ContractsLight;
 using static System.StringComparison;
 
-namespace MarketBasketAnalysis.DomainModel.AssociationRules.Mining;
+namespace MarketBasketAnalysis.DomainModel.Mining;
 
 public class ItemExclusionRule : IEquatable<ItemExclusionRule>
 {

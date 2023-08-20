@@ -2,7 +2,7 @@
 using System.Diagnostics.ContractsLight;
 using static System.StringComparison;
 
-namespace MarketBasketAnalysis.DomainModel.AssociationRules.Mining;
+namespace MarketBasketAnalysis.DomainModel.Mining;
 
 public sealed class ItemConversionRule : IEquatable<ItemConversionRule>
 {
@@ -10,7 +10,7 @@ public sealed class ItemConversionRule : IEquatable<ItemConversionRule>
 
     public string Item { get; }
 
-    public string Group { get;}
+    public string Group { get; }
 
     #endregion Fields and Properties
 

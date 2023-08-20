@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.ContractsLight;
 
-namespace MarketBasketAnalysis.DomainModel.AssociationRules;
+namespace MarketBasketAnalysis.DomainModel;
 
 public sealed class AssociationRule : IEquatable<AssociationRule>
 {
