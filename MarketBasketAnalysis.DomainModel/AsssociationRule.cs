@@ -26,7 +26,7 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
 
     public double AbsoluteContingencyCoefficient { get; }
 
-    public bool AreHandSidesProbablyIndependent { get; }
+    public double ChiSquareStatistic { get; }
 
     #endregion Fields and Properties
 
@@ -62,6 +62,8 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
 
         AbsoluteAssociationCoefficient = Math.Abs((a * d - b * c) / (double)(a * d + b * c));
         AbsoluteContingencyCoefficient = Math.Abs((a * d - b * c) / Math.Sqrt((a + b) * (a + c) * (b + d) * (c + d)));
+        ChiSquareStatistic = itemsetCount * Math.Pow(a * d - b * c, 2) / ((a + b) * (a + c) * (b + d) * (c + d));
+    }
 
         var chiSquaredValue = itemsetCount * Math.Pow(a * d - b * c, 2) / ((a + b) * (a + c) * (b + d) * (c + d));
 
