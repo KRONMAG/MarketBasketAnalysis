@@ -1,5 +1,4 @@
-﻿using MathNet.Numerics.Distributions;
-using System;
+﻿using System;
 using System.Diagnostics.ContractsLight;
 
 namespace MarketBasketAnalysis.DomainModel;
@@ -32,7 +31,7 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
 
     #region Constructors
 
-    internal AssociationRule(string leftHandSideName, string rightHandSideName, int leftHandSideCount,
+    public AssociationRule(string leftHandSideName, string rightHandSideName, int leftHandSideCount,
         int rightHandSideCount, int itemsetCount, int transactionCount)
     {
         Contract.RequiresNotNullOrWhiteSpace(leftHandSideName);
@@ -65,9 +64,12 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
         ChiSquareStatistic = itemsetCount * Math.Pow(a * d - b * c, 2) / ((a + b) * (a + c) * (b + d) * (c + d));
     }
 
-        var chiSquaredValue = itemsetCount * Math.Pow(a * d - b * c, 2) / ((a + b) * (a + c) * (b + d) * (c + d));
+    public AssociationRule(string leftHandSideName, string rightHandSideName, int leftHandSideCount,
+        int rightHandSideCount, int itemsetCount, double support)
+        : this(leftHandSideName, rightHandSideName, leftHandSideCount, rightHandSideCount, itemsetCount,
+              (int)Math.Round(itemsetCount / support))
+    {
 
-        AreHandSidesProbablyIndependent = chiSquaredValue < ChiSquared.InvCDF(1, 0.99);
     }
 
     #endregion Constructors

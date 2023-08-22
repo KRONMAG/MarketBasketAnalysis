@@ -16,15 +16,13 @@ namespace MarketBasketAnalysis.AppServices
         private IReadOnlyCollection<ItemExclusionRule> _itemExclusionRules;
         private IReadOnlyCollection<ItemConversionRule> _itemConversionRules;
 
-        public int Id { get; set; }
-
         public string Name
         {
             get => _name;
             [MemberNotNull(nameof(_name))]
             set
             {
-                Contract.AssertNotNullOrWhiteSpace(value);
+                Contract.RequiresNotNullOrWhiteSpace(value);
 
                 _name = value;
             }
@@ -84,11 +82,10 @@ namespace MarketBasketAnalysis.AppServices
 
         #region Constructors
 
-        public MiningSettingsProfile(int id, string name)
+        public MiningSettingsProfile(string name)
         {
             Contract.RequiresNotNullOrWhiteSpace(name);
 
-            Id = id;
             Name = name;
             MinSupport = 0.001;
             MinConfidence = 0.01;
