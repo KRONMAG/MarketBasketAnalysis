@@ -1,25 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<WarningsAsErrors>Nullable</WarningsAsErrors>
-	<AnalysisMode>all</AnalysisMode>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <WarningsAsErrors>Nullable</WarningsAsErrors>
+        <AnalysisMode>all</AnalysisMode>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Polly" Version="8.4.1" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.32.0.97167">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.29.2" />
+        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.67.0" />
+        <PackageReference Include="Polly" Version="8.5.0" />
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="System.Interactive.Async" Version="6.0.1" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MarketBasketAnalysis.Common.Protos\MarketBasketAnalysis.Common.Protos.csproj" />
-    <ProjectReference Include="..\MarketBasketAnalysis.Server.Data\MarketBasketAnalysis.Server.Data.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MarketBasketAnalysis.Common.Protos\MarketBasketAnalysis.Common.Protos.csproj" />
+        <ProjectReference Include="..\MarketBasketAnalysis.Server.Data\MarketBasketAnalysis.Server.Data.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS base
 USER root
 WORKDIR /app
 RUN mkdir /app/data
@@ -7,7 +7,7 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.13 && \
     chmod +x /bin/grpc_health_probe
 EXPOSE 8080
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MarketBasketAnalysis.Server.API/MarketBasketAnalysis.Server.API.csproj", "MarketBasketAnalysis.Server.API/"]
