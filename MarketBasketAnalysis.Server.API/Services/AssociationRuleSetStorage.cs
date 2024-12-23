@@ -73,32 +73,34 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
 
     #region Load
 
-    public override async Task Load(LoadRequest request, IServerStreamWriter<LoadResponse> responseStream, ServerCallContext context)
+    public override async Task Load(LoadRequest request, IServerStreamWriter<LoadResponse> responseStream,
+        ServerCallContext context)
     {
         try
         {
             var associationRuleSetInfo = await _associationRuleSetLoader.LoadAssociationRuleSetInfoAsync(
                 request.AssociationRuleSetName, context.CancellationToken);
 
-            await responseStream.WriteAsync(new LoadResponse
-            {
-                AssociationRuleSetPart = new AssociationRuleSetPartMessage
-                {
-                    AssociationRuleSetInfo = associationRuleSetInfo
-                }
-            }, context.CancellationToken);
-
-            var itemChunks = _associationRuleSetLoader.LoadItemChunksAsync(request.AssociationRuleSetName, context.CancellationToken);
-
-            await foreach (var itemChunk in itemChunks)
-            {
-                await responseStream.WriteAsync(new LoadResponse
+            await responseStream.WriteAsync(
+                new LoadResponse
                 {
                     AssociationRuleSetPart = new AssociationRuleSetPartMessage
                     {
-                        ItemChunk = itemChunk
+                        AssociationRuleSetInfo = associationRuleSetInfo
                     }
                 }, context.CancellationToken);
+
+            var itemChunks =
+                _associationRuleSetLoader.LoadItemChunksAsync(request.AssociationRuleSetName,
+                    context.CancellationToken);
+
+            await foreach (var itemChunk in itemChunks)
+            {
+                await responseStream.WriteAsync(
+                    new LoadResponse
+                    {
+                        AssociationRuleSetPart = new AssociationRuleSetPartMessage { ItemChunk = itemChunk }
+                    }, context.CancellationToken);
             }
 
             var associationRuleChunks = _associationRuleSetLoader
@@ -106,13 +108,14 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
 
             await foreach (var associationRuleChunk in associationRuleChunks)
             {
-                await responseStream.WriteAsync(new LoadResponse
-                {
-                    AssociationRuleSetPart = new AssociationRuleSetPartMessage
+                await responseStream.WriteAsync(
+                    new LoadResponse
                     {
-                        AssociationRuleChunk = associationRuleChunk
-                    }
-                }, context.CancellationToken);
+                        AssociationRuleSetPart = new AssociationRuleSetPartMessage
+                        {
+                            AssociationRuleChunk = associationRuleChunk
+                        }
+                    }, context.CancellationToken);
             }
         }
         catch (AssociationRuleSetValidationException e)
@@ -161,7 +164,8 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
         return new();
     }
 
-    private static async Task<AssociationRuleSetInfoMessage> ReceiveAssociationRuleSet(IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
+    private static async Task<AssociationRuleSetInfoMessage> ReceiveAssociationRuleSet(
+        IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
     {
         if (!await requestStream.MoveNext(context.CancellationToken))
             RpcThrowHelper.InvalidArgument("Expected association rule set, but request stream is empty.");
@@ -173,7 +177,8 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
         return part.AssociationRuleSetInfo;
     }
 
-    private static async IAsyncEnumerable<ItemChunkMessage> ReceiveItemChunks(IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
+    private static async IAsyncEnumerable<ItemChunkMessage> ReceiveItemChunks(
+        IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
     {
         var atLeastOneItemChunkReceived = false;
         PartTypeOneofCase? partType = null;
@@ -187,7 +192,8 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
         }
 
         if (partType == null)
-            RpcThrowHelper.InvalidArgument("Request stream is empty, association rule set received and item chunks were expected.");
+            RpcThrowHelper.InvalidArgument(
+                "Request stream is empty, association rule set received and item chunks were expected.");
 
         if (!atLeastOneItemChunkReceived)
             CheckPartyType(partType.Value, PartTypeOneofCase.ItemChunk);

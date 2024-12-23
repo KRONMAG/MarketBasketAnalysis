@@ -10,7 +10,8 @@ public static class WebApplicationExtensions
         ArgumentNullException.ThrowIfNull(webApplication);
 
         using var scope = webApplication.Services.CreateScope();
-        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<MarketBasketAnalysisDbContext>>();
+        var contextFactory =
+            scope.ServiceProvider.GetRequiredService<IDbContextFactory<MarketBasketAnalysisDbContext>>();
         await using var context = await contextFactory.CreateDbContextAsync();
 
         await context.Database.MigrateAsync();

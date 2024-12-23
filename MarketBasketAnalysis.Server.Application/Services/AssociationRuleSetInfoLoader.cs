@@ -38,9 +38,7 @@ public class AssociationRuleSetInfoLoader : IAssociationRuleSetInfoLoader
                 .Where(e => e.IsLoaded)
                 .Select(e => new AssociationRuleSetInfoMessage
                 {
-                    Name = e.Name,
-                    Description = e.Description,
-                    TransactionCount = e.TransactionCount
+                    Name = e.Name, Description = e.Description, TransactionCount = e.TransactionCount
                 })
                 .ToListAsync(token);
         }

@@ -44,7 +44,7 @@ public sealed class AssociationRuleSetRemover : IAssociationRuleSetRemover
             context.Remove(associationRuleSet);
             await context.SaveChangesAsync(token);
         }
-        catch(Exception e) when (e is DbException or DbUpdateException)
+        catch (Exception e) when (e is DbException or DbUpdateException)
         {
             throw new AssociationRuleSetRemoveException(associationRuleSetName, e);
         }

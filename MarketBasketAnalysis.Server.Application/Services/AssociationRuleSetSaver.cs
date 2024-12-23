@@ -93,7 +93,8 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
     private static bool ShouldHandleException(Exception e) =>
         e is AssociationRuleSetValidationException or AssociationRuleSetSaveException or OperationCanceledException;
 
-    private async Task<AssociationRuleSet> SaveAssociationRuleSetInfo(AssociationRuleSetInfoMessage associationRuleSetMessage, CancellationToken token)
+    private async Task<AssociationRuleSet> SaveAssociationRuleSetInfo(
+        AssociationRuleSetInfoMessage associationRuleSetMessage, CancellationToken token)
     {
         associationRuleSetMessage.Name.CheckAssociationRuleSetName();
 
@@ -146,10 +147,12 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
             foreach (var itemMessage in itemChunkMessage.Values)
             {
                 if (itemMessage.Name == null)
-                    throw new AssociationRuleSetValidationException($"Item with ID {itemMessage.Id} should have non-null name.");
+                    throw new AssociationRuleSetValidationException(
+                        $"Item with ID {itemMessage.Id} should have non-null name.");
 
                 if (itemMessage.Count < 0)
-                    throw new AssociationRuleSetValidationException($"Count of item with ID {itemMessage.Id} should be positive.");
+                    throw new AssociationRuleSetValidationException(
+                        $"Count of item with ID {itemMessage.Id} should be positive.");
 
                 if (_itemCounts!.ContainsKey(itemMessage.Id))
                     throw new AssociationRuleSetValidationException($"Item with ID {itemMessage.Id} is duplicated.");
@@ -163,16 +166,16 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
                 _itemCounts!.Add(itemMessage.Id, itemMessage.Count);
             }
 
-            await SaveChunkMessageAsync(itemChunkMessage, (data, payloadSize) => new ItemChunk
-            {
-                Data = data,
-                PayloadSize = payloadSize,
-                AssociationRuleSetId = associationRuleSet.Id
-            }, token);
+            await SaveChunkMessageAsync(itemChunkMessage,
+                (data, payloadSize) => new ItemChunk
+                {
+                    Data = data, PayloadSize = payloadSize, AssociationRuleSetId = associationRuleSet.Id
+                }, token);
         }
     }
 
-    private async Task SaveAssociationRuleChunks(IAsyncEnumerable<AssociationRuleChunkMessage> associationRuleChunkMessages,
+    private async Task SaveAssociationRuleChunks(
+        IAsyncEnumerable<AssociationRuleChunkMessage> associationRuleChunkMessages,
         AssociationRuleSet associationRuleSet, CancellationToken token)
     {
         await foreach (var associationRuleChunkMessage in associationRuleChunkMessages.WithCancellation(token))
@@ -225,14 +228,13 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
             await SaveChunkMessageAsync(associationRuleChunkMessage,
                 (data, payloadSize) => new AssociationRuleChunk
                 {
-                    Data = data,
-                    PayloadSize = payloadSize,
-                    AssociationRuleSetId = associationRuleSet.Id
+                    Data = data, PayloadSize = payloadSize, AssociationRuleSetId = associationRuleSet.Id
                 }, token);
         }
     }
 
-    private async Task SaveChunkMessageAsync<TEntity, TMessage>(TMessage message, Func<byte[], int, TEntity> entityFactory,
+    private async Task SaveChunkMessageAsync<TEntity, TMessage>(TMessage message,
+        Func<byte[], int, TEntity> entityFactory,
         CancellationToken token)
         where TEntity : notnull
         where TMessage : IMessage
@@ -286,7 +288,8 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
         await Policy.Handle<DbException>()
             .WaitAndRetryAsync(RollbackChangesRetryCount, n =>
             {
-                var durationInSeconds = RollbackChangesInitialBackoff * Math.Pow(RollbackChangesBackoffMultiplier, n - 1);
+                var durationInSeconds =
+                    RollbackChangesInitialBackoff * Math.Pow(RollbackChangesBackoffMultiplier, n - 1);
 
                 return TimeSpan.FromSeconds(durationInSeconds);
             })

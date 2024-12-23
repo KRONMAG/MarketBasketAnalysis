@@ -38,7 +38,7 @@ services:
       - market-basket-analysis-data:/app/data
     restart: on-failure
     healthcheck:
-      test: ["CMD", "/bin/grpc_health_probe", "-addr=:8080"]
+      test: [ "CMD", "/bin/grpc_health_probe", "-addr=:8080" ]
       timeout: 10s
       interval: 5s
       retries: 10

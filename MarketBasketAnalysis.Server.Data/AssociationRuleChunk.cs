@@ -1,6 +1,4 @@
-﻿using ProtoBuf;
-
-namespace MarketBasketAnalysis.Server.Data;
+﻿namespace MarketBasketAnalysis.Server.Data;
 
 public class AssociationRuleChunk
 {
