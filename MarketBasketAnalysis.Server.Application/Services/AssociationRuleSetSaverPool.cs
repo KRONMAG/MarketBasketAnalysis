@@ -72,7 +72,7 @@ public sealed class AssociationRuleSetSaverPool : IAssociationRuleSetSaverPool
                 var value = new EntryValue(associationRuleSetSaver, context);
 
                 entry.Value = value;
-                entry.SlidingExpiration = TimeSpan.FromSeconds(SlidingExpirationInMinutes);
+                entry.SlidingExpiration = TimeSpan.FromMinutes(SlidingExpirationInMinutes);
                 entry.PostEvictionCallbacks.Add(new()
                 {
                     // ReSharper disable once AsyncVoidLambda
