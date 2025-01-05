@@ -2,7 +2,6 @@
 using MarketBasketAnalysis.Server.Application.Extensions;
 using MarketBasketAnalysis.Server.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
 
 namespace MarketBasketAnalysis.Server.Application.Services;
 
@@ -10,17 +9,17 @@ public sealed class AssociationRuleSetRemover : IAssociationRuleSetRemover
 {
     #region Fields and Properties
 
-    private readonly IDbContextFactory<MarketBasketAnalysisDbContext> _contextFactory;
+    private readonly MarketBasketAnalysisDbContext _context;
 
     #endregion
 
     #region Constructors
 
-    public AssociationRuleSetRemover(IDbContextFactory<MarketBasketAnalysisDbContext> contextFactory)
+    public AssociationRuleSetRemover(MarketBasketAnalysisDbContext context)
     {
-        ArgumentNullException.ThrowIfNull(contextFactory);
+        ArgumentNullException.ThrowIfNull(context);
 
-        _contextFactory = contextFactory;
+        _context = context;
     }
 
     #endregion
@@ -29,24 +28,29 @@ public sealed class AssociationRuleSetRemover : IAssociationRuleSetRemover
 
     public async Task RemoveAsync(string associationRuleSetName, CancellationToken token)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(token);
+        associationRuleSetName.ValidateAssociationRuleSetName();
 
-        associationRuleSetName.CheckAssociationRuleSetName();
+        AssociationRuleSet? associationRuleSet = null;
 
         try
         {
-            var associationRuleSet = await context.AssociationRuleSets
-                .FirstOrDefaultAsync(e => e.IsLoaded && e.Name == associationRuleSetName, token);
+            associationRuleSet = await _context.AssociationRuleSets
+                .FirstOrDefaultAsync(e => e.IsAvailable && e.Name == associationRuleSetName, token);
 
             if (associationRuleSet == null)
                 throw new AssociationRuleSetNotFoundException(associationRuleSetName);
 
-            context.Remove(associationRuleSet);
-            await context.SaveChangesAsync(token);
+            _context.Remove(associationRuleSet);
+            await _context.SaveChangesAsync(token);
         }
-        catch (Exception e) when (e is DbException or DbUpdateException)
+        catch (Exception e) when (e.IsDbOrDbUpdateException())
         {
             throw new AssociationRuleSetRemoveException(associationRuleSetName, e);
+        }
+        finally
+        {
+            if (associationRuleSet != null)
+                _context.Entry(associationRuleSet).State = EntityState.Detached;
         }
     }
 

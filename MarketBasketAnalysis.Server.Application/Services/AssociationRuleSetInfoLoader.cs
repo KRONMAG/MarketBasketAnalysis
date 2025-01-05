@@ -10,35 +10,35 @@ public class AssociationRuleSetInfoLoader : IAssociationRuleSetInfoLoader
 {
     #region Fields and Properties
 
-    private readonly IDbContextFactory<MarketBasketAnalysisDbContext> _contextFactory;
+    private readonly MarketBasketAnalysisDbContext _context;
 
     #endregion
 
     #region Constructors
 
-    public AssociationRuleSetInfoLoader(IDbContextFactory<MarketBasketAnalysisDbContext> contextFactory)
+    public AssociationRuleSetInfoLoader(MarketBasketAnalysisDbContext context)
     {
-        ArgumentNullException.ThrowIfNull(contextFactory);
+        ArgumentNullException.ThrowIfNull(context);
 
-        _contextFactory = contextFactory;
+        _context = context;
     }
 
     #endregion
 
     #region Methods
 
-    public async Task<List<AssociationRuleSetInfoMessage>> LoadAsync(CancellationToken token)
+    public async Task<List<AssociationRuleSetInfoMessage>> LoadAsync(CancellationToken token = default)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(token);
-
         try
         {
-            return await context.AssociationRuleSets
+            return await _context.AssociationRuleSets
                 .AsNoTracking()
-                .Where(e => e.IsLoaded)
+                .Where(e => e.IsAvailable)
                 .Select(e => new AssociationRuleSetInfoMessage
                 {
-                    Name = e.Name, Description = e.Description, TransactionCount = e.TransactionCount
+                    Name = e.Name,
+                    Description = e.Description,
+                    TransactionCount = e.TransactionCount
                 })
                 .ToListAsync(token);
         }

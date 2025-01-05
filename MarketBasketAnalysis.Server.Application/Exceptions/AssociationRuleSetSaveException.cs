@@ -1,6 +1,6 @@
 ﻿namespace MarketBasketAnalysis.Server.Application.Exceptions;
 
-public class AssociationRuleSetSaveException : Exception
+public class AssociationRuleSetSaveException : AssociationRuleSetException
 {
     public AssociationRuleSetSaveException(string message) : base(message)
     {

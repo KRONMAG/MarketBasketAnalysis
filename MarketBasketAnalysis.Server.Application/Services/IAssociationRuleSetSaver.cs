@@ -4,8 +4,13 @@ namespace MarketBasketAnalysis.Server.Application.Services;
 
 public interface IAssociationRuleSetSaver
 {
-    Task SaveAsync(AssociationRuleSetInfoMessage associationRuleSetInfoMessage,
-        IAsyncEnumerable<ItemChunkMessage> itemChunkMessages,
-        IAsyncEnumerable<AssociationRuleChunkMessage> associationRuleChunkMessages,
-        CancellationToken token);
+    Task SaveAssociationRuleSetInfoAsync(AssociationRuleSetInfoMessage message, CancellationToken token = default);
+
+    Task SaveItemChunk(ItemChunkMessage message, CancellationToken token = default);
+
+    Task SaveAssociationRuleChunk(AssociationRuleChunkMessage message, CancellationToken token = default);
+
+    Task RollbackChangesAsync(CancellationToken token = default);
+
+    Task MarkSetAsAvailableAsync(CancellationToken token = default);
 }

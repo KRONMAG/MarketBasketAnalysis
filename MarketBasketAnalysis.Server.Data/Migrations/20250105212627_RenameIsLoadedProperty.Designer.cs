@@ -2,6 +2,7 @@
 using MarketBasketAnalysis.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketBasketAnalysis.Server.Data.Migrations
 {
     [DbContext(typeof(MarketBasketAnalysisDbContext))]
-    partial class MarketBasketAnalysisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250105212627_RenameIsLoadedProperty")]
+    partial class RenameIsLoadedProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");

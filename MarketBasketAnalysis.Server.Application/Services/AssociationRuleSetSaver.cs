@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Polly;
 using System.Buffers;
-using System.Data.Common;
 
 namespace MarketBasketAnalysis.Server.Application.Services;
 
@@ -19,23 +18,22 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
     private const int RollbackChangesInitialBackoff = 2;
     private const double RollbackChangesBackoffMultiplier = 1.5;
 
-    private readonly IDbContextFactory<MarketBasketAnalysisDbContext> _contextFactory;
+    private readonly MarketBasketAnalysisDbContext _context;
     private readonly ILogger<AssociationRuleSetSaver> _logger;
 
-    private MarketBasketAnalysisDbContext? _context;
+    private AssociationRuleSet? _associationRuleSet;
     private Dictionary<int, int>? _itemCounts;
 
     #endregion
 
     #region Constructors
 
-    public AssociationRuleSetSaver(IDbContextFactory<MarketBasketAnalysisDbContext> contextFactory,
-        ILogger<AssociationRuleSetSaver> logger)
+    public AssociationRuleSetSaver(MarketBasketAnalysisDbContext context, ILogger<AssociationRuleSetSaver> logger)
     {
-        ArgumentNullException.ThrowIfNull(contextFactory);
+        ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(logger);
 
-        _contextFactory = contextFactory;
+        _context = context;
         _logger = logger;
     }
 
@@ -43,217 +41,105 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
 
     #region Methods
 
-    public async Task SaveAsync(AssociationRuleSetInfoMessage associationRuleSetInfoMessage,
-        IAsyncEnumerable<ItemChunkMessage> itemChunkMessages,
-        IAsyncEnumerable<AssociationRuleChunkMessage> associationRuleChunkMessages,
-        CancellationToken token)
+    #region Save
+
+    public async Task SaveAssociationRuleSetInfoAsync(AssociationRuleSetInfoMessage message,
+        CancellationToken token = default)
     {
-        ArgumentNullException.ThrowIfNull(associationRuleSetInfoMessage);
-        ArgumentNullException.ThrowIfNull(itemChunkMessages);
-        ArgumentNullException.ThrowIfNull(associationRuleChunkMessages);
-
-        _context = await _contextFactory.CreateDbContextAsync(token);
-        _itemCounts = new Dictionary<int, int>();
-
-        AssociationRuleSet? associationRuleSet = null;
+        ArgumentNullException.ThrowIfNull(message);
 
         try
         {
-            associationRuleSet = await SaveAssociationRuleSetInfo(associationRuleSetInfoMessage, token);
+            if (_associationRuleSet != null)
+                throw new AssociationRuleSetSaveException("Association rule set info already saved.");
 
-            await SaveItemChunks(itemChunkMessages, associationRuleSet, token);
-            await SaveAssociationRuleChunks(associationRuleChunkMessages, associationRuleSet, token);
-            await MarkAssociationRuleSetAsLoaded(associationRuleSet, token);
-        }
-        catch (Exception e) when (ShouldHandleException(e))
-        {
-            if (associationRuleSet != null)
+            await ValidateAssociationRuleSetInfoAsync(message, token);
+
+            _associationRuleSet = new AssociationRuleSet()
             {
-                try
-                {
-                    await RollbackChanges(associationRuleSet);
-                }
-                catch (DbException de)
-                {
-                    _logger.LogError(de, "Failed to rollback changes made while saving association rule set.");
-                }
-            }
+                Name = message.Name,
+                Description = message.Description,
+                TransactionCount = message.TransactionCount
+            };
+            _itemCounts = new Dictionary<int, int>();
 
-            throw;
-        }
-        finally
-        {
-            await _context.DisposeAsync();
-
-            _context = null;
-            _itemCounts = null;
-        }
-    }
-
-    private static bool ShouldHandleException(Exception e) =>
-        e is AssociationRuleSetValidationException or AssociationRuleSetSaveException or OperationCanceledException;
-
-    private async Task<AssociationRuleSet> SaveAssociationRuleSetInfo(
-        AssociationRuleSetInfoMessage associationRuleSetMessage, CancellationToken token)
-    {
-        associationRuleSetMessage.Name.CheckAssociationRuleSetName();
-
-        if (associationRuleSetMessage.TransactionCount <= 0)
-        {
-            throw new AssociationRuleSetValidationException(
-                "Association rule set should have positive transaction count.");
-        }
-
-        var isAlreadyExists = await _context!.AssociationRuleSets
-            .AnyAsync(e => e.Name == associationRuleSetMessage.Name, token);
-
-        if (isAlreadyExists)
-        {
-            throw new AssociationRuleSetValidationException(
-                $"Association rule set with name \"{associationRuleSetMessage.Name}\" already exists.");
-        }
-
-        var associationRuleSet = new AssociationRuleSet
-        {
-            Name = associationRuleSetMessage.Name,
-            Description = associationRuleSetMessage.Description,
-            TransactionCount = associationRuleSetMessage.TransactionCount
-        };
-
-        await _context.AddAsync(associationRuleSet, token);
-
-        try
-        {
+            await _context.AddAsync(_associationRuleSet, token);
             await _context.SaveChangesAsync(token);
         }
         catch (DbUpdateException e)
         {
+            _associationRuleSet = null;
+            _itemCounts = null;
+
             throw new AssociationRuleSetSaveException(
                 "Unexpected error occured while saving association rule set info.", e);
         }
         finally
         {
-            _context.ChangeTracker.Clear();
-        }
-
-        return associationRuleSet;
-    }
-
-    private async Task SaveItemChunks(IAsyncEnumerable<ItemChunkMessage> itemChunkMessages,
-        AssociationRuleSet associationRuleSet, CancellationToken token)
-    {
-        await foreach (var itemChunkMessage in itemChunkMessages.WithCancellation(token))
-        {
-            foreach (var itemMessage in itemChunkMessage.Values)
-            {
-                if (itemMessage.Name == null)
-                    throw new AssociationRuleSetValidationException(
-                        $"Item with ID {itemMessage.Id} should have non-null name.");
-
-                if (itemMessage.Count < 0)
-                    throw new AssociationRuleSetValidationException(
-                        $"Count of item with ID {itemMessage.Id} should be positive.");
-
-                if (_itemCounts!.ContainsKey(itemMessage.Id))
-                    throw new AssociationRuleSetValidationException($"Item with ID {itemMessage.Id} is duplicated.");
-
-                if (itemMessage.Count > associationRuleSet.TransactionCount)
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Count of item  with ID {itemMessage.Id} should be less than or equal to transaction count.");
-                }
-
-                _itemCounts!.Add(itemMessage.Id, itemMessage.Count);
-            }
-
-            await SaveChunkMessageAsync(itemChunkMessage,
-                (data, payloadSize) => new ItemChunk
-                {
-                    Data = data, PayloadSize = payloadSize, AssociationRuleSetId = associationRuleSet.Id
-                }, token);
+            if (_associationRuleSet != null)
+                _context.Entry(_associationRuleSet).State = EntityState.Detached;
         }
     }
 
-    private async Task SaveAssociationRuleChunks(
-        IAsyncEnumerable<AssociationRuleChunkMessage> associationRuleChunkMessages,
-        AssociationRuleSet associationRuleSet, CancellationToken token)
+    public async Task SaveItemChunk(ItemChunkMessage message, CancellationToken token = default)
     {
-        await foreach (var associationRuleChunkMessage in associationRuleChunkMessages.WithCancellation(token))
-        {
-            foreach (var associationRuleMessage in associationRuleChunkMessage.Values)
+        ArgumentNullException.ThrowIfNull(message);
+
+        if (_associationRuleSet == null)
+            throw new AssociationRuleSetSaveException("Item chunks should be saved after association rule set info.");
+
+        ValidateItemChunk(message);
+
+        await SaveChunkMessageAsync(message,
+            (data, payloadSize) => new ItemChunk
             {
-                var leftHandSideId = associationRuleMessage.LeftHandSideId;
-                var rightHandSideId = associationRuleMessage.RightHandSideId;
-                var handSidesCount = associationRuleMessage.Count;
+                Data = data,
+                PayloadSize = payloadSize,
+                AssociationRuleSetId = _associationRuleSet.Id
+            }, token);
+    }
 
-                if (leftHandSideId == rightHandSideId)
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Left and right hand side IDs should be different, but they are equal to {leftHandSideId}.");
-                }
+    public async Task SaveAssociationRuleChunk(AssociationRuleChunkMessage message, CancellationToken token = default)
+    {
+        ArgumentNullException.ThrowIfNull(message);
 
-                if (associationRuleMessage.Count <= 0)
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Count of association rule with hand side IDs {leftHandSideId} and {rightHandSideId} should be positive.");
-                }
-
-                if (!_itemCounts!.TryGetValue(leftHandSideId, out var leftHandSideCount))
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Left hand side with ID {leftHandSideId} not found in items list.");
-                }
-
-                if (!_itemCounts!.TryGetValue(rightHandSideId, out var rightHandSideCount))
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Right hand side with ID {rightHandSideId} not found in items list.");
-                }
-
-                if (handSidesCount > leftHandSideCount)
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Count of association rule with hand side IDs {leftHandSideId} " +
-                        $"and {rightHandSideId} should be less than or equal to left hand side count.");
-                }
-
-                if (handSidesCount > rightHandSideCount)
-                {
-                    throw new AssociationRuleSetValidationException(
-                        $"Count of association rule with hand side IDs {leftHandSideId} " +
-                        $"and {rightHandSideId} should be less than or equal to right hand side count.");
-                }
-            }
-
-            await SaveChunkMessageAsync(associationRuleChunkMessage,
-                (data, payloadSize) => new AssociationRuleChunk
-                {
-                    Data = data, PayloadSize = payloadSize, AssociationRuleSetId = associationRuleSet.Id
-                }, token);
+        if (_associationRuleSet == null || _itemCounts?.Count == 0)
+        {
+            throw new AssociationRuleSetSaveException(
+                "Association rule chunks should be saved after association rule set info and item chunks.");
         }
+
+        ValidateAssociationRuleChunk(message);
+
+        await SaveChunkMessageAsync(message,
+            (data, payloadSize) => new AssociationRuleChunk
+            {
+                Data = data,
+                PayloadSize = payloadSize,
+                AssociationRuleSetId = _associationRuleSet.Id
+            }, token);
     }
 
     private async Task SaveChunkMessageAsync<TEntity, TMessage>(TMessage message,
-        Func<byte[], int, TEntity> entityFactory,
-        CancellationToken token)
+        Func<byte[], int, TEntity> entityFactory, CancellationToken token)
         where TEntity : notnull
         where TMessage : IMessage
     {
         var messageSize = message.CalculateSize();
         var buffer = ArrayPool<byte>.Shared.Rent(messageSize);
+        var bufferSegment = new ArraySegment<byte>(buffer, 0, messageSize);
+
+        message.WriteTo(bufferSegment);
+
+        var entity = entityFactory(buffer, messageSize);
+
+        _context.Add(entity);
 
         try
         {
-            var bufferSegment = new ArraySegment<byte>(buffer, 0, messageSize);
-
-            message.WriteTo(bufferSegment);
-
-            var entity = entityFactory(buffer, messageSize);
-
-            await _context!.AddAsync(entity, token);
             await _context.SaveChangesAsync(token);
         }
-        catch (Exception e) when (e is DbException or DbUpdateException)
+        catch (Exception e) when (e.IsDbOrDbUpdateException())
         {
             var chunkMessageName = message is ItemChunkMessage ? "item" : "association rule";
             var errorMessage = $"Unexpected error occured while saving {chunkMessageName} chunk.";
@@ -263,42 +149,174 @@ public sealed class AssociationRuleSetSaver : IAssociationRuleSetSaver
         finally
         {
             ArrayPool<byte>.Shared.Return(buffer);
-
-            _context!.ChangeTracker.Clear();
+            _context.Entry(entity).State = EntityState.Detached;
         }
     }
 
-    private async Task MarkAssociationRuleSetAsLoaded(AssociationRuleSet associationRuleSet, CancellationToken token)
-    {
-        associationRuleSet.IsLoaded = true;
+    #endregion
 
-        _context!.Entry(associationRuleSet).State = EntityState.Modified;
+    #region Commit/Rollback Changes
+
+    public async Task MarkSetAsAvailableAsync(CancellationToken token = default)
+    {
+        if (_associationRuleSet == null)
+            return;
+
+        _associationRuleSet.IsAvailable = true;
+
+        _context.Update(_associationRuleSet);
 
         try
         {
             await _context.SaveChangesAsync(token);
         }
+        catch (Exception e) when (e.IsDbOrDbUpdateException())
+        {
+            throw new AssociationRuleSetSaveException(
+                "Unexpected error occured while marking association rule set as available.");
+        }
         finally
         {
-            _context.ChangeTracker.Clear();
+            _context.Entry(_associationRuleSet).State = EntityState.Detached;
+        }
+
+        _associationRuleSet = null;
+        _itemCounts = null;
+    }
+
+    public async Task RollbackChangesAsync(CancellationToken token = default)
+    {
+        if (_associationRuleSet == null)
+            return;
+
+        _context.Remove(_associationRuleSet);
+
+        try
+        {
+            await Policy
+                .Handle<Exception>(e => e.IsDbOrDbUpdateException())
+                .WaitAndRetryAsync(RollbackChangesRetryCount, n =>
+                {
+                    var durationInSeconds =
+                        RollbackChangesInitialBackoff * Math.Pow(RollbackChangesBackoffMultiplier, n - 1);
+
+                    return TimeSpan.FromSeconds(durationInSeconds);
+                })
+                .ExecuteAsync(async () => await _context.SaveChangesAsync(token));
+        }
+        catch (Exception e) when (e.IsDbOrDbUpdateException())
+        {
+            _logger.LogError(e, "Failed to rollback changes made while saving association rule set.");
+        }
+        finally
+        {
+            _context.Entry(_associationRuleSet).State = EntityState.Detached;
+            _associationRuleSet = null;
+            _itemCounts = null;
         }
     }
 
-    private async Task RollbackChanges(AssociationRuleSet associationRuleSet) =>
-        await Policy.Handle<DbException>()
-            .WaitAndRetryAsync(RollbackChangesRetryCount, n =>
-            {
-                var durationInSeconds =
-                    RollbackChangesInitialBackoff * Math.Pow(RollbackChangesBackoffMultiplier, n - 1);
+    #endregion
 
-                return TimeSpan.FromSeconds(durationInSeconds);
-            })
-            .ExecuteAsync(async () =>
-            {
-                _context!.AssociationRuleSets.Entry(associationRuleSet).State = EntityState.Deleted;
+    #region Validate
 
-                await _context.SaveChangesAsync();
-            });
+    private async Task ValidateAssociationRuleSetInfoAsync(AssociationRuleSetInfoMessage message, CancellationToken token)
+    {
+        message.Name.ValidateAssociationRuleSetName();
+
+        if (message.TransactionCount <= 0)
+        {
+            throw new AssociationRuleSetValidationException(
+                "Association rule set should have positive transaction count.");
+        }
+
+        var isAlreadyExists = await _context.AssociationRuleSets.AnyAsync(e => e.Name == message.Name, token);
+
+        if (isAlreadyExists)
+        {
+            throw new AssociationRuleSetValidationException(
+                $"Association rule set with name \"{message.Name}\" already exists.");
+        }
+    }
+
+    private void ValidateItemChunk(ItemChunkMessage message)
+    {
+        foreach (var itemMessage in message.Values)
+        {
+            if (itemMessage.Name == null)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Item with ID {itemMessage.Id} should have non-null name.");
+            }
+
+            if (itemMessage.Count <= 0)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Count of item with ID {itemMessage.Id} should be positive.");
+            }
+
+            if (_itemCounts!.ContainsKey(itemMessage.Id))
+                throw new AssociationRuleSetValidationException($"Item with ID {itemMessage.Id} is duplicated.");
+
+            if (itemMessage.Count > _associationRuleSet!.TransactionCount)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Count of item  with ID {itemMessage.Id} should be less than or equal to transaction count.");
+            }
+
+            _itemCounts!.Add(itemMessage.Id, itemMessage.Count);
+        }
+    }
+
+    private void ValidateAssociationRuleChunk(AssociationRuleChunkMessage message)
+    {
+        foreach (var itemMessage in message.Values)
+        {
+            var leftHandSideId = itemMessage.LeftHandSideId;
+            var rightHandSideId = itemMessage.RightHandSideId;
+            var handSidesCount = itemMessage.Count;
+
+            if (leftHandSideId == rightHandSideId)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Left and right hand side IDs should be different, but they are equal to {leftHandSideId}.");
+            }
+
+            if (itemMessage.Count <= 0)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Count of association rule with hand side IDs {leftHandSideId} and {rightHandSideId} should be positive.");
+            }
+
+            if (!_itemCounts!.TryGetValue(leftHandSideId, out var leftHandSideCount))
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Left hand side with ID {leftHandSideId} not found in items list.");
+            }
+
+            if (!_itemCounts!.TryGetValue(rightHandSideId, out var rightHandSideCount))
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Right hand side with ID {rightHandSideId} not found in items list.");
+            }
+
+            if (handSidesCount > leftHandSideCount)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Count of association rule with hand side IDs {leftHandSideId} " +
+                    $"and {rightHandSideId} should be less than or equal to left hand side count.");
+            }
+
+            if (handSidesCount > rightHandSideCount)
+            {
+                throw new AssociationRuleSetValidationException(
+                    $"Count of association rule with hand side IDs {leftHandSideId} " +
+                    $"and {rightHandSideId} should be less than or equal to right hand side count.");
+            }
+        }
+    }
+
+    #endregion
 
     #endregion
 }

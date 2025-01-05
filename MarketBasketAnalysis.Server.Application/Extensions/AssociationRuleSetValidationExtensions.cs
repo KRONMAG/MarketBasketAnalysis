@@ -4,7 +4,7 @@ namespace MarketBasketAnalysis.Server.Application.Extensions;
 
 internal static class AssociationRuleSetValidationExtensions
 {
-    internal static void CheckAssociationRuleSetName(this string name)
+    internal static void ValidateAssociationRuleSetName(this string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {

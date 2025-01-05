@@ -20,6 +20,7 @@ services.AddScoped<IAssociationRuleSetInfoLoader, AssociationRuleSetInfoLoader>(
 services.AddScoped<IAssociationRuleSetSaver, AssociationRuleSetSaver>();
 services.AddScoped<IAssociationRuleSetLoader, AssociationRuleSetLoader>();
 services.AddScoped<IAssociationRuleSetRemover, AssociationRuleSetRemover>();
+services.AddSingleton<IAssociationRuleSetSaverPool, AssociationRuleSetSaverPool>();
 
 var app = builder.Build();
 

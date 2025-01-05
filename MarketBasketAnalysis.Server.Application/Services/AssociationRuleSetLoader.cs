@@ -12,21 +12,17 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
 {
     #region Fields and properties
 
-    private readonly IDbContextFactory<MarketBasketAnalysisDbContext> _contextFactory;
-
-    private MarketBasketAnalysisDbContext? _context;
-
-    private bool _disposed;
+    private readonly MarketBasketAnalysisDbContext _context;
 
     #endregion
 
     #region Constructors
 
-    public AssociationRuleSetLoader(IDbContextFactory<MarketBasketAnalysisDbContext> contexFactory)
+    public AssociationRuleSetLoader(MarketBasketAnalysisDbContext context)
     {
-        ArgumentNullException.ThrowIfNull(contexFactory);
+        ArgumentNullException.ThrowIfNull(context);
 
-        _contextFactory = contexFactory;
+        _context = context;
     }
 
     #endregion
@@ -34,15 +30,11 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
     #region Methods
 
     public async Task<AssociationRuleSetInfoMessage> LoadAssociationRuleSetInfoAsync(
-        string associationRuleSetName, CancellationToken token)
+        string associationRuleSetName, CancellationToken token = default)
     {
-        ObjectDisposedException.ThrowIf(_disposed, this);
+        associationRuleSetName.ValidateAssociationRuleSetName();
 
-        associationRuleSetName.CheckAssociationRuleSetName();
-
-        await CreateContextIfNeedAsync();
-
-        var associationRuleSet = await _context!.AssociationRuleSets
+        var associationRuleSet = await _context.AssociationRuleSets
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Name == associationRuleSetName, token);
 
@@ -58,26 +50,22 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
     }
 
     public IAsyncEnumerable<ItemChunkMessage> LoadItemChunksAsync(string associationRuleSetName,
-        CancellationToken token)
+        CancellationToken token = default)
     {
-        ObjectDisposedException.ThrowIf(_disposed, this);
-
-        associationRuleSetName.CheckAssociationRuleSetName();
+        associationRuleSetName.ValidateAssociationRuleSetName();
 
         return AsyncEnumerableEx
-            .Defer(() => LoadItemsChunkInernalAsync(associationRuleSetName, token))
+            .Defer(() => LoadItemsChunkInternalAsync(associationRuleSetName, token))
             .Catch<ItemChunkMessage, DbException>((e, _) =>
                 throw new AssociationRuleSetLoadException(
                     "Unexpected error occurred while loading item chunks.", e));
     }
 
-    private async IAsyncEnumerable<ItemChunkMessage> LoadItemsChunkInernalAsync(
+    private async IAsyncEnumerable<ItemChunkMessage> LoadItemsChunkInternalAsync(
         string associationRuleSetName,
         [EnumeratorCancellation] CancellationToken token)
     {
-        await CreateContextIfNeedAsync();
-
-        var itemChunks = _context!.ItemChunks
+        var itemChunks = _context.ItemChunks
             .AsNoTracking()
             .Where(e => e.AssociationRuleSet!.Name == associationRuleSetName)
             .AsAsyncEnumerable()
@@ -93,11 +81,9 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
     }
 
     public IAsyncEnumerable<AssociationRuleChunkMessage> LoadAssociationRuleChunksAsync(
-        string associationRuleSetName, CancellationToken token)
+        string associationRuleSetName, CancellationToken token = default)
     {
-        ObjectDisposedException.ThrowIf(_disposed, this);
-
-        associationRuleSetName.CheckAssociationRuleSetName();
+        associationRuleSetName.ValidateAssociationRuleSetName();
 
         return AsyncEnumerableEx
             .Defer(() => LoadAssociationRuleChunksInternalAsync(associationRuleSetName, token))
@@ -109,9 +95,7 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
     private async IAsyncEnumerable<AssociationRuleChunkMessage> LoadAssociationRuleChunksInternalAsync(
         string associationRuleSetName, [EnumeratorCancellation] CancellationToken token)
     {
-        await CreateContextIfNeedAsync();
-
-        var associationRuleChunks = _context!.AssociationRuleChunks
+        var associationRuleChunks = _context.AssociationRuleChunks
             .AsNoTracking()
             .Where(e => e.AssociationRuleSet!.Name == associationRuleSetName)
             .AsAsyncEnumerable()
@@ -124,20 +108,6 @@ public sealed class AssociationRuleSetLoader : IAssociationRuleSetLoader
 
             yield return itemChunkMessage;
         }
-    }
-
-    private async Task CreateContextIfNeedAsync() =>
-        _context ??= await _contextFactory.CreateDbContextAsync();
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_disposed)
-            return;
-
-        if (_context != null)
-            await _context.DisposeAsync();
-
-        _disposed = true;
     }
 
     #endregion

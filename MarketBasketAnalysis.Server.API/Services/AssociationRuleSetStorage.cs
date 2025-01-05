@@ -17,6 +17,7 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
     private readonly IAssociationRuleSetInfoLoader _associationRuleSetInfoLoader;
     private readonly IAssociationRuleSetLoader _associationRuleSetLoader;
     private readonly IAssociationRuleSetSaver _associationRuleSetSaver;
+    private readonly IAssociationRuleSetSaverPool _associationRuleSetSaverPool;
     private readonly IAssociationRuleSetRemover _associationRuleSetRemover;
     private readonly ILogger _logger;
 
@@ -26,17 +27,20 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
 
     public AssociationRuleSetStorage(IAssociationRuleSetInfoLoader associationRuleSetInfoLoader,
         IAssociationRuleSetLoader associationRuleSetLoader, IAssociationRuleSetSaver associationRuleSetSaver,
+        IAssociationRuleSetSaverPool associationRuleSetSaverPool,
         IAssociationRuleSetRemover associationRuleSetRemover, ILogger<AssociationRuleSetStorage> logger)
     {
         ArgumentNullException.ThrowIfNull(associationRuleSetInfoLoader);
         ArgumentNullException.ThrowIfNull(associationRuleSetLoader);
         ArgumentNullException.ThrowIfNull(associationRuleSetSaver);
+        ArgumentNullException.ThrowIfNull(associationRuleSetSaverPool);
         ArgumentNullException.ThrowIfNull(associationRuleSetRemover);
         ArgumentNullException.ThrowIfNull(logger);
 
         _associationRuleSetInfoLoader = associationRuleSetInfoLoader;
         _associationRuleSetLoader = associationRuleSetLoader;
         _associationRuleSetSaver = associationRuleSetSaver;
+        _associationRuleSetSaverPool = associationRuleSetSaverPool;
         _associationRuleSetRemover = associationRuleSetRemover;
         _logger = logger;
     }
@@ -47,7 +51,7 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
 
     #region Get
 
-    public async override Task<GetResponse> Get(Empty request, ServerCallContext context)
+    public override async Task<GetResponse> Get(Empty request, ServerCallContext context)
     {
         List<AssociationRuleSetInfoMessage>? associationRuleSetInfos = null;
 
@@ -142,15 +146,42 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
     {
         try
         {
-            await _associationRuleSetSaver.SaveAsync(
-                await ReceiveAssociationRuleSet(requestStream, context),
-                ReceiveItemChunks(requestStream, context),
-                ReceiveAssociationRuleChunks(requestStream, context),
-                context.CancellationToken);
+            while (await requestStream.MoveNext(context.CancellationToken))
+            {
+                var part = requestStream.Current.AssociationRuleSetPart;
+
+                if (part == null)
+                {
+                    _ = _associationRuleSetSaver.RollbackChangesAsync();
+
+                    RpcThrowHelper.InvalidArgument("Association rule part type not specified.");
+                }
+
+                switch (part.PartTypeCase)
+                {
+                    case PartTypeOneofCase.AssociationRuleSetInfo:
+                        await _associationRuleSetSaver.SaveAssociationRuleSetInfoAsync(part.AssociationRuleSetInfo,
+                            context.CancellationToken);
+                        break;
+
+                    case PartTypeOneofCase.ItemChunk:
+                        await _associationRuleSetSaver.SaveItemChunk(part.ItemChunk, context.CancellationToken);
+                        break;
+
+                    case PartTypeOneofCase.AssociationRuleChunk:
+                        await _associationRuleSetSaver.SaveAssociationRuleChunk(part.AssociationRuleChunk,
+                            context.CancellationToken);
+                        break;
+                }
+            }
+
+            await _associationRuleSetSaver.MarkSetAsAvailableAsync(context.CancellationToken);
         }
         catch (AssociationRuleSetValidationException e)
         {
             _logger.LogInformation(e, "Validation error occured while loading association rule set.");
+
+            _ = _associationRuleSetSaver.RollbackChangesAsync();
 
             RpcThrowHelper.InvalidArgument(e.Message);
         }
@@ -158,96 +189,98 @@ public class AssociationRuleSetStorage : Common.Protos.AssociationRuleSetStorage
         {
             _logger.LogError(e, "Failed to save association rule set.");
 
+            _ = _associationRuleSetSaver.RollbackChangesAsync();
+
             RpcThrowHelper.Internal(e.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            _ = _associationRuleSetSaver.RollbackChangesAsync();
+
+            throw;
         }
 
         return new();
     }
 
-    private static async Task<AssociationRuleSetInfoMessage> ReceiveAssociationRuleSet(
-        IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
+    public override async Task<Empty> SavePart(SavePartRequest request, ServerCallContext context)
     {
-        if (!await requestStream.MoveNext(context.CancellationToken))
-            RpcThrowHelper.InvalidArgument("Expected association rule set, but request stream is empty.");
+        if (!Guid.TryParse(request.TransactionId, out _))
+            RpcThrowHelper.InvalidArgument("Transaction ID should be string in GUID format.");
 
-        var part = requestStream.Current.AssociationRuleSetPart;
+        if (request.AssociationRuleSetPart == null)
+            RpcThrowHelper.InvalidArgument("Association rule part type not specified.");
 
-        CheckPartyType(part.PartTypeCase, PartTypeOneofCase.AssociationRuleSetInfo);
+        var associationRuleSetSaver = await _associationRuleSetSaverPool.TryRentAsync(request.TransactionId);
 
-        return part.AssociationRuleSetInfo;
-    }
-
-    private static async IAsyncEnumerable<ItemChunkMessage> ReceiveItemChunks(
-        IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
-    {
-        var atLeastOneItemChunkReceived = false;
-        PartTypeOneofCase? partType = null;
-
-        while (await requestStream.MoveNext(context.CancellationToken) &&
-               (partType = requestStream.Current.AssociationRuleSetPart.PartTypeCase) == PartTypeOneofCase.ItemChunk)
+        if (associationRuleSetSaver == null)
         {
-            yield return requestStream.Current.AssociationRuleSetPart.ItemChunk;
-
-            atLeastOneItemChunkReceived = true;
+            RpcThrowHelper.FailedPrecondition(
+                "Requests to save parts of same association rule set must be called sequentially.");
         }
-
-        if (partType == null)
-            RpcThrowHelper.InvalidArgument(
-                "Request stream is empty, association rule set received and item chunks were expected.");
-
-        if (!atLeastOneItemChunkReceived)
-            CheckPartyType(partType.Value, PartTypeOneofCase.ItemChunk);
-    }
-
-    private static async IAsyncEnumerable<AssociationRuleChunkMessage> ReceiveAssociationRuleChunks(
-        IAsyncStreamReader<SaveRequest> requestStream, ServerCallContext context)
-    {
-        AssociationRuleSetPartMessage? part = null;
 
         try
         {
-            part = requestStream.Current.AssociationRuleSetPart;
+            var part = request.AssociationRuleSetPart;
+
+            switch (part.PartTypeCase)
+            {
+                case PartTypeOneofCase.AssociationRuleSetInfo:
+                    await associationRuleSetSaver.SaveAssociationRuleSetInfoAsync(part.AssociationRuleSetInfo,
+                        context.CancellationToken);
+                    break;
+
+                case PartTypeOneofCase.ItemChunk:
+                    await associationRuleSetSaver.SaveItemChunk(part.ItemChunk, context.CancellationToken);
+                    break;
+
+                case PartTypeOneofCase.AssociationRuleChunk:
+                    await associationRuleSetSaver.SaveAssociationRuleChunk(part.AssociationRuleChunk,
+                        context.CancellationToken);
+                    break;
+            }
+
+            if (request.IsLastPart)
+            {
+                await associationRuleSetSaver.MarkSetAsAvailableAsync(context.CancellationToken);
+                await _associationRuleSetSaverPool.RemoveAsync(request.TransactionId);
+            }
         }
-        catch (InvalidOperationException)
+        catch (AssociationRuleSetValidationException e)
         {
-            RpcThrowHelper.InvalidArgument("Expected association rule chunk, but request stream is empty.");
+            _logger.LogInformation(e, "Validation error occured while loading association rule set.");
+
+            await HandleFailureAsync();
+
+            RpcThrowHelper.InvalidArgument(e.Message);
+        }
+        catch (AssociationRuleSetSaveException e)
+        {
+            _logger.LogError(e, "Failed to save association rule set.");
+
+            await HandleFailureAsync();
+
+            RpcThrowHelper.Internal(e.Message);
+        }
+        catch (OperationCanceledException)
+        {
+            await HandleFailureAsync();
+
+            throw;
+        }
+        finally
+        {
+            await _associationRuleSetSaverPool.ReturnAsync(request.TransactionId);
         }
 
-        CheckPartyType(part.PartTypeCase, PartTypeOneofCase.AssociationRuleChunk);
+        return new();
 
-        yield return part.AssociationRuleChunk;
-
-        while (await requestStream.MoveNext(context.CancellationToken))
+        async Task HandleFailureAsync()
         {
-            part = requestStream.Current.AssociationRuleSetPart;
-
-            CheckPartyType(part.PartTypeCase, PartTypeOneofCase.AssociationRuleChunk);
-
-            yield return part.AssociationRuleChunk;
+            _ = associationRuleSetSaver.RollbackChangesAsync();
+            await _associationRuleSetSaverPool.RemoveAsync(request.TransactionId);
         }
     }
-
-    private static void CheckPartyType(PartTypeOneofCase actualPartType, PartTypeOneofCase expectedPartType)
-    {
-        if (actualPartType == expectedPartType)
-            return;
-
-        var actualPartTypeName = GetPartTypeName(actualPartType);
-        var expectedPartTypeName = GetPartTypeName(expectedPartType);
-
-        RpcThrowHelper.InvalidArgument($"Expected {expectedPartTypeName}, but received {actualPartTypeName}.");
-    }
-
-    private static string GetPartTypeName(PartTypeOneofCase partType) =>
-#pragma warning disable CS8524 // The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
-        partType switch
-#pragma warning restore CS8524
-        {
-            PartTypeOneofCase.None => "none",
-            PartTypeOneofCase.AssociationRuleSetInfo => "association rule set info",
-            PartTypeOneofCase.ItemChunk => "item chunk",
-            PartTypeOneofCase.AssociationRuleChunk => "association rule chunk"
-        };
 
     #endregion
 

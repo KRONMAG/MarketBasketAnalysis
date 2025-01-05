@@ -9,6 +9,9 @@ public static class ServicesExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
+        services.AddDbContext<MarketBasketAnalysisDbContext>(optionsBuilder =>
+            optionsBuilder.UseSqlite(configuration.GetConnectionString("DefaultConnection")),
+            optionsLifetime: ServiceLifetime.Singleton);
         services.AddDbContextFactory<MarketBasketAnalysisDbContext>(optionsBuilder =>
             optionsBuilder.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
     }

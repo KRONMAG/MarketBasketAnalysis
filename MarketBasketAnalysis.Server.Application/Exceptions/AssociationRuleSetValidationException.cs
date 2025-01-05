@@ -1,3 +1,4 @@
 ﻿namespace MarketBasketAnalysis.Server.Application.Exceptions;
 
-public class AssociationRuleSetValidationException(string message) : Exception(message);
+[Serializable]
+public class AssociationRuleSetValidationException(string message) : AssociationRuleSetException(message);

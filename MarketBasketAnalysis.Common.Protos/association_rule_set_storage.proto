@@ -10,6 +10,7 @@ service AssociationRuleSetStorage {
 	rpc Get(google.protobuf.Empty) returns (GetResponse);
 	rpc Load(LoadRequest) returns (stream LoadResponse);
 	rpc Save(stream SaveRequest) returns (google.protobuf.Empty);
+	rpc SavePart(SavePartRequest) returns (google.protobuf.Empty);
 	rpc Remove(RemoveRequest) returns (google.protobuf.Empty);
 }
 
@@ -27,6 +28,12 @@ message LoadResponse {
 
 message SaveRequest {
 	AssociationRuleSetPartMessage association_rule_set_part = 1;
+}
+
+message SavePartRequest {
+	string transaction_id = 1;
+	bool is_last_part = 2;
+	AssociationRuleSetPartMessage association_rule_set_part = 3;
 }
 
 message RemoveRequest {

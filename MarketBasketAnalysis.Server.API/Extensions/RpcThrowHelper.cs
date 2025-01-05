@@ -18,6 +18,10 @@ public static class RpcThrowHelper
         ThrowRpcException(StatusCode.NotFound, detail);
 
     [DoesNotReturn]
+    public static void FailedPrecondition(string detail) =>
+        ThrowRpcException(StatusCode.FailedPrecondition, detail);
+
+    [DoesNotReturn]
     private static void ThrowRpcException(StatusCode statusCode, string detail) =>
         throw new RpcException(new Status(statusCode, detail));
 }
