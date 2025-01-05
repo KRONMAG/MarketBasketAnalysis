@@ -21,7 +21,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
 
   grpc-ui:
-    image: fullstorydev/grpcui:v1.4.1
+    image: fullstorydev/grpcui:v1.4.2
     command: -plaintext market-basket-analysis-api:8080
     restart: on-failure
     ports:
