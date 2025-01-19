@@ -8,7 +8,7 @@
         <WarningsAsErrors>Nullable</WarningsAsErrors>
         <AnalysisMode>all</AnalysisMode>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+        <DockerComposeProjectPath>..\MarketBasketAnalysis.Server.App\docker-compose.dcproj</DockerComposeProjectPath>
         <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
 
@@ -26,7 +26,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="10.5.0.109200">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
