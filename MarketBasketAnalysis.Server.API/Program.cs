@@ -6,6 +6,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
+builder.WebHost.ConfigureKestrel(o => o.AllowAlternateSchemes = true);
+
 services.AddGrpc(o => o.ConfigureGrpc());
 builder.Services.AddGrpcHealthChecks()
     .AddCheck("Sample", () => HealthCheckResult.Healthy());

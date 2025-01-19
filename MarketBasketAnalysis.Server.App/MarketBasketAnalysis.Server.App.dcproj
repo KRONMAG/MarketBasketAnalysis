@@ -15,11 +15,10 @@
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
-    <None Include="gateway\Dockerfile" />
-    <None Include="gateway\jwt-auth.template.lua" />
-    <None Include="gateway\nginx.template.conf" />
     <None Include="..\.dockerignore">
       <Link>.dockerignore</Link>
     </None>
+    <None Include="envoy\Dockerfile.create-config-file" />
+    <None Include="envoy\envoy.template.yaml" />
   </ItemGroup>
 </Project>
