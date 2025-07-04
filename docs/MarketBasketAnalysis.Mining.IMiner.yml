@@ -1,0 +1,657 @@
+### YamlMime:ManagedReference
+items:
+- uid: MarketBasketAnalysis.Mining.IMiner
+  commentId: T:MarketBasketAnalysis.Mining.IMiner
+  id: IMiner
+  parent: MarketBasketAnalysis.Mining
+  children:
+  - MarketBasketAnalysis.Mining.IMiner.Mine(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters)
+  - MarketBasketAnalysis.Mining.IMiner.MineAsync(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters,System.Threading.CancellationToken)
+  - MarketBasketAnalysis.Mining.IMiner.MiningProgressChanged
+  - MarketBasketAnalysis.Mining.IMiner.MiningStageChanged
+  langs:
+  - csharp
+  - vb
+  name: IMiner
+  nameWithType: IMiner
+  fullName: MarketBasketAnalysis.Mining.IMiner
+  type: Interface
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/IMiner.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: IMiner
+    path: src/MarketBasketAnalysis/Mining/IMiner.cs
+    startLine: 11
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Defines an interface for performing association rule mining based on transaction data.
+  example: []
+  syntax:
+    content: public interface IMiner
+    content.vb: Public Interface IMiner
+- uid: MarketBasketAnalysis.Mining.IMiner.MiningProgressChanged
+  commentId: E:MarketBasketAnalysis.Mining.IMiner.MiningProgressChanged
+  id: MiningProgressChanged
+  parent: MarketBasketAnalysis.Mining.IMiner
+  langs:
+  - csharp
+  - vb
+  name: MiningProgressChanged
+  nameWithType: IMiner.MiningProgressChanged
+  fullName: MarketBasketAnalysis.Mining.IMiner.MiningProgressChanged
+  type: Event
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/IMiner.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MiningProgressChanged
+    path: src/MarketBasketAnalysis/Mining/IMiner.cs
+    startLine: 16
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Event triggered when the mining progress changes.
+  example: []
+  syntax:
+    content: event EventHandler<double> MiningProgressChanged
+    return:
+      type: System.EventHandler{System.Double}
+    content.vb: Event MiningProgressChanged As EventHandler(Of Double)
+- uid: MarketBasketAnalysis.Mining.IMiner.MiningStageChanged
+  commentId: E:MarketBasketAnalysis.Mining.IMiner.MiningStageChanged
+  id: MiningStageChanged
+  parent: MarketBasketAnalysis.Mining.IMiner
+  langs:
+  - csharp
+  - vb
+  name: MiningStageChanged
+  nameWithType: IMiner.MiningStageChanged
+  fullName: MarketBasketAnalysis.Mining.IMiner.MiningStageChanged
+  type: Event
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/IMiner.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MiningStageChanged
+    path: src/MarketBasketAnalysis/Mining/IMiner.cs
+    startLine: 21
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Event triggered when the mining stage changes.
+  example: []
+  syntax:
+    content: event EventHandler<MiningStage> MiningStageChanged
+    return:
+      type: System.EventHandler{MarketBasketAnalysis.Mining.MiningStage}
+    content.vb: Event MiningStageChanged As EventHandler(Of MiningStage)
+- uid: MarketBasketAnalysis.Mining.IMiner.Mine(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters)
+  commentId: M:MarketBasketAnalysis.Mining.IMiner.Mine(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters)
+  id: Mine(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters)
+  parent: MarketBasketAnalysis.Mining.IMiner
+  langs:
+  - csharp
+  - vb
+  name: Mine(IEnumerable<Item[]>, MiningParameters)
+  nameWithType: IMiner.Mine(IEnumerable<Item[]>, MiningParameters)
+  fullName: MarketBasketAnalysis.Mining.IMiner.Mine(System.Collections.Generic.IEnumerable<MarketBasketAnalysis.Item[]>, MarketBasketAnalysis.Mining.MiningParameters)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/IMiner.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Mine
+    path: src/MarketBasketAnalysis/Mining/IMiner.cs
+    startLine: 30
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Performs association rule mining synchronously.
+  example: []
+  syntax:
+    content: IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters)
+    parameters:
+    - id: transactions
+      type: System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]}
+      description: A collection of transactions, where each transaction is represented as an array of items.
+    - id: parameters
+      type: MarketBasketAnalysis.Mining.MiningParameters
+      description: The mining parameters, including minimum support and confidence thresholds.
+    return:
+      type: System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+      description: A collection of association rules that meet the specified parameters.
+    content.vb: Function Mine(transactions As IEnumerable(Of Item()), parameters As MiningParameters) As IReadOnlyCollection(Of AssociationRule)
+  overload: MarketBasketAnalysis.Mining.IMiner.Mine*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">transactions</code> or <code class="paramref">parameters</code> is <code>null</code>.
+  nameWithType.vb: IMiner.Mine(IEnumerable(Of Item()), MiningParameters)
+  fullName.vb: MarketBasketAnalysis.Mining.IMiner.Mine(System.Collections.Generic.IEnumerable(Of MarketBasketAnalysis.Item()), MarketBasketAnalysis.Mining.MiningParameters)
+  name.vb: Mine(IEnumerable(Of Item()), MiningParameters)
+- uid: MarketBasketAnalysis.Mining.IMiner.MineAsync(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters,System.Threading.CancellationToken)
+  commentId: M:MarketBasketAnalysis.Mining.IMiner.MineAsync(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters,System.Threading.CancellationToken)
+  id: MineAsync(System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]},MarketBasketAnalysis.Mining.MiningParameters,System.Threading.CancellationToken)
+  parent: MarketBasketAnalysis.Mining.IMiner
+  langs:
+  - csharp
+  - vb
+  name: MineAsync(IEnumerable<Item[]>, MiningParameters, CancellationToken)
+  nameWithType: IMiner.MineAsync(IEnumerable<Item[]>, MiningParameters, CancellationToken)
+  fullName: MarketBasketAnalysis.Mining.IMiner.MineAsync(System.Collections.Generic.IEnumerable<MarketBasketAnalysis.Item[]>, MarketBasketAnalysis.Mining.MiningParameters, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/IMiner.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MineAsync
+    path: src/MarketBasketAnalysis/Mining/IMiner.cs
+    startLine: 43
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Performs association rule mining asynchronously.
+  example: []
+  syntax:
+    content: Task<IReadOnlyCollection<AssociationRule>> MineAsync(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
+    parameters:
+    - id: transactions
+      type: System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]}
+      description: A collection of transactions, where each transaction is represented as an array of items.
+    - id: parameters
+      type: MarketBasketAnalysis.Mining.MiningParameters
+      description: The mining parameters, including minimum support and confidence thresholds.
+    - id: token
+      type: System.Threading.CancellationToken
+      description: A cancellation token to interrupt the operation.
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+      description: A task representing the asynchronous operation, with a result of a collection of association rules.
+    content.vb: Function MineAsync(transactions As IEnumerable(Of Item()), parameters As MiningParameters, token As CancellationToken = Nothing) As Task(Of IReadOnlyCollection(Of AssociationRule))
+  overload: MarketBasketAnalysis.Mining.IMiner.MineAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">transactions</code> or <code class="paramref">parameters</code> is <code>null</code>.
+  - type: System.OperationCanceledException
+    commentId: T:System.OperationCanceledException
+    description: Thrown if the operation is canceled via the <code class="paramref">token</code>.
+  nameWithType.vb: IMiner.MineAsync(IEnumerable(Of Item()), MiningParameters, CancellationToken)
+  fullName.vb: MarketBasketAnalysis.Mining.IMiner.MineAsync(System.Collections.Generic.IEnumerable(Of MarketBasketAnalysis.Item()), MarketBasketAnalysis.Mining.MiningParameters, System.Threading.CancellationToken)
+  name.vb: MineAsync(IEnumerable(Of Item()), MiningParameters, CancellationToken)
+references:
+- uid: MarketBasketAnalysis.Mining
+  commentId: N:MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.html
+  name: MarketBasketAnalysis.Mining
+  nameWithType: MarketBasketAnalysis.Mining
+  fullName: MarketBasketAnalysis.Mining
+  spec.csharp:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Mining
+    name: Mining
+    href: MarketBasketAnalysis.Mining.html
+  spec.vb:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Mining
+    name: Mining
+    href: MarketBasketAnalysis.Mining.html
+- uid: System.EventHandler{System.Double}
+  commentId: T:System.EventHandler{System.Double}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<double>
+  nameWithType: EventHandler<double>
+  fullName: System.EventHandler<double>
+  nameWithType.vb: EventHandler(Of Double)
+  fullName.vb: System.EventHandler(Of Double)
+  name.vb: EventHandler(Of Double)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: System.Double
+    name: double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Double
+    name: Double
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.double
+  - name: )
+- uid: System.EventHandler`1
+  commentId: T:System.EventHandler`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<TEventArgs>
+  nameWithType: EventHandler<TEventArgs>
+  fullName: System.EventHandler<TEventArgs>
+  nameWithType.vb: EventHandler(Of TEventArgs)
+  fullName.vb: System.EventHandler(Of TEventArgs)
+  name.vb: EventHandler(Of TEventArgs)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - name: TEventArgs
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TEventArgs
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.EventHandler{MarketBasketAnalysis.Mining.MiningStage}
+  commentId: T:System.EventHandler{MarketBasketAnalysis.Mining.MiningStage}
+  parent: System
+  definition: System.EventHandler`1
+  href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  name: EventHandler<MiningStage>
+  nameWithType: EventHandler<MiningStage>
+  fullName: System.EventHandler<MarketBasketAnalysis.Mining.MiningStage>
+  nameWithType.vb: EventHandler(Of MiningStage)
+  fullName.vb: System.EventHandler(Of MarketBasketAnalysis.Mining.MiningStage)
+  name.vb: EventHandler(Of MiningStage)
+  spec.csharp:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: <
+  - uid: MarketBasketAnalysis.Mining.MiningStage
+    name: MiningStage
+    href: MarketBasketAnalysis.Mining.MiningStage.html
+  - name: '>'
+  spec.vb:
+  - uid: System.EventHandler`1
+    name: EventHandler
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventhandler-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.Mining.MiningStage
+    name: MiningStage
+    href: MarketBasketAnalysis.Mining.MiningStage.html
+  - name: )
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: MarketBasketAnalysis.Mining.IMiner.Mine*
+  commentId: Overload:MarketBasketAnalysis.Mining.IMiner.Mine
+  href: MarketBasketAnalysis.Mining.IMiner.html#MarketBasketAnalysis_Mining_IMiner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_
+  name: Mine
+  nameWithType: IMiner.Mine
+  fullName: MarketBasketAnalysis.Mining.IMiner.Mine
+- uid: System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]}
+  commentId: T:System.Collections.Generic.IEnumerable{MarketBasketAnalysis.Item[]}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<Item[]>
+  nameWithType: IEnumerable<Item[]>
+  fullName: System.Collections.Generic.IEnumerable<MarketBasketAnalysis.Item[]>
+  nameWithType.vb: IEnumerable(Of Item())
+  fullName.vb: System.Collections.Generic.IEnumerable(Of MarketBasketAnalysis.Item())
+  name.vb: IEnumerable(Of Item())
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: (
+  - name: )
+  - name: )
+- uid: MarketBasketAnalysis.Mining.MiningParameters
+  commentId: T:MarketBasketAnalysis.Mining.MiningParameters
+  parent: MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.Mining.MiningParameters.html
+  name: MiningParameters
+  nameWithType: MiningParameters
+  fullName: MarketBasketAnalysis.Mining.MiningParameters
+- uid: System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<AssociationRule>
+  nameWithType: IReadOnlyCollection<AssociationRule>
+  fullName: System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>
+  nameWithType.vb: IReadOnlyCollection(Of AssociationRule)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule)
+  name.vb: IReadOnlyCollection(Of AssociationRule)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.OperationCanceledException
+  commentId: T:System.OperationCanceledException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.operationcanceledexception
+  name: OperationCanceledException
+  nameWithType: OperationCanceledException
+  fullName: System.OperationCanceledException
+- uid: MarketBasketAnalysis.Mining.IMiner.MineAsync*
+  commentId: Overload:MarketBasketAnalysis.Mining.IMiner.MineAsync
+  href: MarketBasketAnalysis.Mining.IMiner.html#MarketBasketAnalysis_Mining_IMiner_MineAsync_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_
+  name: MineAsync
+  nameWithType: IMiner.MineAsync
+  fullName: MarketBasketAnalysis.Mining.IMiner.MineAsync
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyCollection<AssociationRule>>
+  nameWithType: Task<IReadOnlyCollection<AssociationRule>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>>
+  nameWithType.vb: Task(Of IReadOnlyCollection(Of AssociationRule))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule))
+  name.vb: Task(Of IReadOnlyCollection(Of AssociationRule))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  - name: )
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

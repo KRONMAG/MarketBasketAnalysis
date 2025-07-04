@@ -1,0 +1,590 @@
+### YamlMime:ManagedReference
+items:
+- uid: MarketBasketAnalysis.Mining.MiningParameters
+  commentId: T:MarketBasketAnalysis.Mining.MiningParameters
+  id: MiningParameters
+  parent: MarketBasketAnalysis.Mining
+  children:
+  - MarketBasketAnalysis.Mining.MiningParameters.#ctor(System.Double,System.Double,MarketBasketAnalysis.Mining.IItemConverter,MarketBasketAnalysis.Mining.IItemExcluder,System.Int32)
+  - MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+  - MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+  - MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+  - MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+  - MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+  langs:
+  - csharp
+  - vb
+  name: MiningParameters
+  nameWithType: MiningParameters
+  fullName: MarketBasketAnalysis.Mining.MiningParameters
+  type: Class
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MiningParameters
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 7
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Represents the parameters used for mining association rules.
+  example: []
+  syntax:
+    content: public sealed class MiningParameters
+    content.vb: Public NotInheritable Class MiningParameters
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+  commentId: P:MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+  id: MinSupport
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: MinSupport
+  nameWithType: MiningParameters.MinSupport
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MinSupport
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 18
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Gets the minimum support threshold for identifying frequent itemsets.
+  remarks: >-
+    The value must be between 0 and 1, where 0 means no support is required, 
+
+    and 1 means the itemset must appear in all transactions.
+  example: []
+  syntax:
+    content: public double MinSupport { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property MinSupport As Double
+  overload: MarketBasketAnalysis.Mining.MiningParameters.MinSupport*
+- uid: MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+  commentId: P:MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+  id: MinConfidence
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: MinConfidence
+  nameWithType: MiningParameters.MinConfidence
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MinConfidence
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 27
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Gets the minimum confidence threshold for generating association rules.
+  remarks: >-
+    The value must be between 0 and 1, where 0 means no confidence is required, 
+
+    and 1 means the rule must always hold true.
+  example: []
+  syntax:
+    content: public double MinConfidence { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property MinConfidence As Double
+  overload: MarketBasketAnalysis.Mining.MiningParameters.MinConfidence*
+- uid: MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+  commentId: P:MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+  id: ItemConverter
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: ItemConverter
+  nameWithType: MiningParameters.ItemConverter
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: ItemConverter
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 35
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Gets the item converter used to group or transform items during the mining process.
+  remarks: This is an optional parameter that allows for custom item grouping or transformation logic.
+  example: []
+  syntax:
+    content: public IItemConverter ItemConverter { get; }
+    parameters: []
+    return:
+      type: MarketBasketAnalysis.Mining.IItemConverter
+    content.vb: Public ReadOnly Property ItemConverter As IItemConverter
+  overload: MarketBasketAnalysis.Mining.MiningParameters.ItemConverter*
+- uid: MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+  commentId: P:MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+  id: ItemExcluder
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: ItemExcluder
+  nameWithType: MiningParameters.ItemExcluder
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: ItemExcluder
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 43
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Gets the item excluder used to filter out specific items from the mining process.
+  remarks: This is an optional parameter that allows for excluding items based on custom logic.
+  example: []
+  syntax:
+    content: public IItemExcluder ItemExcluder { get; }
+    parameters: []
+    return:
+      type: MarketBasketAnalysis.Mining.IItemExcluder
+    content.vb: Public ReadOnly Property ItemExcluder As IItemExcluder
+  overload: MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder*
+- uid: MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+  commentId: P:MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+  id: DegreeOfParallelism
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: DegreeOfParallelism
+  nameWithType: MiningParameters.DegreeOfParallelism
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: DegreeOfParallelism
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 51
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Gets the degree of parallelism to use during the mining process.
+  remarks: The value must be between 1 and 512, where higher values allow for more parallel processing.
+  example: []
+  syntax:
+    content: public int DegreeOfParallelism { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property DegreeOfParallelism As Integer
+  overload: MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism*
+- uid: MarketBasketAnalysis.Mining.MiningParameters.#ctor(System.Double,System.Double,MarketBasketAnalysis.Mining.IItemConverter,MarketBasketAnalysis.Mining.IItemExcluder,System.Int32)
+  commentId: M:MarketBasketAnalysis.Mining.MiningParameters.#ctor(System.Double,System.Double,MarketBasketAnalysis.Mining.IItemConverter,MarketBasketAnalysis.Mining.IItemExcluder,System.Int32)
+  id: '#ctor(System.Double,System.Double,MarketBasketAnalysis.Mining.IItemConverter,MarketBasketAnalysis.Mining.IItemExcluder,System.Int32)'
+  parent: MarketBasketAnalysis.Mining.MiningParameters
+  langs:
+  - csharp
+  - vb
+  name: MiningParameters(double, double, IItemConverter, IItemExcluder, int)
+  nameWithType: MiningParameters.MiningParameters(double, double, IItemConverter, IItemExcluder, int)
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MiningParameters(double, double, MarketBasketAnalysis.Mining.IItemConverter, MarketBasketAnalysis.Mining.IItemExcluder, int)
+  type: Constructor
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: .ctor
+    path: src/MarketBasketAnalysis/Mining/MiningParameters.cs
+    startLine: 69
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Mining
+  summary: Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.MiningParameters" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public MiningParameters(double minSupport, double minConfidence, IItemConverter itemConverter = null, IItemExcluder itemExcluder = null, int degreeOfParallelism = 1)
+    parameters:
+    - id: minSupport
+      type: System.Double
+      description: The minimum support threshold for identifying frequent itemsets.
+    - id: minConfidence
+      type: System.Double
+      description: The minimum confidence threshold for generating association rules.
+    - id: itemConverter
+      type: MarketBasketAnalysis.Mining.IItemConverter
+      description: An optional item converter for grouping or transforming items.
+    - id: itemExcluder
+      type: MarketBasketAnalysis.Mining.IItemExcluder
+      description: An optional item excluder for filtering out specific items.
+    - id: degreeOfParallelism
+      type: System.Int32
+      description: The degree of parallelism to use during the mining process.
+    content.vb: Public Sub New(minSupport As Double, minConfidence As Double, itemConverter As IItemConverter = Nothing, itemExcluder As IItemExcluder = Nothing, degreeOfParallelism As Integer = 1)
+  overload: MarketBasketAnalysis.Mining.MiningParameters.#ctor*
+  exceptions:
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: >-
+      Thrown if <code class="paramref">minSupport</code> or <code class="paramref">minConfidence</code> is not between 0 and 1,
+
+      or if <code class="paramref">degreeOfParallelism</code> is not between 1 and 512.
+  nameWithType.vb: MiningParameters.New(Double, Double, IItemConverter, IItemExcluder, Integer)
+  fullName.vb: MarketBasketAnalysis.Mining.MiningParameters.New(Double, Double, MarketBasketAnalysis.Mining.IItemConverter, MarketBasketAnalysis.Mining.IItemExcluder, Integer)
+  name.vb: New(Double, Double, IItemConverter, IItemExcluder, Integer)
+references:
+- uid: MarketBasketAnalysis.Mining
+  commentId: N:MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.html
+  name: MarketBasketAnalysis.Mining
+  nameWithType: MarketBasketAnalysis.Mining
+  fullName: MarketBasketAnalysis.Mining
+  spec.csharp:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Mining
+    name: Mining
+    href: MarketBasketAnalysis.Mining.html
+  spec.vb:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Mining
+    name: Mining
+    href: MarketBasketAnalysis.Mining.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: MarketBasketAnalysis.Mining.MiningParameters.MinSupport*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters_MinSupport
+  name: MinSupport
+  nameWithType: MiningParameters.MinSupport
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MinSupport
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: MarketBasketAnalysis.Mining.MiningParameters.MinConfidence*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters_MinConfidence
+  name: MinConfidence
+  nameWithType: MiningParameters.MinConfidence
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MinConfidence
+- uid: MarketBasketAnalysis.Mining.MiningParameters.ItemConverter*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters_ItemConverter
+  name: ItemConverter
+  nameWithType: MiningParameters.ItemConverter
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.ItemConverter
+- uid: MarketBasketAnalysis.Mining.IItemConverter
+  commentId: T:MarketBasketAnalysis.Mining.IItemConverter
+  parent: MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.Mining.IItemConverter.html
+  name: IItemConverter
+  nameWithType: IItemConverter
+  fullName: MarketBasketAnalysis.Mining.IItemConverter
+- uid: MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters_ItemExcluder
+  name: ItemExcluder
+  nameWithType: MiningParameters.ItemExcluder
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.ItemExcluder
+- uid: MarketBasketAnalysis.Mining.IItemExcluder
+  commentId: T:MarketBasketAnalysis.Mining.IItemExcluder
+  parent: MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.Mining.IItemExcluder.html
+  name: IItemExcluder
+  nameWithType: IItemExcluder
+  fullName: MarketBasketAnalysis.Mining.IItemExcluder
+- uid: MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters_DegreeOfParallelism
+  name: DegreeOfParallelism
+  nameWithType: MiningParameters.DegreeOfParallelism
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.DegreeOfParallelism
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: MarketBasketAnalysis.Mining.MiningParameters
+  commentId: T:MarketBasketAnalysis.Mining.MiningParameters
+  parent: MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.Mining.MiningParameters.html
+  name: MiningParameters
+  nameWithType: MiningParameters
+  fullName: MarketBasketAnalysis.Mining.MiningParameters
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: MarketBasketAnalysis.Mining.MiningParameters.#ctor*
+  commentId: Overload:MarketBasketAnalysis.Mining.MiningParameters.#ctor
+  href: MarketBasketAnalysis.Mining.MiningParameters.html#MarketBasketAnalysis_Mining_MiningParameters__ctor_System_Double_System_Double_MarketBasketAnalysis_Mining_IItemConverter_MarketBasketAnalysis_Mining_IItemExcluder_System_Int32_
+  name: MiningParameters
+  nameWithType: MiningParameters.MiningParameters
+  fullName: MarketBasketAnalysis.Mining.MiningParameters.MiningParameters
+  nameWithType.vb: MiningParameters.New
+  fullName.vb: MarketBasketAnalysis.Mining.MiningParameters.New
+  name.vb: New

@@ -1,0 +1,69 @@
+### YamlMime:TableOfContent
+items:
+- uid: MarketBasketAnalysis
+  name: MarketBasketAnalysis
+  type: Namespace
+  items:
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    type: Class
+  - uid: MarketBasketAnalysis.AssociationRulePart
+    name: AssociationRulePart
+    type: Class
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    type: Class
+- uid: MarketBasketAnalysis.Analysis
+  name: MarketBasketAnalysis.Analysis
+  type: Namespace
+  items:
+  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+    name: IMaximalCliqueFinder
+    type: Interface
+  - uid: MarketBasketAnalysis.Analysis.ISetOperationsPerformer
+    name: ISetOperationsPerformer
+    type: Interface
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+    name: MaximalCliqueFinder
+    type: Class
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+    name: MaximalCliqueFindingParameters
+    type: Class
+  - uid: MarketBasketAnalysis.Analysis.SetOperationsPerformer
+    name: SetOperationsPerformer
+    type: Class
+- uid: MarketBasketAnalysis.Mining
+  name: MarketBasketAnalysis.Mining
+  type: Namespace
+  items:
+  - uid: MarketBasketAnalysis.Mining.IItemConverter
+    name: IItemConverter
+    type: Interface
+  - uid: MarketBasketAnalysis.Mining.IItemExcluder
+    name: IItemExcluder
+    type: Interface
+  - uid: MarketBasketAnalysis.Mining.IMiner
+    name: IMiner
+    type: Interface
+  - uid: MarketBasketAnalysis.Mining.ItemConversionRule
+    name: ItemConversionRule
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.ItemConverter
+    name: ItemConverter
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.ItemExcluder
+    name: ItemExcluder
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.ItemExclusionRule
+    name: ItemExclusionRule
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.Miner
+    name: Miner
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.MiningParameters
+    name: MiningParameters
+    type: Class
+  - uid: MarketBasketAnalysis.Mining.MiningStage
+    name: MiningStage
+    type: Enum
+memberLayout: SamePage

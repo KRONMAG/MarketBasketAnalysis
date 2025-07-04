@@ -1,0 +1,858 @@
+### YamlMime:ManagedReference
+items:
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+  commentId: T:MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+  id: MaximalCliqueFinder
+  parent: MarketBasketAnalysis.Analysis
+  children:
+  - MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  - MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  langs:
+  - csharp
+  - vb
+  name: MaximalCliqueFinder
+  nameWithType: MaximalCliqueFinder
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+  type: Class
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: MaximalCliqueFinder
+    path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+    startLine: 10
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Analysis
+  example: []
+  syntax:
+    content: 'public sealed class MaximalCliqueFinder : IMaximalCliqueFinder'
+    content.vb: Public NotInheritable Class MaximalCliqueFinder Implements IMaximalCliqueFinder
+  inheritance:
+  - System.Object
+  implements:
+  - MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  commentId: M:MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  id: FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  parent: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+  langs:
+  - csharp
+  - vb
+  name: FindAsync(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters, CancellationToken)
+  nameWithType: MaximalCliqueFinder.FindAsync(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters, CancellationToken)
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>, MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters, System.Threading.CancellationToken)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: FindAsync
+    path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+    startLine: 13
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Analysis
+  summary: Finds maximal cliques in the given collection of association rules asynchronously.
+  example: []
+  syntax:
+    content: public Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>> FindAsync(IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters, CancellationToken token = default)
+    parameters:
+    - id: associationRules
+      type: System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+      description: The collection of association rules to analyze.
+    - id: parameters
+      type: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+      description: The parameters for finding maximal cliques.
+    - id: token
+      type: System.Threading.CancellationToken
+      description: A cancellation token to cancel the operation if needed.
+    return:
+      type: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}}
+      description: >-
+        A task representing the asynchronous operation, with a result of a collection of maximal cliques,
+
+        where each clique is represented as a collection of association rules.
+    content.vb: Public Function FindAsync(associationRules As IReadOnlyCollection(Of AssociationRule), parameters As MaximalCliqueFindingParameters, token As CancellationToken = Nothing) As Task(Of IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule)))
+  overload: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">associationRules</code> or <code class="paramref">parameters</code> is <code>null</code>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">associationRules</code> contains <code>null</code> items or duplicate items.
+  - type: System.OperationCanceledException
+    commentId: T:System.OperationCanceledException
+    description: Thrown if the operation is canceled via the <code class="paramref">token</code>.
+  implements:
+  - MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  nameWithType.vb: MaximalCliqueFinder.FindAsync(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters, CancellationToken)
+  fullName.vb: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule), MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters, System.Threading.CancellationToken)
+  name.vb: FindAsync(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters, CancellationToken)
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  commentId: M:MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  id: Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  parent: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
+  langs:
+  - csharp
+  - vb
+  name: Find(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters)
+  nameWithType: MaximalCliqueFinder.Find(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters)
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>, MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Find
+    path: src/MarketBasketAnalysis/Analysis/MaximalCliqueFinder.cs
+    startLine: 23
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis.Analysis
+  summary: Finds maximal cliques in the given collection of association rules synchronously.
+  example: []
+  syntax:
+    content: public IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> Find(IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters)
+    parameters:
+    - id: associationRules
+      type: System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+      description: The collection of association rules to analyze.
+    - id: parameters
+      type: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+      description: The parameters for finding maximal cliques.
+    return:
+      type: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+      description: A collection of maximal cliques, where each clique is represented as a collection of association rules.
+    content.vb: Public Function Find(associationRules As IReadOnlyCollection(Of AssociationRule), parameters As MaximalCliqueFindingParameters) As IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule))
+  overload: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">associationRules</code> or <code class="paramref">parameters</code> is <code>null</code>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if <code class="paramref">associationRules</code> contains <code>null</code> items or duplicate items.
+  implements:
+  - MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  nameWithType.vb: MaximalCliqueFinder.Find(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters)
+  fullName.vb: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule), MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  name.vb: Find(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters)
+references:
+- uid: MarketBasketAnalysis.Analysis
+  commentId: N:MarketBasketAnalysis.Analysis
+  href: MarketBasketAnalysis.html
+  name: MarketBasketAnalysis.Analysis
+  nameWithType: MarketBasketAnalysis.Analysis
+  fullName: MarketBasketAnalysis.Analysis
+  spec.csharp:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Analysis
+    name: Analysis
+    href: MarketBasketAnalysis.Analysis.html
+  spec.vb:
+  - uid: MarketBasketAnalysis
+    name: MarketBasketAnalysis
+    href: MarketBasketAnalysis.html
+  - name: .
+  - uid: MarketBasketAnalysis.Analysis
+    name: Analysis
+    href: MarketBasketAnalysis.Analysis.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+  commentId: T:MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+  parent: MarketBasketAnalysis.Analysis
+  href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html
+  name: IMaximalCliqueFinder
+  nameWithType: IMaximalCliqueFinder
+  fullName: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.OperationCanceledException
+  commentId: T:System.OperationCanceledException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.operationcanceledexception
+  name: OperationCanceledException
+  nameWithType: OperationCanceledException
+  fullName: System.OperationCanceledException
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync*
+  commentId: Overload:MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync
+  href: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_MaximalCliqueFinder_FindAsync_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_
+  name: FindAsync
+  nameWithType: MaximalCliqueFinder.FindAsync
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.FindAsync
+- uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  commentId: M:MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+  parent: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+  isExternal: true
+  href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_FindAsync_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_
+  name: FindAsync(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters, CancellationToken)
+  nameWithType: IMaximalCliqueFinder.FindAsync(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters, CancellationToken)
+  fullName: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>, MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters, System.Threading.CancellationToken)
+  nameWithType.vb: IMaximalCliqueFinder.FindAsync(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters, CancellationToken)
+  fullName.vb: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule), MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters, System.Threading.CancellationToken)
+  name.vb: FindAsync(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters, CancellationToken)
+  spec.csharp:
+  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+    name: FindAsync
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_FindAsync_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_
+  - name: (
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+    name: MaximalCliqueFindingParameters
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.html
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+  spec.vb:
+  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.FindAsync(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters,System.Threading.CancellationToken)
+    name: FindAsync
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_FindAsync_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_
+  - name: (
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+    name: MaximalCliqueFindingParameters
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.html
+  - name: ','
+  - name: " "
+  - uid: System.Threading.CancellationToken
+    name: CancellationToken
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<AssociationRule>
+  nameWithType: IReadOnlyCollection<AssociationRule>
+  fullName: System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>
+  nameWithType.vb: IReadOnlyCollection(Of AssociationRule)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule)
+  name.vb: IReadOnlyCollection(Of AssociationRule)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+  commentId: T:MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+  parent: MarketBasketAnalysis.Analysis
+  href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.html
+  name: MaximalCliqueFindingParameters
+  nameWithType: MaximalCliqueFindingParameters
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+- uid: System.Threading.CancellationToken
+  commentId: T:System.Threading.CancellationToken
+  parent: System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken
+  name: CancellationToken
+  nameWithType: CancellationToken
+  fullName: System.Threading.CancellationToken
+- uid: System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}}
+  commentId: T:System.Threading.Tasks.Task{System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>>
+  nameWithType: Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>>
+  fullName: System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>>>
+  nameWithType.vb: Task(Of IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule)))
+  fullName.vb: System.Threading.Tasks.Task(Of System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule)))
+  name.vb: Task(Of IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule)))
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: System.Threading
+  commentId: N:System.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading
+  nameWithType: System.Threading
+  fullName: System.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+- uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find*
+  commentId: Overload:MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find
+  href: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_MaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_
+  name: Find
+  nameWithType: MaximalCliqueFinder.Find
+  fullName: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.Find
+- uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  commentId: M:MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  parent: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
+  isExternal: true
+  href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_
+  name: Find(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters)
+  nameWithType: IMaximalCliqueFinder.Find(IReadOnlyCollection<AssociationRule>, MaximalCliqueFindingParameters)
+  fullName: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>, MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  nameWithType.vb: IMaximalCliqueFinder.Find(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters)
+  fullName.vb: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule), MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+  name.vb: Find(IReadOnlyCollection(Of AssociationRule), MaximalCliqueFindingParameters)
+  spec.csharp:
+  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+    name: Find
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_
+  - name: (
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+    name: MaximalCliqueFindingParameters
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.html
+  - name: )
+  spec.vb:
+  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.Find(System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule},MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters)
+    name: Find
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.html#MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_
+  - name: (
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
+    name: MaximalCliqueFindingParameters
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{System.Collections.Generic.IReadOnlyCollection{MarketBasketAnalysis.AssociationRule}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  name: IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>
+  nameWithType: IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>
+  fullName: System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.IReadOnlyCollection<MarketBasketAnalysis.AssociationRule>>
+  nameWithType.vb: IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule))
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of System.Collections.Generic.IReadOnlyCollection(Of MarketBasketAnalysis.AssociationRule))
+  name.vb: IReadOnlyCollection(Of IReadOnlyCollection(Of AssociationRule))
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  - name: )

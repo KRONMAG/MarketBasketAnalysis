@@ -1,0 +1,742 @@
+### YamlMime:ManagedReference
+items:
+- uid: MarketBasketAnalysis.Item
+  commentId: T:MarketBasketAnalysis.Item
+  id: Item
+  parent: MarketBasketAnalysis
+  children:
+  - MarketBasketAnalysis.Item.#ctor(System.Int32,System.String,System.Boolean)
+  - MarketBasketAnalysis.Item.Equals(MarketBasketAnalysis.Item)
+  - MarketBasketAnalysis.Item.Equals(System.Object)
+  - MarketBasketAnalysis.Item.GetHashCode
+  - MarketBasketAnalysis.Item.Id
+  - MarketBasketAnalysis.Item.IsGroup
+  - MarketBasketAnalysis.Item.Name
+  - MarketBasketAnalysis.Item.ToString
+  langs:
+  - csharp
+  - vb
+  name: Item
+  nameWithType: Item
+  fullName: MarketBasketAnalysis.Item
+  type: Class
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Item
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 7
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Represents an item in a transaction.
+  example: []
+  syntax:
+    content: 'public sealed class Item : IEquatable<Item>'
+    content.vb: Public NotInheritable Class Item Implements IEquatable(Of Item)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{MarketBasketAnalysis.Item}
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: MarketBasketAnalysis.Item.Id
+  commentId: P:MarketBasketAnalysis.Item.Id
+  id: Id
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: Id
+  nameWithType: Item.Id
+  fullName: MarketBasketAnalysis.Item.Id
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Id
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 14
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the unique identifier of the item.
+  example: []
+  syntax:
+    content: public int Id { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Id As Integer
+  overload: MarketBasketAnalysis.Item.Id*
+- uid: MarketBasketAnalysis.Item.Name
+  commentId: P:MarketBasketAnalysis.Item.Name
+  id: Name
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Item.Name
+  fullName: MarketBasketAnalysis.Item.Name
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Name
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 19
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the name of the item.
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: MarketBasketAnalysis.Item.Name*
+- uid: MarketBasketAnalysis.Item.IsGroup
+  commentId: P:MarketBasketAnalysis.Item.IsGroup
+  id: IsGroup
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: IsGroup
+  nameWithType: Item.IsGroup
+  fullName: MarketBasketAnalysis.Item.IsGroup
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: IsGroup
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 24
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets a value indicating whether the item is a group of other items.
+  example: []
+  syntax:
+    content: public bool IsGroup { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsGroup As Boolean
+  overload: MarketBasketAnalysis.Item.IsGroup*
+- uid: MarketBasketAnalysis.Item.#ctor(System.Int32,System.String,System.Boolean)
+  commentId: M:MarketBasketAnalysis.Item.#ctor(System.Int32,System.String,System.Boolean)
+  id: '#ctor(System.Int32,System.String,System.Boolean)'
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: Item(int, string, bool)
+  nameWithType: Item.Item(int, string, bool)
+  fullName: MarketBasketAnalysis.Item.Item(int, string, bool)
+  type: Constructor
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: .ctor
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 37
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Initializes a new instance of the <xref href="MarketBasketAnalysis.Item" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public Item(int id, string name, bool isGroup)
+    parameters:
+    - id: id
+      type: System.Int32
+      description: The unique identifier of the item.
+    - id: name
+      type: System.String
+      description: The name of the item.
+    - id: isGroup
+      type: System.Boolean
+      description: A value indicating whether the item is a group of other items.
+    content.vb: Public Sub New(id As Integer, name As String, isGroup As Boolean)
+  overload: MarketBasketAnalysis.Item.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">name</code> is <code>null</code>.
+  nameWithType.vb: Item.New(Integer, String, Boolean)
+  fullName.vb: MarketBasketAnalysis.Item.New(Integer, String, Boolean)
+  name.vb: New(Integer, String, Boolean)
+- uid: MarketBasketAnalysis.Item.Equals(MarketBasketAnalysis.Item)
+  commentId: M:MarketBasketAnalysis.Item.Equals(MarketBasketAnalysis.Item)
+  id: Equals(MarketBasketAnalysis.Item)
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: Equals(Item)
+  nameWithType: Item.Equals(Item)
+  fullName: MarketBasketAnalysis.Item.Equals(MarketBasketAnalysis.Item)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Equals
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 50
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public bool Equals(Item other)
+    parameters:
+    - id: other
+      type: MarketBasketAnalysis.Item
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As Item) As Boolean
+  overload: MarketBasketAnalysis.Item.Equals*
+  implements:
+  - System.IEquatable{MarketBasketAnalysis.Item}.Equals(MarketBasketAnalysis.Item)
+- uid: MarketBasketAnalysis.Item.Equals(System.Object)
+  commentId: M:MarketBasketAnalysis.Item.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: Item.Equals(object)
+  fullName: MarketBasketAnalysis.Item.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Equals
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 62
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: MarketBasketAnalysis.Item.Equals*
+  nameWithType.vb: Item.Equals(Object)
+  fullName.vb: MarketBasketAnalysis.Item.Equals(Object)
+  name.vb: Equals(Object)
+- uid: MarketBasketAnalysis.Item.GetHashCode
+  commentId: M:MarketBasketAnalysis.Item.GetHashCode
+  id: GetHashCode
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: Item.GetHashCode()
+  fullName: MarketBasketAnalysis.Item.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: GetHashCode
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 66
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: MarketBasketAnalysis.Item.GetHashCode*
+- uid: MarketBasketAnalysis.Item.ToString
+  commentId: M:MarketBasketAnalysis.Item.ToString
+  id: ToString
+  parent: MarketBasketAnalysis.Item
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Item.ToString()
+  fullName: MarketBasketAnalysis.Item.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/Item.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: ToString
+    path: src/MarketBasketAnalysis/Item.cs
+    startLine: 70
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: MarketBasketAnalysis.Item.ToString*
+references:
+- uid: MarketBasketAnalysis
+  commentId: N:MarketBasketAnalysis
+  href: MarketBasketAnalysis.html
+  name: MarketBasketAnalysis
+  nameWithType: MarketBasketAnalysis
+  fullName: MarketBasketAnalysis
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{MarketBasketAnalysis.Item}
+  commentId: T:System.IEquatable{MarketBasketAnalysis.Item}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<Item>
+  nameWithType: IEquatable<Item>
+  fullName: System.IEquatable<MarketBasketAnalysis.Item>
+  nameWithType.vb: IEquatable(Of Item)
+  fullName.vb: System.IEquatable(Of MarketBasketAnalysis.Item)
+  name.vb: IEquatable(Of Item)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: MarketBasketAnalysis.Item.Id*
+  commentId: Overload:MarketBasketAnalysis.Item.Id
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_Id
+  name: Id
+  nameWithType: Item.Id
+  fullName: MarketBasketAnalysis.Item.Id
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: MarketBasketAnalysis.Item.Name*
+  commentId: Overload:MarketBasketAnalysis.Item.Name
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_Name
+  name: Name
+  nameWithType: Item.Name
+  fullName: MarketBasketAnalysis.Item.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: MarketBasketAnalysis.Item.IsGroup*
+  commentId: Overload:MarketBasketAnalysis.Item.IsGroup
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_IsGroup
+  name: IsGroup
+  nameWithType: Item.IsGroup
+  fullName: MarketBasketAnalysis.Item.IsGroup
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: MarketBasketAnalysis.Item
+  commentId: T:MarketBasketAnalysis.Item
+  parent: MarketBasketAnalysis
+  href: MarketBasketAnalysis.Item.html
+  name: Item
+  nameWithType: Item
+  fullName: MarketBasketAnalysis.Item
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: MarketBasketAnalysis.Item.#ctor*
+  commentId: Overload:MarketBasketAnalysis.Item.#ctor
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item__ctor_System_Int32_System_String_System_Boolean_
+  name: Item
+  nameWithType: Item.Item
+  fullName: MarketBasketAnalysis.Item.Item
+  nameWithType.vb: Item.New
+  fullName.vb: MarketBasketAnalysis.Item.New
+  name.vb: New
+- uid: MarketBasketAnalysis.Item.Equals*
+  commentId: Overload:MarketBasketAnalysis.Item.Equals
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_Equals_MarketBasketAnalysis_Item_
+  name: Equals
+  nameWithType: Item.Equals
+  fullName: MarketBasketAnalysis.Item.Equals
+- uid: System.IEquatable{MarketBasketAnalysis.Item}.Equals(MarketBasketAnalysis.Item)
+  commentId: M:System.IEquatable{MarketBasketAnalysis.Item}.Equals(MarketBasketAnalysis.Item)
+  parent: System.IEquatable{MarketBasketAnalysis.Item}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(Item)
+  nameWithType: IEquatable<Item>.Equals(Item)
+  fullName: System.IEquatable<MarketBasketAnalysis.Item>.Equals(MarketBasketAnalysis.Item)
+  nameWithType.vb: IEquatable(Of Item).Equals(Item)
+  fullName.vb: System.IEquatable(Of MarketBasketAnalysis.Item).Equals(MarketBasketAnalysis.Item)
+  spec.csharp:
+  - uid: System.IEquatable{MarketBasketAnalysis.Item}.Equals(MarketBasketAnalysis.Item)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{MarketBasketAnalysis.Item}.Equals(MarketBasketAnalysis.Item)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: MarketBasketAnalysis.Item
+    name: Item
+    href: MarketBasketAnalysis.Item.html
+  - name: )
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: MarketBasketAnalysis.Item.GetHashCode*
+  commentId: Overload:MarketBasketAnalysis.Item.GetHashCode
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_GetHashCode
+  name: GetHashCode
+  nameWithType: Item.GetHashCode
+  fullName: MarketBasketAnalysis.Item.GetHashCode
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: MarketBasketAnalysis.Item.ToString*
+  commentId: Overload:MarketBasketAnalysis.Item.ToString
+  href: MarketBasketAnalysis.Item.html#MarketBasketAnalysis_Item_ToString
+  name: ToString
+  nameWithType: Item.ToString
+  fullName: MarketBasketAnalysis.Item.ToString

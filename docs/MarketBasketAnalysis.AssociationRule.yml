@@ -1,0 +1,1103 @@
+### YamlMime:ManagedReference
+items:
+- uid: MarketBasketAnalysis.AssociationRule
+  commentId: T:MarketBasketAnalysis.AssociationRule
+  id: AssociationRule
+  parent: MarketBasketAnalysis
+  children:
+  - MarketBasketAnalysis.AssociationRule.#ctor(MarketBasketAnalysis.Item,MarketBasketAnalysis.Item,System.Int32,System.Int32,System.Int32,System.Int32)
+  - MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+  - MarketBasketAnalysis.AssociationRule.Confidence
+  - MarketBasketAnalysis.AssociationRule.Conviction
+  - MarketBasketAnalysis.AssociationRule.Equals(MarketBasketAnalysis.AssociationRule)
+  - MarketBasketAnalysis.AssociationRule.Equals(System.Object)
+  - MarketBasketAnalysis.AssociationRule.GetHashCode
+  - MarketBasketAnalysis.AssociationRule.LeftHandSide
+  - MarketBasketAnalysis.AssociationRule.Lift
+  - MarketBasketAnalysis.AssociationRule.PairCount
+  - MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+  - MarketBasketAnalysis.AssociationRule.RightHandSide
+  - MarketBasketAnalysis.AssociationRule.Support
+  - MarketBasketAnalysis.AssociationRule.ToString
+  - MarketBasketAnalysis.AssociationRule.TransactionCount
+  - MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+  langs:
+  - csharp
+  - vb
+  name: AssociationRule
+  nameWithType: AssociationRule
+  fullName: MarketBasketAnalysis.AssociationRule
+  type: Class
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: AssociationRule
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 8
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: >-
+    Represents an association rule - a relationship between two items in market basket analysis,
+
+    where the presence of one item (left hand side) implies the presence of another (right hand side).
+  example: []
+  syntax:
+    content: 'public sealed class AssociationRule : IEquatable<AssociationRule>'
+    content.vb: Public NotInheritable Class AssociationRule Implements IEquatable(Of AssociationRule)
+  inheritance:
+  - System.Object
+  implements:
+  - System.IEquatable{MarketBasketAnalysis.AssociationRule}
+  inheritedMembers:
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetType
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+- uid: MarketBasketAnalysis.AssociationRule.LeftHandSide
+  commentId: P:MarketBasketAnalysis.AssociationRule.LeftHandSide
+  id: LeftHandSide
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: LeftHandSide
+  nameWithType: AssociationRule.LeftHandSide
+  fullName: MarketBasketAnalysis.AssociationRule.LeftHandSide
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: LeftHandSide
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 18
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the left-hand side (LHS) of the association rule.
+  example: []
+  syntax:
+    content: public AssociationRulePart LeftHandSide { get; }
+    parameters: []
+    return:
+      type: MarketBasketAnalysis.AssociationRulePart
+    content.vb: Public ReadOnly Property LeftHandSide As AssociationRulePart
+  overload: MarketBasketAnalysis.AssociationRule.LeftHandSide*
+- uid: MarketBasketAnalysis.AssociationRule.RightHandSide
+  commentId: P:MarketBasketAnalysis.AssociationRule.RightHandSide
+  id: RightHandSide
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: RightHandSide
+  nameWithType: AssociationRule.RightHandSide
+  fullName: MarketBasketAnalysis.AssociationRule.RightHandSide
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: RightHandSide
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 23
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the right-hand side (RHS) of the association rule.
+  example: []
+  syntax:
+    content: public AssociationRulePart RightHandSide { get; }
+    parameters: []
+    return:
+      type: MarketBasketAnalysis.AssociationRulePart
+    content.vb: Public ReadOnly Property RightHandSide As AssociationRulePart
+  overload: MarketBasketAnalysis.AssociationRule.RightHandSide*
+- uid: MarketBasketAnalysis.AssociationRule.PairCount
+  commentId: P:MarketBasketAnalysis.AssociationRule.PairCount
+  id: PairCount
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: PairCount
+  nameWithType: AssociationRule.PairCount
+  fullName: MarketBasketAnalysis.AssociationRule.PairCount
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: PairCount
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 28
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the number of transactions that contain both the LHS and RHS of the rule.
+  example: []
+  syntax:
+    content: public int PairCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property PairCount As Integer
+  overload: MarketBasketAnalysis.AssociationRule.PairCount*
+- uid: MarketBasketAnalysis.AssociationRule.TransactionCount
+  commentId: P:MarketBasketAnalysis.AssociationRule.TransactionCount
+  id: TransactionCount
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: TransactionCount
+  nameWithType: AssociationRule.TransactionCount
+  fullName: MarketBasketAnalysis.AssociationRule.TransactionCount
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: TransactionCount
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 33
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the number of transactions.
+  example: []
+  syntax:
+    content: public int TransactionCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TransactionCount As Integer
+  overload: MarketBasketAnalysis.AssociationRule.TransactionCount*
+- uid: MarketBasketAnalysis.AssociationRule.Support
+  commentId: P:MarketBasketAnalysis.AssociationRule.Support
+  id: Support
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Support
+  nameWithType: AssociationRule.Support
+  fullName: MarketBasketAnalysis.AssociationRule.Support
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Support
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 38
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the support of the rule, which is the proportion of transactions that contain both the LHS and RHS.
+  example: []
+  syntax:
+    content: public double Support { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property Support As Double
+  overload: MarketBasketAnalysis.AssociationRule.Support*
+- uid: MarketBasketAnalysis.AssociationRule.Confidence
+  commentId: P:MarketBasketAnalysis.AssociationRule.Confidence
+  id: Confidence
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Confidence
+  nameWithType: AssociationRule.Confidence
+  fullName: MarketBasketAnalysis.AssociationRule.Confidence
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Confidence
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 43
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the confidence of the rule, which is the proportion of transactions containing the LHS that also contain the RHS.
+  example: []
+  syntax:
+    content: public double Confidence { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property Confidence As Double
+  overload: MarketBasketAnalysis.AssociationRule.Confidence*
+- uid: MarketBasketAnalysis.AssociationRule.Lift
+  commentId: P:MarketBasketAnalysis.AssociationRule.Lift
+  id: Lift
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Lift
+  nameWithType: AssociationRule.Lift
+  fullName: MarketBasketAnalysis.AssociationRule.Lift
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Lift
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 48
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the lift of the rule, which measures how much more likely the RHS is to occur given the LHS, compared to its baseline probability.
+  example: []
+  syntax:
+    content: public double Lift { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property Lift As Double
+  overload: MarketBasketAnalysis.AssociationRule.Lift*
+- uid: MarketBasketAnalysis.AssociationRule.Conviction
+  commentId: P:MarketBasketAnalysis.AssociationRule.Conviction
+  id: Conviction
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Conviction
+  nameWithType: AssociationRule.Conviction
+  fullName: MarketBasketAnalysis.AssociationRule.Conviction
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Conviction
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 53
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the conviction of the rule, which measures the strength of the implication in the rule.
+  example: []
+  syntax:
+    content: public double Conviction { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property Conviction As Double
+  overload: MarketBasketAnalysis.AssociationRule.Conviction*
+- uid: MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+  commentId: P:MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+  id: YuleQCoefficient
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: YuleQCoefficient
+  nameWithType: AssociationRule.YuleQCoefficient
+  fullName: MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: YuleQCoefficient
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 58
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the Yule's Q coefficient, which measures the association between the LHS and RHS.
+  example: []
+  syntax:
+    content: public double YuleQCoefficient { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property YuleQCoefficient As Double
+  overload: MarketBasketAnalysis.AssociationRule.YuleQCoefficient*
+- uid: MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+  commentId: P:MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+  id: PhiCorrelationCoefficient
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: PhiCorrelationCoefficient
+  nameWithType: AssociationRule.PhiCorrelationCoefficient
+  fullName: MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: PhiCorrelationCoefficient
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 71
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the Phi correlation coefficient, which measures the strength of the relationship between the LHS and RHS.
+  example: []
+  syntax:
+    content: public double PhiCorrelationCoefficient { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property PhiCorrelationCoefficient As Double
+  overload: MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient*
+- uid: MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+  commentId: P:MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+  id: ChiSquaredTestStatistic
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: ChiSquaredTestStatistic
+  nameWithType: AssociationRule.ChiSquaredTestStatistic
+  fullName: MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+  type: Property
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: ChiSquaredTestStatistic
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 84
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Gets the Chi-squared test statistic, which measures the independence of the LHS and RHS.
+  example: []
+  syntax:
+    content: public double ChiSquaredTestStatistic { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property ChiSquaredTestStatistic As Double
+  overload: MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic*
+- uid: MarketBasketAnalysis.AssociationRule.#ctor(MarketBasketAnalysis.Item,MarketBasketAnalysis.Item,System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:MarketBasketAnalysis.AssociationRule.#ctor(MarketBasketAnalysis.Item,MarketBasketAnalysis.Item,System.Int32,System.Int32,System.Int32,System.Int32)
+  id: '#ctor(MarketBasketAnalysis.Item,MarketBasketAnalysis.Item,System.Int32,System.Int32,System.Int32,System.Int32)'
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: AssociationRule(Item, Item, int, int, int, int)
+  nameWithType: AssociationRule.AssociationRule(Item, Item, int, int, int, int)
+  fullName: MarketBasketAnalysis.AssociationRule.AssociationRule(MarketBasketAnalysis.Item, MarketBasketAnalysis.Item, int, int, int, int)
+  type: Constructor
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: .ctor
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 112
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  summary: Initializes a new instance of the <xref href="MarketBasketAnalysis.AssociationRule" data-throw-if-not-resolved="false"></xref> class.
+  example: []
+  syntax:
+    content: public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
+    parameters:
+    - id: lhsItem
+      type: MarketBasketAnalysis.Item
+      description: The item on the left-hand side of the rule.
+    - id: rhsItem
+      type: MarketBasketAnalysis.Item
+      description: The item on the right-hand side of the rule.
+    - id: lhsCount
+      type: System.Int32
+      description: The number of transactions containing the LHS item.
+    - id: rhsCount
+      type: System.Int32
+      description: The number of transactions containing the RHS item.
+    - id: pairCount
+      type: System.Int32
+      description: The number of transactions containing both the LHS and RHS items.
+    - id: transactionCount
+      type: System.Int32
+      description: The total number of transactions.
+    content.vb: Public Sub New(lhsItem As Item, rhsItem As Item, lhsCount As Integer, rhsCount As Integer, pairCount As Integer, transactionCount As Integer)
+  overload: MarketBasketAnalysis.AssociationRule.#ctor*
+  exceptions:
+  - type: System.ArgumentNullException
+    commentId: T:System.ArgumentNullException
+    description: Thrown if <code class="paramref">lhsItem</code> or <code class="paramref">rhsItem</code> is <code>null</code>.
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if the LHS and RHS items are the same.
+  - type: System.ArgumentOutOfRangeException
+    commentId: T:System.ArgumentOutOfRangeException
+    description: Thrown if any of the counts are invalid (e.g., negative or greater than the total transaction count).
+  nameWithType.vb: AssociationRule.New(Item, Item, Integer, Integer, Integer, Integer)
+  fullName.vb: MarketBasketAnalysis.AssociationRule.New(MarketBasketAnalysis.Item, MarketBasketAnalysis.Item, Integer, Integer, Integer, Integer)
+  name.vb: New(Item, Item, Integer, Integer, Integer, Integer)
+- uid: MarketBasketAnalysis.AssociationRule.Equals(MarketBasketAnalysis.AssociationRule)
+  commentId: M:MarketBasketAnalysis.AssociationRule.Equals(MarketBasketAnalysis.AssociationRule)
+  id: Equals(MarketBasketAnalysis.AssociationRule)
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Equals(AssociationRule)
+  nameWithType: AssociationRule.Equals(AssociationRule)
+  fullName: MarketBasketAnalysis.AssociationRule.Equals(MarketBasketAnalysis.AssociationRule)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Equals
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 181
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public bool Equals(AssociationRule other)
+    parameters:
+    - id: other
+      type: MarketBasketAnalysis.AssociationRule
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As AssociationRule) As Boolean
+  overload: MarketBasketAnalysis.AssociationRule.Equals*
+  implements:
+  - System.IEquatable{MarketBasketAnalysis.AssociationRule}.Equals(MarketBasketAnalysis.AssociationRule)
+- uid: MarketBasketAnalysis.AssociationRule.GetHashCode
+  commentId: M:MarketBasketAnalysis.AssociationRule.GetHashCode
+  id: GetHashCode
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: AssociationRule.GetHashCode()
+  fullName: MarketBasketAnalysis.AssociationRule.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: GetHashCode
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 194
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.Object.GetHashCode
+  overload: MarketBasketAnalysis.AssociationRule.GetHashCode*
+- uid: MarketBasketAnalysis.AssociationRule.Equals(System.Object)
+  commentId: M:MarketBasketAnalysis.AssociationRule.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: AssociationRule.Equals(object)
+  fullName: MarketBasketAnalysis.AssociationRule.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: Equals
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 198
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.Object.Equals(System.Object)
+  overload: MarketBasketAnalysis.AssociationRule.Equals*
+  nameWithType.vb: AssociationRule.Equals(Object)
+  fullName.vb: MarketBasketAnalysis.AssociationRule.Equals(Object)
+  name.vb: Equals(Object)
+- uid: MarketBasketAnalysis.AssociationRule.ToString
+  commentId: M:MarketBasketAnalysis.AssociationRule.ToString
+  id: ToString
+  parent: MarketBasketAnalysis.AssociationRule
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: AssociationRule.ToString()
+  fullName: MarketBasketAnalysis.AssociationRule.ToString()
+  type: Method
+  source:
+    remote:
+      path: src/MarketBasketAnalysis/AssociationRule.cs
+      branch: main
+      repo: https://github.com/vladimir-makeev/MarketBasketAnalysis
+    id: ToString
+    path: src/MarketBasketAnalysis/AssociationRule.cs
+    startLine: 202
+  assemblies:
+  - MarketBasketAnalysis
+  namespace: MarketBasketAnalysis
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: MarketBasketAnalysis.AssociationRule.ToString*
+references:
+- uid: MarketBasketAnalysis
+  commentId: N:MarketBasketAnalysis
+  href: MarketBasketAnalysis.html
+  name: MarketBasketAnalysis
+  nameWithType: MarketBasketAnalysis
+  fullName: MarketBasketAnalysis
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IEquatable{MarketBasketAnalysis.AssociationRule}
+  commentId: T:System.IEquatable{MarketBasketAnalysis.AssociationRule}
+  parent: System
+  definition: System.IEquatable`1
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<AssociationRule>
+  nameWithType: IEquatable<AssociationRule>
+  fullName: System.IEquatable<MarketBasketAnalysis.AssociationRule>
+  nameWithType.vb: IEquatable(Of AssociationRule)
+  fullName.vb: System.IEquatable(Of MarketBasketAnalysis.AssociationRule)
+  name.vb: IEquatable(Of AssociationRule)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.IEquatable`1
+  commentId: T:System.IEquatable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  name: IEquatable<T>
+  nameWithType: IEquatable<T>
+  fullName: System.IEquatable<T>
+  nameWithType.vb: IEquatable(Of T)
+  fullName.vb: System.IEquatable(Of T)
+  name.vb: IEquatable(Of T)
+  spec.csharp:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.IEquatable`1
+    name: IEquatable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: MarketBasketAnalysis.AssociationRule.LeftHandSide*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.LeftHandSide
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_LeftHandSide
+  name: LeftHandSide
+  nameWithType: AssociationRule.LeftHandSide
+  fullName: MarketBasketAnalysis.AssociationRule.LeftHandSide
+- uid: MarketBasketAnalysis.AssociationRulePart
+  commentId: T:MarketBasketAnalysis.AssociationRulePart
+  parent: MarketBasketAnalysis
+  href: MarketBasketAnalysis.AssociationRulePart.html
+  name: AssociationRulePart
+  nameWithType: AssociationRulePart
+  fullName: MarketBasketAnalysis.AssociationRulePart
+- uid: MarketBasketAnalysis.AssociationRule.RightHandSide*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.RightHandSide
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_RightHandSide
+  name: RightHandSide
+  nameWithType: AssociationRule.RightHandSide
+  fullName: MarketBasketAnalysis.AssociationRule.RightHandSide
+- uid: MarketBasketAnalysis.AssociationRule.PairCount*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.PairCount
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_PairCount
+  name: PairCount
+  nameWithType: AssociationRule.PairCount
+  fullName: MarketBasketAnalysis.AssociationRule.PairCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: MarketBasketAnalysis.AssociationRule.TransactionCount*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.TransactionCount
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_TransactionCount
+  name: TransactionCount
+  nameWithType: AssociationRule.TransactionCount
+  fullName: MarketBasketAnalysis.AssociationRule.TransactionCount
+- uid: MarketBasketAnalysis.AssociationRule.Support*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.Support
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_Support
+  name: Support
+  nameWithType: AssociationRule.Support
+  fullName: MarketBasketAnalysis.AssociationRule.Support
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: MarketBasketAnalysis.AssociationRule.Confidence*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.Confidence
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_Confidence
+  name: Confidence
+  nameWithType: AssociationRule.Confidence
+  fullName: MarketBasketAnalysis.AssociationRule.Confidence
+- uid: MarketBasketAnalysis.AssociationRule.Lift*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.Lift
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_Lift
+  name: Lift
+  nameWithType: AssociationRule.Lift
+  fullName: MarketBasketAnalysis.AssociationRule.Lift
+- uid: MarketBasketAnalysis.AssociationRule.Conviction*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.Conviction
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_Conviction
+  name: Conviction
+  nameWithType: AssociationRule.Conviction
+  fullName: MarketBasketAnalysis.AssociationRule.Conviction
+- uid: MarketBasketAnalysis.AssociationRule.YuleQCoefficient*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_YuleQCoefficient
+  name: YuleQCoefficient
+  nameWithType: AssociationRule.YuleQCoefficient
+  fullName: MarketBasketAnalysis.AssociationRule.YuleQCoefficient
+- uid: MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_PhiCorrelationCoefficient
+  name: PhiCorrelationCoefficient
+  nameWithType: AssociationRule.PhiCorrelationCoefficient
+  fullName: MarketBasketAnalysis.AssociationRule.PhiCorrelationCoefficient
+- uid: MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_ChiSquaredTestStatistic
+  name: ChiSquaredTestStatistic
+  nameWithType: AssociationRule.ChiSquaredTestStatistic
+  fullName: MarketBasketAnalysis.AssociationRule.ChiSquaredTestStatistic
+- uid: MarketBasketAnalysis.AssociationRule
+  commentId: T:MarketBasketAnalysis.AssociationRule
+  parent: MarketBasketAnalysis
+  href: MarketBasketAnalysis.AssociationRule.html
+  name: AssociationRule
+  nameWithType: AssociationRule
+  fullName: MarketBasketAnalysis.AssociationRule
+- uid: System.ArgumentNullException
+  commentId: T:System.ArgumentNullException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentnullexception
+  name: ArgumentNullException
+  nameWithType: ArgumentNullException
+  fullName: System.ArgumentNullException
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentexception
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: System.ArgumentOutOfRangeException
+  commentId: T:System.ArgumentOutOfRangeException
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception
+  name: ArgumentOutOfRangeException
+  nameWithType: ArgumentOutOfRangeException
+  fullName: System.ArgumentOutOfRangeException
+- uid: MarketBasketAnalysis.AssociationRule.#ctor*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.#ctor
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule__ctor_MarketBasketAnalysis_Item_MarketBasketAnalysis_Item_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: AssociationRule
+  nameWithType: AssociationRule.AssociationRule
+  fullName: MarketBasketAnalysis.AssociationRule.AssociationRule
+  nameWithType.vb: AssociationRule.New
+  fullName.vb: MarketBasketAnalysis.AssociationRule.New
+  name.vb: New
+- uid: MarketBasketAnalysis.Item
+  commentId: T:MarketBasketAnalysis.Item
+  parent: MarketBasketAnalysis
+  href: MarketBasketAnalysis.Item.html
+  name: Item
+  nameWithType: Item
+  fullName: MarketBasketAnalysis.Item
+- uid: MarketBasketAnalysis.AssociationRule.Equals*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.Equals
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_Equals_MarketBasketAnalysis_AssociationRule_
+  name: Equals
+  nameWithType: AssociationRule.Equals
+  fullName: MarketBasketAnalysis.AssociationRule.Equals
+- uid: System.IEquatable{MarketBasketAnalysis.AssociationRule}.Equals(MarketBasketAnalysis.AssociationRule)
+  commentId: M:System.IEquatable{MarketBasketAnalysis.AssociationRule}.Equals(MarketBasketAnalysis.AssociationRule)
+  parent: System.IEquatable{MarketBasketAnalysis.AssociationRule}
+  definition: System.IEquatable`1.Equals(`0)
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(AssociationRule)
+  nameWithType: IEquatable<AssociationRule>.Equals(AssociationRule)
+  fullName: System.IEquatable<MarketBasketAnalysis.AssociationRule>.Equals(MarketBasketAnalysis.AssociationRule)
+  nameWithType.vb: IEquatable(Of AssociationRule).Equals(AssociationRule)
+  fullName.vb: System.IEquatable(Of MarketBasketAnalysis.AssociationRule).Equals(MarketBasketAnalysis.AssociationRule)
+  spec.csharp:
+  - uid: System.IEquatable{MarketBasketAnalysis.AssociationRule}.Equals(MarketBasketAnalysis.AssociationRule)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable{MarketBasketAnalysis.AssociationRule}.Equals(MarketBasketAnalysis.AssociationRule)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - uid: MarketBasketAnalysis.AssociationRule
+    name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.IEquatable`1.Equals(`0)
+  commentId: M:System.IEquatable`1.Equals(`0)
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  name: Equals(T)
+  nameWithType: IEquatable<T>.Equals(T)
+  fullName: System.IEquatable<T>.Equals(T)
+  nameWithType.vb: IEquatable(Of T).Equals(T)
+  fullName.vb: System.IEquatable(Of T).Equals(T)
+  spec.csharp:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: System.IEquatable`1.Equals(`0)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.iequatable-1.equals
+  - name: (
+  - name: T
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: MarketBasketAnalysis.AssociationRule.GetHashCode*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.GetHashCode
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_GetHashCode
+  name: GetHashCode
+  nameWithType: AssociationRule.GetHashCode
+  fullName: MarketBasketAnalysis.AssociationRule.GetHashCode
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: MarketBasketAnalysis.AssociationRule.ToString*
+  commentId: Overload:MarketBasketAnalysis.AssociationRule.ToString
+  href: MarketBasketAnalysis.AssociationRule.html#MarketBasketAnalysis_AssociationRule_ToString
+  name: ToString
+  nameWithType: AssociationRule.ToString
+  fullName: MarketBasketAnalysis.AssociationRule.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
