@@ -71,17 +71,7 @@ namespace MarketBasketAnalysis.Mining
             if (_notAllowedItems.ContainsKey(item))
                 return true;
 
-            var shouldExclude = false;
-
-            foreach (var exclusionRule in _exclusionRules)
-            {
-                if (exclusionRule.ShouldExclude(item))
-                {
-                    shouldExclude = true;
-
-                    break;
-                }
-            }
+            var shouldExclude = _exclusionRules.Any(er => er.ShouldExclude(item));
 
             if (shouldExclude)
                 _notAllowedItems.TryAdd(item, default);

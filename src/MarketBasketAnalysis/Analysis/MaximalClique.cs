@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MarketBasketAnalysis.Analysis
 {
-    internal class MaximalClique<TVertex> : IEnumerable<TVertex>
+    internal class MaximalClique<TVertex> : IEnumerable<TVertex> where TVertex: struct
     {
         private readonly IReadOnlyCollection<TVertex> _vertices;
 
-        public MaximalClique(IReadOnlyCollection<TVertex> vertices)
-        {
-            if (vertices == null)
-                throw new ArgumentNullException(nameof(vertices));
-
-            if (vertices.Any(item => item == null))
-                throw new ArgumentException("Collection of vertices cannot contain null items.", nameof(vertices));
-
-            _vertices = vertices;
-        }
+        public MaximalClique(IReadOnlyCollection<TVertex> vertices) =>
+            _vertices = vertices ?? throw new ArgumentNullException(nameof(vertices));
 
         public IEnumerator<TVertex> GetEnumerator() =>
             _vertices.GetEnumerator();

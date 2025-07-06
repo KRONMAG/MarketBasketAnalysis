@@ -192,12 +192,12 @@ namespace MarketBasketAnalysis
         }
 
         /// <inheritdoc />
-        public override int GetHashCode() =>
-            LeftHandSide.GetHashCode() * 397 ^ RightHandSide.GetHashCode();
-
-        /// <inheritdoc />
         public override bool Equals(object obj) =>
             Equals(obj as AssociationRule);
+
+        /// <inheritdoc />
+        public override int GetHashCode() =>
+            LeftHandSide.GetHashCode() * 397 ^ RightHandSide.GetHashCode();
 
         /// <inheritdoc />
         public override string ToString() =>

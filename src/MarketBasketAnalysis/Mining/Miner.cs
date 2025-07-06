@@ -73,7 +73,7 @@ namespace MarketBasketAnalysis.Mining
             return GenerateAssociationRules(itemsets, frequentItems, transactionCount, parameters, token);
         }
 
-        private Dictionary<Item, int> SearchForFrequentItems(IEnumerable<Item[]> transactions,
+        private static Dictionary<Item, int> SearchForFrequentItems(IEnumerable<Item[]> transactions,
             MiningParameters parameters, CancellationToken token, out int transactionCount)
         {
             var itemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
@@ -268,7 +268,7 @@ namespace MarketBasketAnalysis.Mining
             return associationRules;
         }
 
-        private int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
+        private static int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
 
         #endregion
     }

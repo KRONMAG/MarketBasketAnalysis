@@ -115,6 +115,7 @@ namespace MarketBasketAnalysis.Analysis
             IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
             (IReadOnlyDictionary<Item, TVertex>, IReadOnlyDictionary<TVertex, Item>) maps,
             CancellationToken token)
+            where TVertex: struct
         {
             var adjacencyList = ConvertToAdjacencyList(associationRules, parameters, maps.Item1, token);
 
@@ -205,6 +206,7 @@ namespace MarketBasketAnalysis.Analysis
         private static IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> ConvertToAssociationRuleSubsets<TVertex>(
             IReadOnlyCollection<MaximalClique<TVertex>> maximalCliques, IReadOnlyCollection<AssociationRule> associationRules,
             IReadOnlyDictionary<TVertex, Item> vertexToItemMap, CancellationToken token)
+            where TVertex : struct
         {
             var associationRuleMap = associationRules.ToDictionary(associationRule =>
                 (associationRule.LeftHandSide.Item, associationRule.RightHandSide.Item));

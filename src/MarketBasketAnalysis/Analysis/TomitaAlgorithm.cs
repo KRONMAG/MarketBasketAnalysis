@@ -9,7 +9,7 @@ namespace MarketBasketAnalysis.Analysis
     {
         #region Nested types
 
-        private sealed class LocalState<TVertex>
+        private sealed class LocalState<TVertex> where TVertex: struct
         {
             public TVertex[] Clique { get; }
 
@@ -88,6 +88,7 @@ namespace MarketBasketAnalysis.Analysis
         public IReadOnlyCollection<MaximalClique<TVertex>> Find<TVertex>(
             IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
             int minCliqueSize, int maxCliqueSize, CancellationToken token = default)
+            where TVertex : struct
         {
             if (adjacencyList == null)
                 throw new ArgumentNullException(nameof(adjacencyList));
