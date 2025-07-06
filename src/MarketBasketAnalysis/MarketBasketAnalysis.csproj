@@ -4,6 +4,17 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AnalysisMode>all</AnalysisMode>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageId>MarketBasketAnalysis</PackageId>
+		<Version>1.0.0-alpha.1</Version>
+		<Authors>KRONMAG</Authors>
+		<Description>Library for discovering and analyzing association rules from transactional data, supporting advanced operations such as generalized rule mining, exclusion of specific items, comparison between rule sets, and identification of maximal cliques in the rule graph.</Description>
+		<RepositoryUrl>https://github.com/KRONMAG/MarketBasketAnalysis</RepositoryUrl>
+		<PackageTags>market-basket-analysis;association-analysis;machine-learning;ml;unsupervised-learning;analytics;association-rules;data-mining;pattern-mining;apriori;fp-growth;eclat;frequent-itemsets;recommendation;shopping-cart</PackageTags>
+		<PackageProjectUrl>https://github.com/KRONMAG/MarketBasketAnalysis</PackageProjectUrl>
+		<Title>Market Basket Analysis</Title>
+		<PackageIcon>MarketBasketAnalysis.png</PackageIcon>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>Copyright (c) KRONMAG 2025</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,6 +29,10 @@
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>MarketBasketAnalysis.UnitTests</_Parameter1>
 		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="MarketBasketAnalysis.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 </Project>
