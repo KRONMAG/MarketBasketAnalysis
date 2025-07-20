@@ -31,8 +31,4 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Include="MarketBasketAnalysis.png" Pack="true" PackagePath="" />
-	</ItemGroup>
-
 </Project>

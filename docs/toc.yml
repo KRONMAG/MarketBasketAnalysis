@@ -1,69 +1,52 @@
 ### YamlMime:TableOfContent
-items:
-- uid: MarketBasketAnalysis
-  name: MarketBasketAnalysis
-  type: Namespace
+- name: MarketBasketAnalysis
+  href: MarketBasketAnalysis.md
   items:
-  - uid: MarketBasketAnalysis.AssociationRule
-    name: AssociationRule
-    type: Class
-  - uid: MarketBasketAnalysis.AssociationRulePart
-    name: AssociationRulePart
-    type: Class
-  - uid: MarketBasketAnalysis.Item
-    name: Item
-    type: Class
-- uid: MarketBasketAnalysis.Analysis
-  name: MarketBasketAnalysis.Analysis
-  type: Namespace
+  - name: Classes
+  - name: AssociationRule
+    href: MarketBasketAnalysis.AssociationRule.md
+  - name: AssociationRulePart
+    href: MarketBasketAnalysis.AssociationRulePart.md
+  - name: Item
+    href: MarketBasketAnalysis.Item.md
+- name: MarketBasketAnalysis.Analysis
+  href: MarketBasketAnalysis.Analysis.md
   items:
-  - uid: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder
-    name: IMaximalCliqueFinder
-    type: Interface
-  - uid: MarketBasketAnalysis.Analysis.ISetOperationsPerformer
-    name: ISetOperationsPerformer
-    type: Interface
-  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFinder
-    name: MaximalCliqueFinder
-    type: Class
-  - uid: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters
-    name: MaximalCliqueFindingParameters
-    type: Class
-  - uid: MarketBasketAnalysis.Analysis.SetOperationsPerformer
-    name: SetOperationsPerformer
-    type: Class
-- uid: MarketBasketAnalysis.Mining
-  name: MarketBasketAnalysis.Mining
-  type: Namespace
+  - name: Classes
+  - name: MaximalCliqueFinder
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.md
+  - name: MaximalCliqueFindingParameters
+    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md
+  - name: SetOperationsPerformer
+    href: MarketBasketAnalysis.Analysis.SetOperationsPerformer.md
+  - name: Interfaces
+  - name: IMaximalCliqueFinder
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.md
+  - name: ISetOperationsPerformer
+    href: MarketBasketAnalysis.Analysis.ISetOperationsPerformer.md
+- name: MarketBasketAnalysis.Mining
+  href: MarketBasketAnalysis.Mining.md
   items:
-  - uid: MarketBasketAnalysis.Mining.IItemConverter
-    name: IItemConverter
-    type: Interface
-  - uid: MarketBasketAnalysis.Mining.IItemExcluder
-    name: IItemExcluder
-    type: Interface
-  - uid: MarketBasketAnalysis.Mining.IMiner
-    name: IMiner
-    type: Interface
-  - uid: MarketBasketAnalysis.Mining.ItemConversionRule
-    name: ItemConversionRule
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.ItemConverter
-    name: ItemConverter
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.ItemExcluder
-    name: ItemExcluder
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.ItemExclusionRule
-    name: ItemExclusionRule
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.Miner
-    name: Miner
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.MiningParameters
-    name: MiningParameters
-    type: Class
-  - uid: MarketBasketAnalysis.Mining.MiningStage
-    name: MiningStage
-    type: Enum
-memberLayout: SamePage
+  - name: Classes
+  - name: ItemConversionRule
+    href: MarketBasketAnalysis.Mining.ItemConversionRule.md
+  - name: ItemConverter
+    href: MarketBasketAnalysis.Mining.ItemConverter.md
+  - name: ItemExcluder
+    href: MarketBasketAnalysis.Mining.ItemExcluder.md
+  - name: ItemExclusionRule
+    href: MarketBasketAnalysis.Mining.ItemExclusionRule.md
+  - name: Miner
+    href: MarketBasketAnalysis.Mining.Miner.md
+  - name: MiningParameters
+    href: MarketBasketAnalysis.Mining.MiningParameters.md
+  - name: Interfaces
+  - name: IItemConverter
+    href: MarketBasketAnalysis.Mining.IItemConverter.md
+  - name: IItemExcluder
+    href: MarketBasketAnalysis.Mining.IItemExcluder.md
+  - name: IMiner
+    href: MarketBasketAnalysis.Mining.IMiner.md
+  - name: Enums
+  - name: MiningStage
+    href: MarketBasketAnalysis.Mining.MiningStage.md

@@ -6,7 +6,8 @@
           "files": [ "src/MarketBasketAnalysis/MarketBasketAnalysis.csproj" ]
         }
       ],
-      "dest": "docs"
+      "dest": "docs",
+      "outputFormat":  "markdown"
     }
   ]
 }
