@@ -9,7 +9,7 @@ Library for discovering and analyzing association rules from transactional data
 
 - Association Rule Mining: discover rules based on user-defined support and confidence thresholds
 - Rule Quality Metrics: support, confidence, lift, conviction, Yule's Q coefficient, φ (phi) correlation coefficient, χ² (chi-squared) test statistic
-- Pattern-Based Item Exclusion: dynamically exclude specific items from the mining process using item exlusion rules;
+- Pattern-Based Item Exclusion: dynamically exclude specific items from the mining process using item exlusion rules
 - Generalized Rule Mining: lift rules to higher abstraction levels using item conversion rules
 - Graph Analysis: detect maximal cliques of user-specified size in the association rule graph
 - Rule Set Operations: compute intersection and difference between two rule sets
