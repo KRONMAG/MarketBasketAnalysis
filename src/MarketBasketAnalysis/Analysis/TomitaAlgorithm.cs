@@ -107,7 +107,9 @@ namespace MarketBasketAnalysis.Analysis
                 throw new ArgumentOutOfRangeException(nameof(maxCliqueSize), maxCliqueSize,
                     "Maximum clique size must be greater than or equal to minimum clique size");
             }
-            
+
+            token.ThrowIfCancellationRequested();
+
             var currentState = new LocalState<TVertex>(Array.Empty<TVertex>(),
                 new HashSet<TVertex>(adjacencyList.Keys), new HashSet<TVertex>(), adjacencyList);
             

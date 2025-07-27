@@ -135,6 +135,7 @@ public class TomitaAlgorithmTests
         AssertContainsCliques(cliques, [1, 2], [2, 3], [3, 4], [1, 4]);
     }
 
+    [Fact]
     public void Find_CancellationTokenIsActive_ThrowsOperationCanceledException()
     {
         // Arrange
