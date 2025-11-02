@@ -6,15 +6,15 @@ namespace MarketBasketAnalysis.UnitTests
     {
         private readonly Item _item;
         private readonly Item _group;
-        private readonly ItemConversionRule _conversionRule;
+        private readonly ItemConversionRule _itemConversionRule;
         private readonly ItemConverter _itemConverter;
 
         public ItemConverterTests()
         {
             _item = new(1, "item", false);
             _group = new(2, "group", true);
-            _conversionRule = new ItemConversionRule(_item, _group);
-            _itemConverter = new([_conversionRule]);
+            _itemConversionRule = new ItemConversionRule(_item, _group);
+            _itemConverter = new([_itemConversionRule]);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace MarketBasketAnalysis.UnitTests
         [Fact]
         public void Ctor_ConversionRulesContainDuplicates_ThrowsArgumentException() =>
             // Act & Assert
-            Assert.Throws<ArgumentException>(() => new ItemConverter([_conversionRule, _conversionRule]));
+            Assert.Throws<ArgumentException>(() => new ItemConverter([_itemConversionRule, _itemConversionRule]));
 
         [Fact]
         public void TryConvert_ItemIsNull_ThrowsArgumentNullException() =>

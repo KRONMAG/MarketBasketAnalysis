@@ -9,22 +9,27 @@ public class TomitaAlgorithmTests
     [Fact]
     public void Find_AdjacencyListIsNull_ThrowsArgumentNullException() =>
         Assert.Throws<ArgumentNullException>(() =>
-            _algorithm.Find((IReadOnlyDictionary<int, HashSet<int>>)null!, 2, 3));
+            _algorithm.Find((IReadOnlyDictionary<int, HashSet<int>>)null!, 2, 3).ToList());
 
     [Fact]
     public void Find_AdjacencyListHasNullValues_ThrowsArgumentException() =>
         Assert.Throws<ArgumentException>(() =>
-            _algorithm.Find(new Dictionary<int, HashSet<int>>() { [1] = null! }, 2, 3));
+            _algorithm.Find(new Dictionary<int, HashSet<int>>() { [1] = null! }, 2, 3).ToList());
 
     [Fact]
     public void Find_MinCliqueSizeIsNegative_ThrowsArgumentOutOfRangeException() =>
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            _algorithm.Find(new Dictionary<int, HashSet<int>>(), -1, 3));
+            _algorithm.Find(new Dictionary<int, HashSet<int>>(), -1, 3).ToList());
+
+    [Fact]
+    public void Find_MaxCliqueSizeIsZero_ThrowsArgumentOutOfRangeException() =>
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            _algorithm.Find(new Dictionary<int, HashSet<int>>(), 1, 0).ToList());
 
     [Fact]
     public void Find_MinCliqueSizeIsGreaterThanMaxCliqueSize_ThrowsArgumentOutOfRangeException() =>
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            _algorithm.Find(new Dictionary<int, HashSet<int>>(), 4, 3));
+            _algorithm.Find(new Dictionary<int, HashSet<int>>(), 4, 3).ToList());
 
     [Fact]
     public void Find_EmptyGraph_ReturnsEmptyCollection()
@@ -33,7 +38,7 @@ public class TomitaAlgorithmTests
         var graph = new Dictionary<int, HashSet<int>>();
         
         // Act
-        var cliques = _algorithm.Find(graph, 1, 10);
+        var cliques = _algorithm.Find(graph, 1, 10).ToList();
 
         // Assert
         Assert.Empty(cliques);
@@ -52,7 +57,7 @@ public class TomitaAlgorithmTests
         };
 
         // Act
-        var cliques = _algorithm.Find(graph, 3, 4);
+        var cliques = _algorithm.Find(graph, 3, 4).ToList();
 
         // Assert
         Assert.Empty(cliques);
@@ -71,7 +76,7 @@ public class TomitaAlgorithmTests
         };
 
         // Act
-        var cliques = _algorithm.Find(graph, 1, 4);
+        var cliques = _algorithm.Find(graph, 1, 4).ToList();
 
         // Assert
         AssertContainsCliques(cliques, [1, 2, 3, 4]);
@@ -91,7 +96,7 @@ public class TomitaAlgorithmTests
         };
 
         // Act
-        var cliques = _algorithm.Find(graph, 2, 3);
+        var cliques = _algorithm.Find(graph, 2, 3).ToList();
 
         // Assert
         AssertContainsCliques(cliques, [1, 2, 3], [4, 5]);
@@ -141,11 +146,12 @@ public class TomitaAlgorithmTests
         // Arrange
         var cancellationTokenSource = new CancellationTokenSource();
 
+        // Act
         cancellationTokenSource.Cancel();
 
         // Act & Assert
         Assert.Throws<OperationCanceledException>(() =>
-            _algorithm.Find(new Dictionary<int, HashSet<int>>(), 1, 10, cancellationTokenSource.Token));
+            _algorithm.Find(new Dictionary<int, HashSet<int>>(), 1, 10, cancellationTokenSource.Token).ToList());
     }
 
     private static void AssertContainsCliques(

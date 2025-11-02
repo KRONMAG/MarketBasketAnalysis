@@ -82,6 +82,26 @@ public class AssociationRuleExtensionsTests
         Assert.Contains(_cdAssociationRule, result);
     }
 
+    [Theory]
+    [InlineData(true, true, true)]
+    [InlineData(false, true, true)]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, false)]
+    public void Intersect_SetIsEmpty_ResultIsEmpty(bool isFirstSetEmpty, bool isSecondSetEmpty, bool ignoreLinkDirection)
+    {
+        // Arrange
+        var firstAssociationRuleSet = isFirstSetEmpty ? [] : _firstAssociationRuleSet;
+        var secondAssociationRuleSet = isSecondSetEmpty ? [] : _secondAssociationRuleSet;
+
+        // Act
+        var result = firstAssociationRuleSet.Intersect(secondAssociationRuleSet, ignoreLinkDirection).ToList();
+
+        // Assert
+        Assert.Empty(result);
+    }
+
     [Fact]
     public void Except_IgnoreLinkDirection_ReturnsCorrectResult()
     {
@@ -118,5 +138,25 @@ public class AssociationRuleExtensionsTests
         Assert.Contains(_baAssociationRule, result);
         Assert.Contains(_bcAssociationRule, result);
         Assert.Contains(_cdAssociationRule, result);
+    }
+
+    [Theory]
+    [InlineData(true, true, true)]
+    [InlineData(false, true, true)]
+    [InlineData(true, false, true)]
+    [InlineData(true, true, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, false)]
+    public void Intersect_OneOfSetIsEmpty_ResultIsEmpty(bool isFirstSetEmpty, bool isSecondSetEmpty, bool ignoreLinkDirection)
+    {
+        // Arrange
+        var firstAssociationRuleSet = isFirstSetEmpty ? [] : _firstAssociationRuleSet;
+        var secondAssociationRuleSet = isSecondSetEmpty ? [] : _secondAssociationRuleSet;
+
+        // Act
+        var result = firstAssociationRuleSet.Intersect(secondAssociationRuleSet, ignoreLinkDirection).ToList();
+
+        // Assert
+        Assert.Empty(result);
     }
 }
