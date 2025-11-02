@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Extensions.ObjectPool;
 using Timer = System.Timers.Timer;
@@ -16,6 +15,12 @@ namespace MarketBasketAnalysis.Mining
     {
         #region Fields and Properties
 
+        private readonly Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> _itemConverterFactory;
+        private readonly Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> _itemExcluderFactory;
+
+        private IItemConverter _itemConverter;
+        private IItemExcluder _itemExcluder;
+
         /// <inheritdoc />
         public event EventHandler<double> MiningProgressChanged;
 
@@ -24,57 +29,80 @@ namespace MarketBasketAnalysis.Mining
 
         #endregion
 
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Miner"/> class.
+        /// </summary>
+        /// <param name="itemConverterFactory">
+        /// A factory function that creates an <see cref="IItemConverter"/> based on a collection of <see cref="ItemConversionRule"/>.
+        /// This is used to define how items are grouped or replaced during mining.
+        /// </param>
+        /// <param name="itemExcluderFactory">
+        /// A factory function that creates an <see cref="IItemExcluder"/> based on a collection of <see cref="ItemExclusionRule"/>.
+        /// This is used to define which items or groups should be excluded from mining.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="itemConverterFactory"/> or <paramref name="itemExcluderFactory"/> is <c>null</c>.
+        /// </exception>
+        public Miner(
+            Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> itemConverterFactory,
+            Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> itemExcluderFactory)
+        {
+            _itemConverterFactory = itemConverterFactory ?? throw new ArgumentNullException(nameof(itemConverterFactory));
+            _itemExcluderFactory = itemExcluderFactory ?? throw new ArgumentNullException(nameof(itemExcluderFactory));
+        }
+
+        #endregion
+
         #region Methods
 
         /// <inheritdoc />
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public Task<IReadOnlyCollection<AssociationRule>> MineAsync(IEnumerable<Item[]> transactions,
-            MiningParameters parameters, CancellationToken token = default)
-        {
-            ValidateParameters(transactions, parameters);
-
-            return Task.Run((() => MineInternal(transactions, parameters, token)), token);
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions,
-            MiningParameters parameters)
-        {
-            ValidateParameters(transactions, parameters);
-
-            return MineInternal(transactions, parameters, default);
-        }
-
-        private static void ValidateParameters(IEnumerable<Item[]> transactions, MiningParameters parameters)
+            MiningParameters parameters, CancellationToken token = default)
         {
             if (transactions == null)
                 throw new ArgumentNullException(nameof(transactions));
 
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
+
+            try
+            {
+                _itemConverter = parameters.ItemConversionRules != null
+                    ? _itemConverterFactory(parameters.ItemConversionRules)
+                    : null;
+                _itemExcluder = parameters.ItemExclusionRules != null
+                    ? _itemExcluderFactory(parameters.ItemExclusionRules)
+                    : null;
+
+                OnMiningStageChanged(MiningStage.FrequentItemSearch);
+
+                // ReSharper disable once PossibleMultipleEnumeration
+                var frequentItems = SearchForFrequentItems(transactions, parameters, token, out var transactionCount);
+
+                OnMiningStageChanged(MiningStage.ItemsetSearch);
+
+                // ReSharper disable once PossibleMultipleEnumeration
+                var itemsets = SearchForItemsets(transactions, parameters, frequentItems, transactionCount, token);
+
+                OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
+
+                return GenerateAssociationRules(itemsets, frequentItems, transactionCount, parameters, token);
+            }
+            finally
+            {
+                _itemConverter = null;
+                _itemExcluder = null;
+            }
         }
 
-        private IReadOnlyCollection<AssociationRule> MineInternal(IEnumerable<Item[]> transactions,
-            MiningParameters parameters, CancellationToken token)
-        {
-            OnMiningStageChanged(MiningStage.FrequentItemSearch);
-
-            // ReSharper disable once PossibleMultipleEnumeration
-            var frequentItems = SearchForFrequentItems(transactions, parameters, token, out var transactionCount);
-
-            OnMiningStageChanged(MiningStage.ItemsetSearch);
-
-            // ReSharper disable once PossibleMultipleEnumeration
-            var itemsets = SearchForItemsets(transactions, parameters, frequentItems, transactionCount, token);
-
-            OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
-
-            return GenerateAssociationRules(itemsets, frequentItems, transactionCount, parameters, token);
-        }
-
-        private static Dictionary<Item, int> SearchForFrequentItems(IEnumerable<Item[]> transactions,
-            MiningParameters parameters, CancellationToken token, out int transactionCount)
+        private Dictionary<Item, int> SearchForFrequentItems(
+            IEnumerable<Item[]> transactions,
+            MiningParameters parameters,
+            CancellationToken token,
+            out int transactionCount)
         {
             var itemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
             var itemsPool = new DefaultObjectPool<HashSet<Item>>(
@@ -93,14 +121,14 @@ namespace MarketBasketAnalysis.Mining
 
                     foreach (var item in transaction)
                     {
-                        if (items.Contains(item) || parameters.ItemExcluder?.ShouldExclude(item) == true)
+                        if (items.Contains(item) || _itemExcluder?.ShouldExclude(item) == true)
                             continue;
 
                         items.Add(item);
                         
-                        if (parameters.ItemConverter?.TryConvert(item, out var group) == true)
+                        if (_itemConverter?.TryConvert(item, out var group) == true)
                         {
-                            if (items.Contains(group) || parameters.ItemExcluder?.ShouldExclude(group) == true)
+                            if (items.Contains(group) || _itemExcluder?.ShouldExclude(group) == true)
                                 continue;
 
                             items.Add(group);
@@ -126,8 +154,11 @@ namespace MarketBasketAnalysis.Mining
                 .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
         }
 
-        private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(IEnumerable<Item[]> transactions,
-            MiningParameters parameters, Dictionary<Item, int> frequentItems, int transactionCount,
+        private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(
+            IEnumerable<Item[]> transactions,
+            MiningParameters parameters,
+            Dictionary<Item, int> frequentItems,
+            int transactionCount,
             CancellationToken token)
         {
             var previousProcessedTransactionsCount = 0;
@@ -143,7 +174,6 @@ namespace MarketBasketAnalysis.Mining
             var itemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
                 new DefaultPooledObjectPolicy<HashSet<(Item, Item)>>(),
                 parameters.DegreeOfParallelism);
-            var itemConverter = parameters.ItemConverter;
 
             try
             {
@@ -167,10 +197,10 @@ namespace MarketBasketAnalysis.Mining
                                 if (itemset.Item1.Equals(itemset.Item2) || !itemsets.Add(itemset))
                                     continue;
 
-                                if (itemConverter != null)
+                                if (_itemConverter != null)
                                 {
-                                    var isItem1Converted = itemConverter.TryConvert(itemset.Item1, out var item1Group);
-                                    var isItem2Converted = itemConverter.TryConvert(itemset.Item2, out var item2Group);
+                                    var isItem1Converted = _itemConverter.TryConvert(itemset.Item1, out var item1Group);
+                                    var isItem2Converted = _itemConverter.TryConvert(itemset.Item2, out var item2Group);
 
                                     if (isItem1Converted)
                                         itemset.Item1 = item1Group;

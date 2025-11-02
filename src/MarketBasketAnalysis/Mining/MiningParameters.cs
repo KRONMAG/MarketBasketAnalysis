@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MarketBasketAnalysis.Extensions;
 
 namespace MarketBasketAnalysis.Mining
 {
@@ -28,20 +30,14 @@ namespace MarketBasketAnalysis.Mining
         public double MinConfidence { get; }
 
         /// <summary>
-        /// Gets the item converter used to group or transform items during the mining process.
+        /// Gets the collection of <see cref="ItemConversionRule"/> objects that define the rules for converting items.
         /// </summary>
-        /// <remarks>
-        /// This is an optional parameter that allows for custom item grouping or transformation logic.
-        /// </remarks>
-        public IItemConverter ItemConverter { get; }
+        public IReadOnlyCollection<ItemConversionRule> ItemConversionRules { get; }
 
         /// <summary>
-        /// Gets the item excluder used to filter out specific items from the mining process.
-        /// </summary>
-        /// <remarks>
-        /// This is an optional parameter that allows for excluding items based on custom logic.
-        /// </remarks>
-        public IItemExcluder ItemExcluder { get; }
+        /// Gets collection of <see cref="ItemExclusionRule"/> objects that define the rules for excluding items.
+        /// </summary>>
+        public IReadOnlyCollection<ItemExclusionRule> ItemExclusionRules { get; }
 
         /// <summary>
         /// Gets the degree of parallelism to use during the mining process.
@@ -60,15 +56,49 @@ namespace MarketBasketAnalysis.Mining
         /// </summary>
         /// <param name="minSupport">The minimum support threshold for identifying frequent itemsets.</param>
         /// <param name="minConfidence">The minimum confidence threshold for generating association rules.</param>
-        /// <param name="itemConverter">An optional item converter for grouping or transforming items.</param>
-        /// <param name="itemExcluder">An optional item excluder for filtering out specific items.</param>
+        /// <param name="itemConversionRules">An optional collection of <see cref="ItemConversionRule"/> objects that define the rules for converting items.</param>
+        /// <param name="itemExclusionRules">An optional collection of <see cref="ItemExclusionRule"/> objects that define the rules for excluding items.</param>
         /// <param name="degreeOfParallelism">The degree of parallelism to use during the mining process.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="minSupport"/> or <paramref name="minConfidence"/> is not between 0 and 1,
-        /// or if <paramref name="degreeOfParallelism"/> is not between 1 and 512.
+        /// <list type="number">
+        ///     <listheader>
+        ///         <description>Thrown if:</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="minSupport"/> or <paramref name="minConfidence"/> is not between 0 and 1;
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="degreeOfParallelism"/> is not between 1 and 512.
+        ///         </description>
+        ///     </item>
+        /// </list>
         /// </exception>
-        public MiningParameters(double minSupport, double minConfidence, IItemConverter itemConverter = null,
-            IItemExcluder itemExcluder = null, int degreeOfParallelism = 1)
+        /// <exception cref="ArgumentException">
+        /// <list type="number">
+        ///     <listheader>
+        ///         <description>Thrown if:</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or same items;
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="itemExclusionRules"/> is empty or contains <c>null</c> items.
+        ///         </description>
+        ///     </item>
+        /// </list>
+        /// </exception>
+        public MiningParameters(
+            double minSupport,
+            double minConfidence,
+            IReadOnlyCollection<ItemConversionRule> itemConversionRules = null,
+            IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null, 
+            int degreeOfParallelism = 1)
         {
             if (minSupport < 0 || minSupport > 1)
             {
@@ -88,10 +118,20 @@ namespace MarketBasketAnalysis.Mining
                     "Degree of parallelism must be between 1 and 512.");
             }
 
+            if (itemConversionRules != null)
+            {
+                itemConversionRules.Validate(nameof(itemConversionRules));
+            }
+
+            if (itemExclusionRules != null)
+            {
+                itemExclusionRules.Validate(nameof(itemExclusionRules));
+            }
+
             MinSupport = minSupport;
             MinConfidence = minConfidence;
-            ItemConverter = itemConverter;
-            ItemExcluder = itemExcluder;
+            ItemConversionRules = itemConversionRules;
+            ItemExclusionRules = itemExclusionRules;
             DegreeOfParallelism = degreeOfParallelism;
         }
 

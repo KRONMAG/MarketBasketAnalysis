@@ -5,7 +5,8 @@ using System.Threading;
 
 namespace MarketBasketAnalysis.Analysis
 {
-    internal sealed class TomitaAlgorithm
+    /// <inheritdoc />
+    public sealed class TomitaAlgorithm : IMaximalCliqueAlgorithm
     {
         #region Nested types
 
@@ -85,9 +86,12 @@ namespace MarketBasketAnalysis.Analysis
 
         #region Methods
 
-        public IReadOnlyCollection<MaximalClique<TVertex>> Find<TVertex>(
+        /// <inheritdoc />
+        public IEnumerable<MaximalClique<TVertex>> Find<TVertex>(
             IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
-            int minCliqueSize, int maxCliqueSize, CancellationToken token = default)
+            int minCliqueSize,
+            int maxCliqueSize,
+            CancellationToken token = default)
             where TVertex : struct
         {
             if (adjacencyList == null)
@@ -114,7 +118,6 @@ namespace MarketBasketAnalysis.Analysis
                 new HashSet<TVertex>(adjacencyList.Keys), new HashSet<TVertex>(), adjacencyList);
             
             var stack = new Stack<LocalState<TVertex>>();
-            var maximalCliques = new List<MaximalClique<TVertex>>();
 
             TVertex candidateVertex;
 
@@ -155,7 +158,7 @@ namespace MarketBasketAnalysis.Analysis
                 {
                     var maximalClique = new MaximalClique<TVertex>(augmentedClique);
 
-                    maximalCliques.Add(maximalClique);
+                    yield return maximalClique;
                 }
 
                 if (newCandidateVertices.Count > 0 && augmentedClique.Length < maxCliqueSize)
@@ -166,8 +169,6 @@ namespace MarketBasketAnalysis.Analysis
                         newExcludedVertices, adjacencyList);
                 }
             }
-
-            return maximalCliques;
         }
 
         #endregion

@@ -1,64 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MarketBasketAnalysis.Analysis
 {
     /// <inheritdoc />
-    // ReSharper disable once UnusedMember.Global
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public sealed class MaximalCliqueFinder : IMaximalCliqueFinder
     {
+        private readonly IMaximalCliqueAlgorithm _maximalCliqueAlgorithm;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MaximalCliqueFinder"/> class.
+        /// </summary>
+        /// <param name="maximalCliqueAlgorithm">
+        /// The algorithm implementation used to find maximal cliques in the graph.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="maximalCliqueAlgorithm"/> is <c>null</c>.
+        /// </exception>
+        public MaximalCliqueFinder(IMaximalCliqueAlgorithm maximalCliqueAlgorithm)
+        {
+            _maximalCliqueAlgorithm =
+                maximalCliqueAlgorithm ?? throw new ArgumentNullException(nameof(maximalCliqueAlgorithm));
+        }
+
         /// <inheritdoc />
-        public Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>> FindAsync(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
+        public IEnumerable<IReadOnlyCollection<AssociationRule>> Find(
+            IEnumerable<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
             CancellationToken token = default)
-        {
-            ValidateParameters(associationRules, parameters);
-            
-            return Task.Run((() => FindInternal(associationRules, parameters, token)), token);
-        }
-
-        /// <inheritdoc />
-        public IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> Find(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters)
-        {
-            ValidateParameters(associationRules, parameters);
-
-            return FindInternal(associationRules, parameters, default);
-        }
-
-        private static void ValidateParameters(IReadOnlyCollection<AssociationRule> associationRules,
-            MaximalCliqueFindingParameters parameters)
         {
             if (associationRules == null)
                 throw new ArgumentNullException(nameof(associationRules));
 
-            if (associationRules.Any(item => item == null))
+            if (parameters == null)
+                throw new ArgumentNullException(nameof(parameters));
+
+            if (associationRules.Contains(null))
             {
                 throw new ArgumentException("Collection of association rules cannot contain null items.",
                     nameof(associationRules));
             }
 
-            if (associationRules.Distinct().Count() != associationRules.Count)
+            if (associationRules.Distinct().Count() != associationRules.Count())
             {
                 throw new ArgumentException("Collection of association rules cannot contain same items.",
                     nameof(associationRules));
             }
 
-            if (parameters == null)
-                throw new ArgumentNullException(nameof(parameters));
+            token.ThrowIfCancellationRequested();
+
+            if (!associationRules.Any())
+                return Array.Empty<IReadOnlyCollection<AssociationRule>>();
+
+            var itemsCount = associationRules.Select(r => r.LeftHandSide.Item)
+                .Union(associationRules.Select(r => r.RightHandSide.Item))
+                .Count();
+
+            token.ThrowIfCancellationRequested();
+
+            if (itemsCount <= byte.MaxValue + 1)
+            {
+                byte vertexCounter = 0;
+
+                var (itemToVertexMap, vertexToItemMap) = MarkupItems(associationRules, () => vertexCounter++, token);
+
+                return FindInternal(associationRules, parameters, itemToVertexMap, vertexToItemMap, token);
+            }
+            // ReSharper disable once RedundantIfElseBlock
+            else if (itemsCount <= ushort.MaxValue + 1)
+            {
+                ushort vertexCounter = 0;
+
+                var (itemToVertexMap, vertexToItemMap) = MarkupItems(associationRules, () => vertexCounter++, token);
+
+                return FindInternal(associationRules, parameters, itemToVertexMap, vertexToItemMap, token);
+            }
+            else
+            {
+                int vertexCounter = 0;
+
+                var (itemToVertexMap, vertexToItemMap) = MarkupItems(associationRules, () => vertexCounter++, token);
+
+                return FindInternal(associationRules, parameters, itemToVertexMap, vertexToItemMap, token);
+            }
         }
 
         private static (IReadOnlyDictionary<Item, TVertex>, IReadOnlyDictionary<TVertex, Item>) MarkupItems<TVertex>(
-            IReadOnlyCollection<AssociationRule> associationRules, Func<TVertex> generateVertex)
+            IEnumerable<AssociationRule> associationRules,
+            Func<TVertex> generateVertex,
+            CancellationToken token)
         {
             var itemToVertexMap = new Dictionary<Item, TVertex>();
             var vertexToItemMap = new Dictionary<TVertex, Item>();
 
             foreach (var associationRule in associationRules)
             {
+                token.ThrowIfCancellationRequested();
+
                 MarkupItem(associationRule.LeftHandSide);
                 MarkupItem(associationRule.RightHandSide);
             }
@@ -79,58 +120,36 @@ namespace MarketBasketAnalysis.Analysis
             }
         }
 
-        private static IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> FindInternal(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
+        private IEnumerable<IReadOnlyCollection<AssociationRule>> FindInternal<TVertex>(
+            IEnumerable<AssociationRule> associationRules,
+            MaximalCliqueFindingParameters parameters,
+            IReadOnlyDictionary<Item, TVertex> itemToVertexMap,
+            IReadOnlyDictionary<TVertex, Item> vertexToItemMap,
             CancellationToken token)
+            where TVertex : struct
         {
-            if (associationRules.Count == 0)
-                return Array.Empty<IReadOnlyCollection<AssociationRule>>();
+            var adjacencyList = ConvertToAdjacencyList(associationRules, parameters, itemToVertexMap, token);
+            var itemPairToAssociationRuleMap = associationRules.ToDictionary(associationRule =>
+                (associationRule.LeftHandSide.Item, associationRule.RightHandSide.Item));
 
-            var itemsCount = associationRules.Select(r => r.LeftHandSide.Item)
-                .Union(associationRules.Select(r => r.RightHandSide.Item))
-                .Count();
+            token.ThrowIfCancellationRequested();
 
-            if (itemsCount <= byte.MaxValue)
+            var maximalCliques = _maximalCliqueAlgorithm.Find(
+                adjacencyList, parameters.MinCliqueSize, parameters.MaxCliqueSize, token);
+
+            foreach (var maximalClique in maximalCliques)
             {
-                byte vertexCounter = 0;
+                token.ThrowIfCancellationRequested();
 
-                return FindInternal(associationRules, parameters, MarkupItems(associationRules, () => vertexCounter++), token);
-            }
-            // ReSharper disable once RedundantIfElseBlock
-            else if (itemsCount <= ushort.MaxValue)
-            {
-                ushort vertexCounter = 0;
-
-                return FindInternal(associationRules, parameters, MarkupItems(associationRules, () => vertexCounter++), token);
-            }
-            else
-            {
-                int vertexCounter = 0;
-
-                return FindInternal(associationRules, parameters, MarkupItems(associationRules, () => vertexCounter++), token);
+                yield return ConvertToAssociationRules(maximalClique, vertexToItemMap, itemPairToAssociationRuleMap);
             }
         }
 
-        private static IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> FindInternal<TVertex>(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
-            (IReadOnlyDictionary<Item, TVertex>, IReadOnlyDictionary<TVertex, Item>) maps,
+        private Dictionary<TVertex, HashSet<TVertex>> ConvertToAdjacencyList<TVertex>(
+            IEnumerable<AssociationRule> associationRules,
+            MaximalCliqueFindingParameters parameters,
+            IReadOnlyDictionary<Item, TVertex> itemToVertexMap,
             CancellationToken token)
-            where TVertex: struct
-        {
-            var adjacencyList = ConvertToAdjacencyList(associationRules, parameters, maps.Item1, token);
-
-            var maximalCliques = new TomitaAlgorithm()
-                .Find(adjacencyList, parameters.MinCliqueSize, parameters.MaxCliqueSize, token);
-
-            var associationRuleSubsets =
-                ConvertToAssociationRuleSubsets(maximalCliques, associationRules, maps.Item2, token);
-
-            return associationRuleSubsets;
-        }
-
-        private static Dictionary<TVertex, HashSet<TVertex>> ConvertToAdjacencyList<TVertex>(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
-            IReadOnlyDictionary<Item, TVertex> itemToVertexMap, CancellationToken token)
         {
             var adjacencyList = new Dictionary<TVertex, HashSet<TVertex>>();
 
@@ -141,12 +160,6 @@ namespace MarketBasketAnalysis.Analysis
                 foreach (var associationRule in associationRules)
                 {
                     token.ThrowIfCancellationRequested();
-
-                    if (parameters.AssociationRuleFilter != null &&
-                        !parameters.AssociationRuleFilter(associationRule))
-                    {
-                        continue;
-                    }
 
                     var sourceVertex = itemToVertexMap[associationRule.LeftHandSide.Item];
                     var targetVertex = itemToVertexMap[associationRule.RightHandSide.Item];
@@ -167,12 +180,6 @@ namespace MarketBasketAnalysis.Analysis
                 foreach (var associationRule in associationRules)
                 {
                     token.ThrowIfCancellationRequested();
-
-                    if (parameters.AssociationRuleFilter != null &&
-                        !parameters.AssociationRuleFilter(associationRule))
-                    {
-                        continue;
-                    }
 
                     var sourceVertex = itemToVertexMap[associationRule.LeftHandSide.Item];
                     var targetVertex = itemToVertexMap[associationRule.RightHandSide.Item];
@@ -203,37 +210,28 @@ namespace MarketBasketAnalysis.Analysis
             }
         }
 
-        private static IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> ConvertToAssociationRuleSubsets<TVertex>(
-            IReadOnlyCollection<MaximalClique<TVertex>> maximalCliques, IReadOnlyCollection<AssociationRule> associationRules,
-            IReadOnlyDictionary<TVertex, Item> vertexToItemMap, CancellationToken token)
+        private static IReadOnlyCollection<AssociationRule> ConvertToAssociationRules<TVertex>(
+            MaximalClique<TVertex> maximalClique,
+            IReadOnlyDictionary<TVertex, Item> vertexToItemMap,
+            IReadOnlyDictionary<(Item, Item), AssociationRule> itemPairToAssociationRuleMap)
             where TVertex : struct
         {
-            var associationRuleMap = associationRules.ToDictionary(associationRule =>
-                (associationRule.LeftHandSide.Item, associationRule.RightHandSide.Item));
+            var associationRuleSubset = new List<AssociationRule>();
 
-            return maximalCliques
-                .Select(maximalClique =>
+            foreach (var sourceVertex in maximalClique)
+            {
+                var leftHandSide = vertexToItemMap[sourceVertex];
+
+                foreach (var targetVertex in maximalClique)
                 {
-                    token.ThrowIfCancellationRequested();
+                    var rightHandSide = vertexToItemMap[targetVertex];
 
-                    var associationRuleSubset = new List<AssociationRule>();
+                    if (itemPairToAssociationRuleMap.TryGetValue((leftHandSide, rightHandSide), out var associationRule))
+                        associationRuleSubset.Add(associationRule);
+                }
+            }
 
-                    foreach (var sourceVertex in maximalClique)
-                    {
-                        var leftHandSide = vertexToItemMap[sourceVertex];
-
-                        foreach (var targetVertex in maximalClique)
-                        {
-                            var rightHandSide = vertexToItemMap[targetVertex];
-
-                            if (associationRuleMap.TryGetValue((leftHandSide, rightHandSide), out var associationRule))
-                                associationRuleSubset.Add(associationRule);
-                        }
-                    }
-
-                    return associationRuleSubset;
-                })
-                .ToList();
+            return associationRuleSubset;
         }
     }
 }
