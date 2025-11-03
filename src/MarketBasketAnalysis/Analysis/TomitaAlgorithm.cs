@@ -94,12 +94,23 @@ namespace MarketBasketAnalysis.Analysis
             CancellationToken token = default)
             where TVertex : struct
         {
+            ValidateParameters(adjacencyList, minCliqueSize, maxCliqueSize);
+
+            return FindInternal(adjacencyList, minCliqueSize, maxCliqueSize, token);
+        }
+
+        private static void ValidateParameters<TVertex>(
+            IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
+            int minCliqueSize,
+            int maxCliqueSize)
+            where TVertex : struct
+        {
             if (adjacencyList == null)
                 throw new ArgumentNullException(nameof(adjacencyList));
 
             if (adjacencyList.Any(pair => pair.Value == null))
                 throw new ArgumentException("Adjacency list cannot contain null values.");
-            
+
             if (minCliqueSize <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(minCliqueSize), minCliqueSize,
@@ -111,12 +122,20 @@ namespace MarketBasketAnalysis.Analysis
                 throw new ArgumentOutOfRangeException(nameof(maxCliqueSize), maxCliqueSize,
                     "Maximum clique size must be greater than or equal to minimum clique size");
             }
+        }
 
+        private static IEnumerable<MaximalClique<TVertex>> FindInternal<TVertex>(
+            IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
+            int minCliqueSize,
+            int maxCliqueSize,
+            CancellationToken token = default)
+            where TVertex : struct
+        {
             token.ThrowIfCancellationRequested();
 
             var currentState = new LocalState<TVertex>(Array.Empty<TVertex>(),
                 new HashSet<TVertex>(adjacencyList.Keys), new HashSet<TVertex>(), adjacencyList);
-            
+
             var stack = new Stack<LocalState<TVertex>>();
 
             TVertex candidateVertex;
