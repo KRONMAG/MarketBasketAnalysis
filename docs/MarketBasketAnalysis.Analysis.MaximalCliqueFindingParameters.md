@@ -26,12 +26,12 @@ public class MaximalCliqueFindingParameters
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters__ctor_System_Int32_System_Int32_System_Boolean_System_Predicate_MarketBasketAnalysis_AssociationRule__"></a> MaximalCliqueFindingParameters\(int, int, bool, Predicate<AssociationRule\>\)
+### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters__ctor_System_Int32_System_Int32_System_Boolean_"></a> MaximalCliqueFindingParameters\(int, int, bool\)
 
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public MaximalCliqueFindingParameters(int minCliqueSize, int maxCliqueSize, bool ignoreOneWayLinks = false, Predicate<AssociationRule> associationRuleFilter = null)
+public MaximalCliqueFindingParameters(int minCliqueSize, int maxCliqueSize, bool ignoreOneWayLinks = false)
 ```
 
 #### Parameters
@@ -48,10 +48,6 @@ The maximum size of a clique to be considered.
 
 A value indicating whether one-way links should be ignored.
 
-`associationRuleFilter` [Predicate](https://learn.microsoft.com/dotnet/api/system.predicate\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-A predicate used to filter association rules before finding maximal cliques. If <code>null</code>, all rules are considered.
-
 #### Exceptions
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
@@ -60,19 +56,6 @@ Thrown if <code class="paramref">minCliqueSize</code> is less than or equal to z
 or if <code class="paramref">maxCliqueSize</code> is less than <code class="paramref">minCliqueSize</code>.
 
 ## Properties
-
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_AssociationRuleFilter"></a> AssociationRuleFilter
-
-Gets the predicate used to filter association rules before finding maximal cliques.
-If <code>null</code>, all rules are considered.
-
-```csharp
-public Predicate<AssociationRule> AssociationRuleFilter { get; }
-```
-
-#### Property Value
-
- [Predicate](https://learn.microsoft.com/dotnet/api/system.predicate\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
 ### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_IgnoreOneWayLinks"></a> IgnoreOneWayLinks
 

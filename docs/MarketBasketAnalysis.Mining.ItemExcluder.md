@@ -33,12 +33,12 @@ public class ItemExcluder : IItemExcluder
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.ItemExcluder" data-throw-if-not-resolved="false"></xref> class with the specified collection of exclusion rules.
 
 ```csharp
-public ItemExcluder(IReadOnlyCollection<ItemExclusionRule> exclusionRules)
+public ItemExcluder(IReadOnlyCollection<ItemExclusionRule> itemExclusionRules)
 ```
 
 #### Parameters
 
-`exclusionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)\>
+`itemExclusionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)\>
 
 A collection of <xref href="MarketBasketAnalysis.Mining.ItemExclusionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for excluding items.
 Each rule specifies the criteria for determining whether an item should be excluded.
@@ -47,11 +47,11 @@ Each rule specifies the criteria for determining whether an item should be exclu
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
 
-Thrown if <code class="paramref">exclusionRules</code> is <code>null</code>.
+Thrown if <code class="paramref">itemExclusionRules</code> is <code>null</code>.
 
  [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
 
-Thrown if <code class="paramref">exclusionRules</code> contains <code>null</code> elements.
+Thrown if <code class="paramref">itemExclusionRules</code> is empty or contains <code>null</code> items.
 
 ## Methods
 

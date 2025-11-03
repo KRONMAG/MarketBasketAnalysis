@@ -25,44 +25,42 @@ public sealed class Miner : IMiner
 [object.ReferenceEquals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.referenceequals), 
 [object.ToString\(\)](https://learn.microsoft.com/dotnet/api/system.object.tostring)
 
-## Methods
+## Constructors
 
-### <a id="MarketBasketAnalysis_Mining_Miner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_"></a> Mine\(IEnumerable<Item\[\]\>, MiningParameters\)
+### <a id="MarketBasketAnalysis_Mining_Miner__ctor_System_Func_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemConversionRule__MarketBasketAnalysis_Mining_IItemConverter__System_Func_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemExclusionRule__MarketBasketAnalysis_Mining_IItemExcluder__"></a> Miner\(Func<IReadOnlyCollection<ItemConversionRule\>, IItemConverter\>, Func<IReadOnlyCollection<ItemExclusionRule\>, IItemExcluder\>\)
 
-Performs association rule mining synchronously.
+Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.Miner" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters)
+public Miner(Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> itemConverterFactory, Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> itemExcluderFactory)
 ```
 
 #### Parameters
 
-`transactions` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[Item](MarketBasketAnalysis.Item.md)\[\]\>
+`itemConverterFactory` [Func](https://learn.microsoft.com/dotnet/api/system.func\-2)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemConversionRule](MarketBasketAnalysis.Mining.ItemConversionRule.md)\>, [IItemConverter](MarketBasketAnalysis.Mining.IItemConverter.md)\>
 
-A collection of transactions, where each transaction is represented as an array of items.
+A factory function that creates an <xref href="MarketBasketAnalysis.Mining.IItemConverter" data-throw-if-not-resolved="false"></xref> based on a collection of <xref href="MarketBasketAnalysis.Mining.ItemConversionRule" data-throw-if-not-resolved="false"></xref>.
+This is used to define how items are grouped or replaced during mining.
 
-`parameters` [MiningParameters](MarketBasketAnalysis.Mining.MiningParameters.md)
+`itemExcluderFactory` [Func](https://learn.microsoft.com/dotnet/api/system.func\-2)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)\>, [IItemExcluder](MarketBasketAnalysis.Mining.IItemExcluder.md)\>
 
-The mining parameters, including minimum support and confidence thresholds.
-
-#### Returns
-
- [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-A collection of association rules that meet the specified parameters.
+A factory function that creates an <xref href="MarketBasketAnalysis.Mining.IItemExcluder" data-throw-if-not-resolved="false"></xref> based on a collection of <xref href="MarketBasketAnalysis.Mining.ItemExclusionRule" data-throw-if-not-resolved="false"></xref>.
+This is used to define which items or groups should be excluded from mining.
 
 #### Exceptions
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
 
-Thrown if <code class="paramref">transactions</code> or <code class="paramref">parameters</code> is <code>null</code>.
+Thrown if <code class="paramref">itemConverterFactory</code> or <code class="paramref">itemExcluderFactory</code> is <code>null</code>.
 
-### <a id="MarketBasketAnalysis_Mining_Miner_MineAsync_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> MineAsync\(IEnumerable<Item\[\]\>, MiningParameters, CancellationToken\)
+## Methods
 
-Performs association rule mining asynchronously.
+### <a id="MarketBasketAnalysis_Mining_Miner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> Mine\(IEnumerable<Item\[\]\>, MiningParameters, CancellationToken\)
+
+Performs association rule mining.
 
 ```csharp
-public Task<IReadOnlyCollection<AssociationRule>> MineAsync(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
+public IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
 ```
 
 #### Parameters
@@ -77,13 +75,13 @@ The mining parameters, including minimum support and confidence thresholds.
 
 `token` [CancellationToken](https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken)
 
-A cancellation token to interrupt the operation.
+A cancellation token to cancel the operation if needed.
 
 #### Returns
 
- [Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>
+ [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
-A task representing the asynchronous operation, with a result of a collection of association rules.
+A collection of association rules that meet the specified parameters.
 
 #### Exceptions
 

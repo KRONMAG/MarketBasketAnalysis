@@ -11,42 +11,12 @@ public interface IMiner
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Mining_IMiner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_"></a> Mine\(IEnumerable<Item\[\]\>, MiningParameters\)
+### <a id="MarketBasketAnalysis_Mining_IMiner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> Mine\(IEnumerable<Item\[\]\>, MiningParameters, CancellationToken\)
 
-Performs association rule mining synchronously.
-
-```csharp
-IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters)
-```
-
-#### Parameters
-
-`transactions` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[Item](MarketBasketAnalysis.Item.md)\[\]\>
-
-A collection of transactions, where each transaction is represented as an array of items.
-
-`parameters` [MiningParameters](MarketBasketAnalysis.Mining.MiningParameters.md)
-
-The mining parameters, including minimum support and confidence thresholds.
-
-#### Returns
-
- [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-A collection of association rules that meet the specified parameters.
-
-#### Exceptions
-
- [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
-
-Thrown if <code class="paramref">transactions</code> or <code class="paramref">parameters</code> is <code>null</code>.
-
-### <a id="MarketBasketAnalysis_Mining_IMiner_MineAsync_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> MineAsync\(IEnumerable<Item\[\]\>, MiningParameters, CancellationToken\)
-
-Performs association rule mining asynchronously.
+Performs association rule mining.
 
 ```csharp
-Task<IReadOnlyCollection<AssociationRule>> MineAsync(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
+IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
 ```
 
 #### Parameters
@@ -61,13 +31,13 @@ The mining parameters, including minimum support and confidence thresholds.
 
 `token` [CancellationToken](https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken)
 
-A cancellation token to interrupt the operation.
+A cancellation token to cancel the operation if needed.
 
 #### Returns
 
- [Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>
+ [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
-A task representing the asynchronous operation, with a result of a collection of association rules.
+A collection of association rules that meet the specified parameters.
 
 #### Exceptions
 

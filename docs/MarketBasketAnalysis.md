@@ -4,6 +4,8 @@
 
  [MarketBasketAnalysis.Analysis](MarketBasketAnalysis.Analysis.md)
 
+ [MarketBasketAnalysis.Extensions](MarketBasketAnalysis.Extensions.md)
+
  [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)
 
 ### Classes
@@ -16,6 +18,10 @@ where the presence of one item (left hand side) implies the presence of another 
  [AssociationRulePart](MarketBasketAnalysis.AssociationRulePart.md)
 
 Represents a part of an association rule, either the left-hand side or the right-hand side.
+
+ [DependencyInjection](MarketBasketAnalysis.DependencyInjection.md)
+
+Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
 
  [Item](MarketBasketAnalysis.Item.md)
 

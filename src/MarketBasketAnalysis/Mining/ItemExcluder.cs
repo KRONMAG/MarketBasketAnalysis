@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using MarketBasketAnalysis.Extensions;
 
 namespace MarketBasketAnalysis.Mining
 {
@@ -10,7 +11,7 @@ namespace MarketBasketAnalysis.Mining
     {
         #region Fields and Properties
 
-        private readonly IReadOnlyCollection<ItemExclusionRule> _exclusionRules;
+        private readonly IReadOnlyCollection<ItemExclusionRule> _itemExclusionRules;
 
         private readonly ConcurrentDictionary<Item, int> _allowedItems;
         private readonly ConcurrentDictionary<Item, int> _notAllowedItems;
@@ -22,34 +23,24 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemExcluder"/> class with the specified collection of exclusion rules.
         /// </summary>
-        /// <param name="exclusionRules">
+        /// <param name="itemExclusionRules">
         /// A collection of <see cref="ItemExclusionRule"/> objects that define the rules for excluding items.
         /// Each rule specifies the criteria for determining whether an item should be excluded.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="exclusionRules"/> is <c>null</c>.
+        /// Thrown if <paramref name="itemExclusionRules"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="exclusionRules"/> contains <c>null</c> elements.
+        /// Thrown if <paramref name="itemExclusionRules"/> is empty or contains <c>null</c> items.
         /// </exception>
-        public ItemExcluder(IReadOnlyCollection<ItemExclusionRule> exclusionRules)
+        public ItemExcluder(IReadOnlyCollection<ItemExclusionRule> itemExclusionRules)
         {
-            if (exclusionRules == null)
-                throw new ArgumentNullException(nameof(exclusionRules));
+            if (itemExclusionRules == null)
+                throw new ArgumentNullException(nameof(itemExclusionRules));
 
-            if (exclusionRules.Count == 0)
-            {
-                throw new ArgumentException("Collection of item exclusion rules cannot be empty.",
-                    nameof(exclusionRules));
-            }
+            itemExclusionRules.Validate(nameof(itemExclusionRules));
 
-            if (exclusionRules.Any(item => item == null))
-            {
-                throw new ArgumentException("Collection of item exclusion rules cannot contain null items.",
-                    nameof(exclusionRules));
-            }
-
-            _exclusionRules = exclusionRules;
+            _itemExclusionRules = itemExclusionRules;
 
             _allowedItems = new ConcurrentDictionary<Item, int>();
             _notAllowedItems = new ConcurrentDictionary<Item, int>();
@@ -71,7 +62,7 @@ namespace MarketBasketAnalysis.Mining
             if (_notAllowedItems.ContainsKey(item))
                 return true;
 
-            var shouldExclude = _exclusionRules.Any(er => er.ShouldExclude(item));
+            var shouldExclude = _itemExclusionRules.Any(er => er.ShouldExclude(item));
 
             if (shouldExclude)
                 _notAllowedItems.TryAdd(item, default);

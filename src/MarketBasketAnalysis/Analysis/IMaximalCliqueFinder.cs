@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-// ReSharper disable UnusedMember.Global
 
 namespace MarketBasketAnalysis.Analysis
 {
@@ -14,30 +12,12 @@ namespace MarketBasketAnalysis.Analysis
     public interface IMaximalCliqueFinder
     {
         /// <summary>
-        /// Finds maximal cliques in the given collection of association rules synchronously.
-        /// </summary>
-        /// <param name="associationRules">The collection of association rules to analyze.</param>
-        /// <param name="parameters">The parameters for finding maximal cliques.</param>
-        /// <returns>A collection of maximal cliques, where each clique is represented as a collection of association rules.</returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="associationRules"/> or <paramref name="parameters"/> is <c>null</c>.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="associationRules"/> contains <c>null</c> items or duplicate items.
-        /// </exception>
-        IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> Find(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters);
-
-        /// <summary>
-        /// Finds maximal cliques in the given collection of association rules asynchronously.
+        /// Finds maximal cliques in the given collection of association rules.
         /// </summary>
         /// <param name="associationRules">The collection of association rules to analyze.</param>
         /// <param name="parameters">The parameters for finding maximal cliques.</param>
         /// <param name="token">A cancellation token to cancel the operation if needed.</param>
-        /// <returns>
-        /// A task representing the asynchronous operation, with a result of a collection of maximal cliques,
-        /// where each clique is represented as a collection of association rules.
-        /// </returns>
+        /// <returns>A collection of maximal cliques, where each clique is represented as a collection of association rules.</returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="associationRules"/> or <paramref name="parameters"/> is <c>null</c>.
         /// </exception>
@@ -47,8 +27,9 @@ namespace MarketBasketAnalysis.Analysis
         /// <exception cref="OperationCanceledException">
         /// Thrown if the operation is canceled via the <paramref name="token"/>.
         /// </exception>
-        Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>> FindAsync(
-            IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters,
+        IEnumerable<IReadOnlyCollection<AssociationRule>> Find(
+            IEnumerable<AssociationRule> associationRules,
+            MaximalCliqueFindingParameters parameters,
             CancellationToken token = default);
     }
 }

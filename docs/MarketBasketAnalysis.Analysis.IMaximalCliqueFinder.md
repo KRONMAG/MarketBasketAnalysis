@@ -13,51 +13,17 @@ public interface IMaximalCliqueFinder
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_"></a> Find\(IReadOnlyCollection<AssociationRule\>, MaximalCliqueFindingParameters\)
+### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> Find\(IEnumerable<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
 
-Finds maximal cliques in the given collection of association rules synchronously.
+Finds maximal cliques in the given collection of association rules.
 
 ```csharp
-IReadOnlyCollection<IReadOnlyCollection<AssociationRule>> Find(IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters)
+IEnumerable<IReadOnlyCollection<AssociationRule>> Find(IEnumerable<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters, CancellationToken token = default)
 ```
 
 #### Parameters
 
-`associationRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-The collection of association rules to analyze.
-
-`parameters` [MaximalCliqueFindingParameters](MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md)
-
-The parameters for finding maximal cliques.
-
-#### Returns
-
- [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>
-
-A collection of maximal cliques, where each clique is represented as a collection of association rules.
-
-#### Exceptions
-
- [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
-
-Thrown if <code class="paramref">associationRules</code> or <code class="paramref">parameters</code> is <code>null</code>.
-
- [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
-
-Thrown if <code class="paramref">associationRules</code> contains <code>null</code> items or duplicate items.
-
-### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_FindAsync_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> FindAsync\(IReadOnlyCollection<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
-
-Finds maximal cliques in the given collection of association rules asynchronously.
-
-```csharp
-Task<IReadOnlyCollection<IReadOnlyCollection<AssociationRule>>> FindAsync(IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters, CancellationToken token = default)
-```
-
-#### Parameters
-
-`associationRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`associationRules` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
 The collection of association rules to analyze.
 
@@ -71,10 +37,9 @@ A cancellation token to cancel the operation if needed.
 
 #### Returns
 
- [Task](https://learn.microsoft.com/dotnet/api/system.threading.tasks.task\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>\>
+ [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>
 
-A task representing the asynchronous operation, with a result of a collection of maximal cliques,
-where each clique is represented as a collection of association rules.
+A collection of maximal cliques, where each clique is represented as a collection of association rules.
 
 #### Exceptions
 

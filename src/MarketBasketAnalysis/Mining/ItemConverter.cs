@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MarketBasketAnalysis.Extensions;
 
 namespace MarketBasketAnalysis.Mining
 {
@@ -9,7 +10,7 @@ namespace MarketBasketAnalysis.Mining
     {
         #region Fields and Properties
 
-        private readonly Dictionary<Item, ItemConversionRule> _replacementRules;
+        private readonly Dictionary<Item, ItemConversionRule> _itemConversionRules;
 
         #endregion
 
@@ -18,39 +19,23 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemConverter"/> class with the specified collection of conversion rules.
         /// </summary>
-        /// <param name="conversionRules">
+        /// <param name="itemConversionRules">
         /// A collection of <see cref="ItemConversionRule"/> objects that define the rules for converting items.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="conversionRules"/> is <c>null</c>.
+        /// Thrown if <paramref name="itemConversionRules"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="conversionRules"/> is empty or contains <c>null</c> elements or duplicate rules.
+        /// Thrown if <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or same rules.
         /// </exception>
-        public ItemConverter(IReadOnlyCollection<ItemConversionRule> conversionRules)
+        public ItemConverter(IReadOnlyCollection<ItemConversionRule> itemConversionRules)
         {
-            if (conversionRules == null)
-                throw new ArgumentNullException(nameof(conversionRules));
+            if (itemConversionRules == null)
+                throw new ArgumentNullException(nameof(itemConversionRules));
 
-            if (conversionRules.Count == 0)
-            {
-                throw new ArgumentException("Collection of item conversion rules cannot be empty.",
-                    nameof(conversionRules));
-            }
+            itemConversionRules.Validate(nameof(itemConversionRules));
 
-            if (conversionRules.Any(item => item == null))
-            {
-                throw new ArgumentException("Collection of item conversion rules cannot contain null items.",
-                    nameof(conversionRules));
-            }
-
-            if (conversionRules.Distinct().Count() != conversionRules.Count)
-            {
-                throw new ArgumentException("Collection of item conversion rules cannot contain same items.",
-                    nameof(conversionRules));
-            }
-
-            _replacementRules = conversionRules.ToDictionary(rule => rule.SourceItem);
+            _itemConversionRules = itemConversionRules.ToDictionary(rule => rule.SourceItem);
         }
 
         #endregion
@@ -63,7 +48,7 @@ namespace MarketBasketAnalysis.Mining
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
 
-            if (_replacementRules.TryGetValue(item, out var replacementRule))
+            if (_itemConversionRules.TryGetValue(item, out var replacementRule))
             {
                 group = replacementRule.TargetItem;
 
