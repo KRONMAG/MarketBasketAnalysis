@@ -2,8 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsNotAsErrors>S1135</WarningsNotAsErrors>
 		<AnalysisMode>all</AnalysisMode>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<PackageId>MarketBasketAnalysis</PackageId>
 		<Version>1.0.0-alpha.1</Version>
 		<Authors>KRONMAG</Authors>
