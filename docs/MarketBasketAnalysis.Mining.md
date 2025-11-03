@@ -16,6 +16,8 @@ Represents a rule for excluding items or groups from association rule mining.
 
  [Miner](MarketBasketAnalysis.Mining.Miner.md)
 
+ [MinerFactory](MarketBasketAnalysis.Mining.MinerFactory.md)
+
  [MiningParameters](MarketBasketAnalysis.Mining.MiningParameters.md)
 
 Represents the parameters used for mining association rules.
@@ -33,6 +35,10 @@ Defines a method to determine whether a specific item should be excluded during 
  [IMiner](MarketBasketAnalysis.Mining.IMiner.md)
 
 Defines an interface for performing association rule mining based on transaction data.
+
+ [IMinerFactory](MarketBasketAnalysis.Mining.IMinerFactory.md)
+
+Defines an interface for factory interface for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
 
 ### Enums
 

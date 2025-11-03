@@ -7,23 +7,33 @@
     href: MarketBasketAnalysis.AssociationRule.md
   - name: AssociationRulePart
     href: MarketBasketAnalysis.AssociationRulePart.md
+  - name: DependencyInjection
+    href: MarketBasketAnalysis.DependencyInjection.md
   - name: Item
     href: MarketBasketAnalysis.Item.md
 - name: MarketBasketAnalysis.Analysis
   href: MarketBasketAnalysis.Analysis.md
   items:
   - name: Classes
+  - name: MaximalClique<TVertex>
+    href: MarketBasketAnalysis.Analysis.MaximalClique-1.md
   - name: MaximalCliqueFinder
     href: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.md
   - name: MaximalCliqueFindingParameters
     href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md
-  - name: SetOperationsPerformer
-    href: MarketBasketAnalysis.Analysis.SetOperationsPerformer.md
+  - name: TomitaAlgorithm
+    href: MarketBasketAnalysis.Analysis.TomitaAlgorithm.md
   - name: Interfaces
+  - name: IMaximalCliqueAlgorithm
+    href: MarketBasketAnalysis.Analysis.IMaximalCliqueAlgorithm.md
   - name: IMaximalCliqueFinder
     href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.md
-  - name: ISetOperationsPerformer
-    href: MarketBasketAnalysis.Analysis.ISetOperationsPerformer.md
+- name: MarketBasketAnalysis.Extensions
+  href: MarketBasketAnalysis.Extensions.md
+  items:
+  - name: Classes
+  - name: AssociationRuleExtensions
+    href: MarketBasketAnalysis.Extensions.AssociationRuleExtensions.md
 - name: MarketBasketAnalysis.Mining
   href: MarketBasketAnalysis.Mining.md
   items:
@@ -38,6 +48,8 @@
     href: MarketBasketAnalysis.Mining.ItemExclusionRule.md
   - name: Miner
     href: MarketBasketAnalysis.Mining.Miner.md
+  - name: MinerFactory
+    href: MarketBasketAnalysis.Mining.MinerFactory.md
   - name: MiningParameters
     href: MarketBasketAnalysis.Mining.MiningParameters.md
   - name: Interfaces
@@ -47,6 +59,8 @@
     href: MarketBasketAnalysis.Mining.IItemExcluder.md
   - name: IMiner
     href: MarketBasketAnalysis.Mining.IMiner.md
+  - name: IMinerFactory
+    href: MarketBasketAnalysis.Mining.IMinerFactory.md
   - name: Enums
   - name: MiningStage
     href: MarketBasketAnalysis.Mining.MiningStage.md

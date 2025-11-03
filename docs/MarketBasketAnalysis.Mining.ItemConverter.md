@@ -32,12 +32,12 @@ public sealed class ItemConverter : IItemConverter
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.ItemConverter" data-throw-if-not-resolved="false"></xref> class with the specified collection of conversion rules.
 
 ```csharp
-public ItemConverter(IReadOnlyCollection<ItemConversionRule> conversionRules)
+public ItemConverter(IReadOnlyCollection<ItemConversionRule> itemConversionRules)
 ```
 
 #### Parameters
 
-`conversionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemConversionRule](MarketBasketAnalysis.Mining.ItemConversionRule.md)\>
+`itemConversionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemConversionRule](MarketBasketAnalysis.Mining.ItemConversionRule.md)\>
 
 A collection of <xref href="MarketBasketAnalysis.Mining.ItemConversionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for converting items.
 
@@ -45,11 +45,11 @@ A collection of <xref href="MarketBasketAnalysis.Mining.ItemConversionRule" data
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
 
-Thrown if <code class="paramref">conversionRules</code> is <code>null</code>.
+Thrown if <code class="paramref">itemConversionRules</code> is <code>null</code>.
 
  [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
 
-Thrown if <code class="paramref">conversionRules</code> is empty or contains <code>null</code> elements or duplicate rules.
+Thrown if <code class="paramref">itemConversionRules</code> is empty or contains <code>null</code> or same rules.
 
 ## Methods
 

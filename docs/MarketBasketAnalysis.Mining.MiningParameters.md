@@ -25,12 +25,12 @@ public sealed class MiningParameters
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Mining_MiningParameters__ctor_System_Double_System_Double_MarketBasketAnalysis_Mining_IItemConverter_MarketBasketAnalysis_Mining_IItemExcluder_System_Int32_"></a> MiningParameters\(double, double, IItemConverter, IItemExcluder, int\)
+### <a id="MarketBasketAnalysis_Mining_MiningParameters__ctor_System_Double_System_Double_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemConversionRule__System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemExclusionRule__System_Int32_"></a> MiningParameters\(double, double, IReadOnlyCollection<ItemConversionRule\>, IReadOnlyCollection<ItemExclusionRule\>, int\)
 
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.MiningParameters" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public MiningParameters(double minSupport, double minConfidence, IItemConverter itemConverter = null, IItemExcluder itemExcluder = null, int degreeOfParallelism = 1)
+public MiningParameters(double minSupport, double minConfidence, IReadOnlyCollection<ItemConversionRule> itemConversionRules = null, IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null, int degreeOfParallelism = 1)
 ```
 
 #### Parameters
@@ -43,13 +43,13 @@ The minimum support threshold for identifying frequent itemsets.
 
 The minimum confidence threshold for generating association rules.
 
-`itemConverter` [IItemConverter](MarketBasketAnalysis.Mining.IItemConverter.md)
+`itemConversionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemConversionRule](MarketBasketAnalysis.Mining.ItemConversionRule.md)\>
 
-An optional item converter for grouping or transforming items.
+An optional collection of <xref href="MarketBasketAnalysis.Mining.ItemConversionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for converting items.
 
-`itemExcluder` [IItemExcluder](MarketBasketAnalysis.Mining.IItemExcluder.md)
+`itemExclusionRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)\>
 
-An optional item excluder for filtering out specific items.
+An optional collection of <xref href="MarketBasketAnalysis.Mining.ItemExclusionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for excluding items.
 
 `degreeOfParallelism` [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
@@ -59,8 +59,19 @@ The degree of parallelism to use during the mining process.
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
 
-Thrown if <code class="paramref">minSupport</code> or <code class="paramref">minConfidence</code> is not between 0 and 1,
-or if <code class="paramref">degreeOfParallelism</code> is not between 1 and 512.
+<p><strong>Thrown if:</strong></p><ol><li>
+            <code class="paramref">minSupport</code> or <code class="paramref">minConfidence</code> is not between 0 and 1;
+        </li><li>
+            <code class="paramref">degreeOfParallelism</code> is not between 1 and 512.
+        </li></ol>
+
+ [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
+
+<p><strong>Thrown if:</strong></p><ol><li>
+            <code class="paramref">itemConversionRules</code> is empty or contains <code>null</code> or same items;
+        </li><li>
+            <code class="paramref">itemExclusionRules</code> is empty or contains <code>null</code> items.
+        </li></ol>
 
 ## Properties
 
@@ -80,37 +91,29 @@ public int DegreeOfParallelism { get; }
 
 The value must be between 1 and 512, where higher values allow for more parallel processing.
 
-### <a id="MarketBasketAnalysis_Mining_MiningParameters_ItemConverter"></a> ItemConverter
+### <a id="MarketBasketAnalysis_Mining_MiningParameters_ItemConversionRules"></a> ItemConversionRules
 
-Gets the item converter used to group or transform items during the mining process.
+Gets the collection of <xref href="MarketBasketAnalysis.Mining.ItemConversionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for converting items.
 
 ```csharp
-public IItemConverter ItemConverter { get; }
+public IReadOnlyCollection<ItemConversionRule> ItemConversionRules { get; }
 ```
 
 #### Property Value
 
- [IItemConverter](MarketBasketAnalysis.Mining.IItemConverter.md)
+ [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemConversionRule](MarketBasketAnalysis.Mining.ItemConversionRule.md)\>
 
-#### Remarks
+### <a id="MarketBasketAnalysis_Mining_MiningParameters_ItemExclusionRules"></a> ItemExclusionRules
 
-This is an optional parameter that allows for custom item grouping or transformation logic.
-
-### <a id="MarketBasketAnalysis_Mining_MiningParameters_ItemExcluder"></a> ItemExcluder
-
-Gets the item excluder used to filter out specific items from the mining process.
+Gets collection of <xref href="MarketBasketAnalysis.Mining.ItemExclusionRule" data-throw-if-not-resolved="false"></xref> objects that define the rules for excluding items.
 
 ```csharp
-public IItemExcluder ItemExcluder { get; }
+public IReadOnlyCollection<ItemExclusionRule> ItemExclusionRules { get; }
 ```
 
 #### Property Value
 
- [IItemExcluder](MarketBasketAnalysis.Mining.IItemExcluder.md)
-
-#### Remarks
-
-This is an optional parameter that allows for excluding items based on custom logic.
+ [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)\>
 
 ### <a id="MarketBasketAnalysis_Mining_MiningParameters_MinConfidence"></a> MinConfidence
 
