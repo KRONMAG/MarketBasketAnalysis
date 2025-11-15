@@ -1,4 +1,6 @@
-﻿using MarketBasketAnalysis.Mining;
+﻿// Ignore Spelling: Excluder
+
+using MarketBasketAnalysis.Mining;
 using Moq;
 
 namespace MarketBasketAnalysis.UnitTests;
@@ -18,7 +20,6 @@ public class MinerTests
 
     public MinerTests()
     {
-
         _itemA = new(1, "A", false);
         _itemB = new(2, "B", false);
         _itemC = new(3, "C", false);
@@ -78,7 +79,7 @@ public class MinerTests
         // Arrange
         var stages = new List<MiningStage>();
 
-        _miner.MiningStageChanged += (_, stage) => stages.Add(stage);
+        _miner.MiningStageChanged += (_, e) => stages.Add(e.Stage);
 
         // Act
         _miner.Mine(_transactions, new(0, 0));
@@ -95,20 +96,22 @@ public class MinerTests
         // Arrange
         var progressValues = new List<double>();
 
-        _miner.MiningProgressChanged += (_, progress) => progressValues.Add(progress);
+        _miner.MiningProgressChanged += (_, e) => progressValues.Add(e.Progress);
 
         // Act
         _miner.Mine(GenerateTransactions(), new(0, 0));
 
         // Assert
         Assert.NotEmpty(progressValues);
-        Assert.True(progressValues.All(p => p is >= 0 and <= 100));
+        Assert.All(progressValues, v => Assert.InRange(v, 0, 100));
 
         IEnumerable<Item[]> GenerateTransactions()
         {
             foreach (var transaction in _transactions)
             {
+#pragma warning disable S2925 // "Thread.Sleep" should not be used in tests
                 Thread.Sleep(100);
+#pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
 
                 yield return transaction;
             }
@@ -234,7 +237,7 @@ public class MinerTests
         }
     }
 
-    private void AssertEqualAssociationRules(IReadOnlyCollection<AssociationRule> expected, IReadOnlyCollection<AssociationRule> actual)
+    private static void AssertEqualAssociationRules(IReadOnlyCollection<AssociationRule> expected, IReadOnlyCollection<AssociationRule> actual)
     {
         Assert.Equal(expected.Count, actual.Count);
 

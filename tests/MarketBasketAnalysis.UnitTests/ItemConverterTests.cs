@@ -38,6 +38,20 @@ namespace MarketBasketAnalysis.UnitTests
             Assert.Throws<ArgumentException>(() => new ItemConverter([_itemConversionRule, _itemConversionRule]));
 
         [Fact]
+        public void Ctor_ConversionRulesForSameItem_ThrowsArgumentException()
+        {
+            // Arrange
+            var conversionRules = new[]
+            {
+                _itemConversionRule,
+                new ItemConversionRule(_itemConversionRule.SourceItem, new Item(3, "group2", true)),
+            };
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => new ItemConverter(conversionRules));
+        }
+
+        [Fact]
         public void TryConvert_ItemIsNull_ThrowsArgumentNullException() =>
             Assert.Throws<ArgumentNullException>(() => _itemConverter.TryConvert(null, out _));
 

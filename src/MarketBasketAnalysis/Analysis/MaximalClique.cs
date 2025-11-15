@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarketBasketAnalysis.Analysis
 {
@@ -9,7 +10,8 @@ namespace MarketBasketAnalysis.Analysis
     /// and no additional vertex can be added without breaking this property.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
-    public class MaximalClique<TVertex> : IEnumerable<TVertex> where TVertex: struct
+    public sealed class MaximalClique<TVertex> : IEnumerable<TVertex>
+        where TVertex : struct
     {
         private readonly IReadOnlyCollection<TVertex> _vertices;
 
@@ -18,10 +20,27 @@ namespace MarketBasketAnalysis.Analysis
         /// </summary>
         /// <param name="vertices">The collection of vertices that form the maximal clique.</param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="vertices"/> is <c>null</c>.
+        /// Thrown if <paramref name="vertices"/> is <c>null</c>, empty or contains duplicates.
         /// </exception>
-        public MaximalClique(IReadOnlyCollection<TVertex> vertices) =>
-            _vertices = vertices ?? throw new ArgumentNullException(nameof(vertices));
+        public MaximalClique(IReadOnlyCollection<TVertex> vertices)
+        {
+            if (vertices == null)
+            {
+                throw new ArgumentNullException(nameof(vertices));
+            }
+
+            if (vertices.Count == 0)
+            {
+                throw new ArgumentException("Clique cannot be empty.", nameof(vertices));
+            }
+
+            if (vertices.Distinct().Count() != vertices.Count)
+            {
+                throw new ArgumentException("Clique cannot contain duplicate vertices.", nameof(vertices));
+            }
+
+            _vertices = vertices;
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through the vertices in the clique.

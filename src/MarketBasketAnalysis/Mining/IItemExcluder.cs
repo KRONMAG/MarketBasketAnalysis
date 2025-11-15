@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Excluder
+
+using System;
 
 namespace MarketBasketAnalysis.Mining
 {

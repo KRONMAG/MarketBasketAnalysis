@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Excluder
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -11,10 +13,9 @@ using Timer = System.Timers.Timer;
 namespace MarketBasketAnalysis.Mining
 {
     /// <inheritdoc />
-    public sealed class Miner : IMiner
+    internal sealed class Miner : IMiner
     {
         #region Fields and Properties
-
         private readonly Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> _itemConverterFactory;
         private readonly Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> _itemExcluderFactory;
 
@@ -22,24 +23,22 @@ namespace MarketBasketAnalysis.Mining
         private IItemExcluder _itemExcluder;
 
         /// <inheritdoc />
-        public event EventHandler<double> MiningProgressChanged;
+        public event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
 
         /// <inheritdoc />
-        public event EventHandler<MiningStage> MiningStageChanged;
-
+        public event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Miner"/> class.
         /// </summary>
         /// <param name="itemConverterFactory">
-        /// A factory function that creates an <see cref="IItemConverter"/> based on a collection of <see cref="ItemConversionRule"/>.
+        /// A factory function that creates a <see cref="IItemConverter"/> based on a collection of <see cref="ItemConversionRule"/>.
         /// This is used to define how items are grouped or replaced during mining.
         /// </param>
         /// <param name="itemExcluderFactory">
-        /// A factory function that creates an <see cref="IItemExcluder"/> based on a collection of <see cref="ItemExclusionRule"/>.
+        /// A factory function that creates a <see cref="IItemExcluder"/> based on a collection of <see cref="ItemExclusionRule"/>.
         /// This is used to define which items or groups should be excluded from mining.
         /// </param>
         /// <exception cref="ArgumentNullException">
@@ -52,21 +51,25 @@ namespace MarketBasketAnalysis.Mining
             _itemConverterFactory = itemConverterFactory ?? throw new ArgumentNullException(nameof(itemConverterFactory));
             _itemExcluderFactory = itemExcluderFactory ?? throw new ArgumentNullException(nameof(itemExcluderFactory));
         }
-
         #endregion
 
         #region Methods
-
         /// <inheritdoc />
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions,
-            MiningParameters parameters, CancellationToken token = default)
+        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs for IMiner.")]
+        public IReadOnlyCollection<AssociationRule> Mine(
+            IEnumerable<Item[]> transactions,
+            MiningParameters parameters,
+            CancellationToken token = default)
         {
             if (transactions == null)
+            {
                 throw new ArgumentNullException(nameof(transactions));
+            }
 
             if (parameters == null)
+            {
                 throw new ArgumentNullException(nameof(parameters));
+            }
 
             try
             {
@@ -79,12 +82,10 @@ namespace MarketBasketAnalysis.Mining
 
                 OnMiningStageChanged(MiningStage.FrequentItemSearch);
 
-                // ReSharper disable once PossibleMultipleEnumeration
                 var frequentItems = SearchForFrequentItems(transactions, parameters, token, out var transactionCount);
 
                 OnMiningStageChanged(MiningStage.ItemsetSearch);
 
-                // ReSharper disable once PossibleMultipleEnumeration
                 var itemsets = SearchForItemsets(transactions, parameters, frequentItems, transactionCount, token);
 
                 OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
@@ -97,6 +98,18 @@ namespace MarketBasketAnalysis.Mining
                 _itemExcluder = null;
             }
         }
+
+        private static void ThrowIfTransactionIsNull(Item[] transaction)
+        {
+            if (transaction == null)
+            {
+                throw new InvalidOperationException("Transaction cannot be null.");
+            }
+        }
+
+#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
+        private static int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
+#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
 
         private Dictionary<Item, int> SearchForFrequentItems(
             IEnumerable<Item[]> transactions,
@@ -122,14 +135,18 @@ namespace MarketBasketAnalysis.Mining
                     foreach (var item in transaction)
                     {
                         if (items.Contains(item) || _itemExcluder?.ShouldExclude(item) == true)
+                        {
                             continue;
+                        }
 
                         items.Add(item);
-                        
+
                         if (_itemConverter?.TryConvert(item, out var group) == true)
                         {
                             if (items.Contains(group) || _itemExcluder?.ShouldExclude(group) == true)
+                            {
                                 continue;
+                            }
 
                             items.Add(group);
 
@@ -188,6 +205,7 @@ namespace MarketBasketAnalysis.Mining
                         var itemsets = itemsetsPool.Get();
 
                         for (var i = 0; i < transaction.Length; i++)
+                        {
                             for (var j = i + 1; j < transaction.Length; j++)
                             {
                                 var itemset = transaction[i].Id < transaction[j].Id
@@ -195,7 +213,9 @@ namespace MarketBasketAnalysis.Mining
                                     : (transaction[j], transaction[i]);
 
                                 if (itemset.Item1.Equals(itemset.Item2) || !itemsets.Add(itemset))
+                                {
                                     continue;
+                                }
 
                                 if (_itemConverter != null)
                                 {
@@ -203,21 +223,30 @@ namespace MarketBasketAnalysis.Mining
                                     var isItem2Converted = _itemConverter.TryConvert(itemset.Item2, out var item2Group);
 
                                     if (isItem1Converted)
+                                    {
                                         itemset.Item1 = item1Group;
+                                    }
 
                                     if (isItem2Converted)
+                                    {
                                         itemset.Item2 = item2Group;
+                                    }
 
                                     var shouldSkipItemset = (isItem1Converted || isItem2Converted) &&
                                         (!itemsets.Add(itemset) || itemset.Item1.Equals(itemset.Item2));
 
                                     if (shouldSkipItemset)
+                                    {
                                         continue;
+                                    }
                                 }
 
                                 if (frequentItems.ContainsKey(itemset.Item1) && frequentItems.ContainsKey(itemset.Item2))
+                                {
                                     itemsetFrequencies.AddOrUpdate(itemset, 1, UpdateFrequency);
+                                }
                             }
+                        }
 
                         itemsets.Clear();
                         itemsetsPool.Return(itemsets);
@@ -237,7 +266,9 @@ namespace MarketBasketAnalysis.Mining
             void Timer_Elapsed(object sender, ElapsedEventArgs e)
             {
                 if (processedTransactionCount == previousProcessedTransactionsCount)
+                {
                     return;
+                }
 
                 var progress = processedTransactionCount / (double)transactionCount * 100;
 
@@ -247,20 +278,18 @@ namespace MarketBasketAnalysis.Mining
             }
         }
 
-        private static void ThrowIfTransactionIsNull(Item[] transaction)
-        {
-            if (transaction == null)
-                throw new InvalidOperationException("Transaction cannot be null.");
-        }
-
         private void OnMiningStageChanged(MiningStage stage) =>
-            MiningStageChanged?.Invoke(this, stage);
+            MiningStageChanged?.Invoke(this, new MiningStageChangedEventArgs(stage));
 
         private void OnMiningProgressChanged(double progress) =>
-            MiningProgressChanged?.Invoke(this, progress);
+            MiningProgressChanged?.Invoke(this, new MiningProgressChangedEventArgs(progress));
 
-        private ConcurrentBag<AssociationRule> GenerateAssociationRules(ConcurrentDictionary<(Item, Item), int> frequentItemsets,
-            Dictionary<Item, int> frequentItems, int transactionCount, MiningParameters parameters, CancellationToken token)
+        private ConcurrentBag<AssociationRule> GenerateAssociationRules(
+            ConcurrentDictionary<(Item, Item), int> frequentItemsets,
+            Dictionary<Item, int> frequentItems,
+            int transactionCount,
+            MiningParameters parameters,
+            CancellationToken token)
         {
             var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
             var associationRules = new ConcurrentBag<AssociationRule>();
@@ -276,7 +305,9 @@ namespace MarketBasketAnalysis.Mining
                 var itemsetFrequency = keyValuePair.Value;
 
                 if (itemsetFrequency < frequencyThreshold)
+                {
                     return;
+                }
 
                 var (item1, item2) = keyValuePair.Key;
                 var itemFrequency1 = frequentItems[item1];
@@ -284,22 +315,30 @@ namespace MarketBasketAnalysis.Mining
 
                 if (itemsetFrequency / (double)itemFrequency1 >= parameters.MinConfidence)
                 {
-                    associationRules.Add(new AssociationRule(item1, item2, itemFrequency1, itemFrequency2,
-                        itemsetFrequency, transactionCount));
+                    associationRules.Add(new AssociationRule(
+                        item1,
+                        item2,
+                        itemFrequency1,
+                        itemFrequency2,
+                        itemsetFrequency,
+                        transactionCount));
                 }
 
                 if (itemsetFrequency / (double)itemFrequency2 >= parameters.MinConfidence)
                 {
-                    associationRules.Add(new AssociationRule(item2, item1, itemFrequency2, itemFrequency1,
-                        itemsetFrequency, transactionCount));
+                    associationRules.Add(
+                        new AssociationRule(
+                            item2,
+                            item1,
+                            itemFrequency2,
+                            itemFrequency1,
+                            itemsetFrequency,
+                            transactionCount));
                 }
             }
 
             return associationRules;
         }
-
-        private static int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
-
         #endregion
     }
 }

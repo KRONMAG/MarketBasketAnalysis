@@ -30,7 +30,9 @@ public class ItemTests
         var item = new Item(_id, _name, _isGroup);
 
         // Act
+#pragma warning disable CA1508 // Avoid dead conditional code
         var result = item.Equals(null);
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         // Assert
         Assert.False(result);

@@ -41,7 +41,7 @@ public class MaximalCliqueFinderTests
     {
         // Arrange
         var finder = GetMaximalCliqueFinder(out _);
-        var rule = GetAssociationRules().First();
+        var rule = GetAssociationRules()[0];
         var associationRules = new List<AssociationRule> { rule, rule };
         var parameters = new MaximalCliqueFindingParameters(2, 5);
 
@@ -92,24 +92,24 @@ public class MaximalCliqueFinderTests
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         // Arrange
-        var finder = GetMaximalCliqueFinder(out _);
+        var finder = GetMaximalCliqueFinder(out var algorithmMock);
         var rules = GetAssociationRules();
         var parameters = new MaximalCliqueFindingParameters(2, 5);
         using var cancellationTokenSource = new CancellationTokenSource();
 
+        algorithmMock.Setup(
+            a => a.Find(
+                It.IsAny<IReadOnlyDictionary<byte, HashSet<byte>>>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            // ReSharper disable once AccessToDisposedClosure
+            .Callback(() => cancellationTokenSource.Cancel())
+            .Returns([new MaximalClique<byte>([0, 1])]);
+
         // Act & Assert
         Assert.Throws<OperationCanceledException>(() =>
-            finder.Find(GenerateAssociationRules(), parameters, cancellationTokenSource.Token).ToList());
-
-        IEnumerable<AssociationRule> GenerateAssociationRules()
-        {
-            foreach (var rule in rules)
-            {
-                yield return rule;
-
-                cancellationTokenSource.Cancel();
-            }
-        }
+            finder.Find(rules, parameters, cancellationTokenSource.Token).ToList());
     }
 
     [Fact]
@@ -129,7 +129,7 @@ public class MaximalCliqueFinderTests
             new()
             {
                 { 0, [1] },
-                { 1, [0] }
+                { 1, [0] },
             });
     }
 
@@ -194,17 +194,6 @@ public class MaximalCliqueFinderTests
         VerifyAlgorithmMock<byte>(algorithmMock, isAlgorithmInvoked: isVertexByte);
         VerifyAlgorithmMock<ushort>(algorithmMock, isAlgorithmInvoked: isVertexUshort);
         VerifyAlgorithmMock<int>(algorithmMock, isAlgorithmInvoked: isVertexInt);
-
-        static IEnumerable<AssociationRule> GenerateAssociationRules(int itemsCount)
-        {
-            for (var i = 1; i <= itemsCount - 1; i++)
-            {
-                var lhsItem = new Item(i, i.ToString(), false);
-                var rhsItem = new Item(i + 1, i.ToString(), false);
-
-                yield return new(lhsItem, rhsItem, 1, 1, 1, int.MaxValue);
-            }
-        }
     }
 
     [Fact]
@@ -228,7 +217,7 @@ public class MaximalCliqueFinderTests
 
         // Assert
         Assert.Single(maximalCliques);
-        Assert.Equivalent(rules, maximalCliques.First(), true);
+        Assert.Equivalent(rules, maximalCliques[0], true);
     }
 
     private static MaximalCliqueFinder GetMaximalCliqueFinder(out Mock<IMaximalCliqueAlgorithm> algorithmMock)
@@ -254,6 +243,21 @@ public class MaximalCliqueFinderTests
 
         static AssociationRule CreateAssociationRule(Item lhsItem, Item rhsItem) =>
             new(lhsItem, rhsItem, 1, 1, 1, 10);
+    }
+
+    private static List<AssociationRule> GenerateAssociationRules(int itemsCount)
+    {
+        var associationRules = new List<AssociationRule>();
+
+        for (var i = 1; i <= itemsCount - 1; i++)
+        {
+            var lhsItem = new Item(i, $"{i}", false);
+            var rhsItem = new Item(i + 1, $"{i + 1}", false);
+
+            associationRules.Add(new(lhsItem, rhsItem, 1, 1, 1, 1));
+        }
+
+        return associationRules;
     }
 
     private static void VerifyAlgorithmMock<TVertex>(

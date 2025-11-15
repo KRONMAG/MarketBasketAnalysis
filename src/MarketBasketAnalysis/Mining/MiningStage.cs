@@ -18,6 +18,6 @@
         /// <summary>
         /// The stage where association rules are generated from the itemsets.
         /// </summary>
-        AssociationRuleGeneration
+        AssociationRuleGeneration,
     }
 }

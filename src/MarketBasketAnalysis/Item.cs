@@ -8,7 +8,6 @@ namespace MarketBasketAnalysis
     public sealed class Item : IEquatable<Item>
     {
         #region Fields and Properties
-
         /// <summary>
         /// Gets the unique identifier of the item.
         /// </summary>
@@ -23,11 +22,9 @@ namespace MarketBasketAnalysis
         /// Gets a value indicating whether the item is a group of other items.
         /// </summary>
         public bool IsGroup { get; }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Item"/> class.
         /// </summary>
@@ -42,19 +39,21 @@ namespace MarketBasketAnalysis
             Id = id;
             IsGroup = isGroup;
         }
-
         #endregion
 
         #region Methods
-
         /// <inheritdoc />
         public bool Equals(Item other)
         {
             if (ReferenceEquals(null, other))
+            {
                 return false;
+            }
 
             if (ReferenceEquals(this, other))
+            {
                 return true;
+            }
 
             return Id == other.Id;
         }
@@ -69,7 +68,6 @@ namespace MarketBasketAnalysis
 
         /// <inheritdoc />
         public override string ToString() => Name;
-
         #endregion
     }
 }

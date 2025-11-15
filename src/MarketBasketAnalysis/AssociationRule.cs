@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: lhs rhs
+
+using System;
 
 namespace MarketBasketAnalysis
 {
@@ -9,7 +11,6 @@ namespace MarketBasketAnalysis
     public sealed class AssociationRule : IEquatable<AssociationRule>
     {
         #region Fields and Properties
-
         private readonly int _pairCount;
         private readonly int _transactionCount;
 
@@ -91,11 +92,9 @@ namespace MarketBasketAnalysis
                 return (a + b + c + d) * Math.Pow(a * d - b * c, 2) / ((a + b) * (a + c) * (b + d) * (c + d));
             }
         }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AssociationRule"/> class.
         /// </summary>
@@ -112,8 +111,13 @@ namespace MarketBasketAnalysis
         /// </exception>
         public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
         {
-            ValidateParameters(lhsItem, rhsItem, lhsCount, rhsCount,
-                pairCount, transactionCount);
+            ValidateParameters(
+                lhsItem,
+                rhsItem,
+                lhsCount,
+                rhsCount,
+                pairCount,
+                transactionCount);
 
             LeftHandSide = new AssociationRulePart(lhsItem, lhsCount, transactionCount);
             RightHandSide = new AssociationRulePart(rhsItem, rhsCount, transactionCount);
@@ -121,71 +125,21 @@ namespace MarketBasketAnalysis
             _pairCount = pairCount;
             _transactionCount = transactionCount;
         }
-
         #endregion
 
         #region Methods
-
-        private static void ValidateParameters(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
-        {
-            if (lhsItem == null)
-                throw new ArgumentNullException(nameof(lhsItem));
-
-            if (rhsItem == null)
-                throw new ArgumentNullException(nameof(rhsItem));
-
-            if (lhsItem.Equals(rhsItem))
-                throw new ArgumentException("Items of left and right hand sides cannot be the the same.");
-
-            if (transactionCount <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(transactionCount), transactionCount,
-                    "Transaction count must be greater than zero.");
-            }
-
-            if (pairCount <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pairCount), pairCount,
-                    "Pair count must be greater than zero.");
-            }
-
-            if (lhsCount > transactionCount)
-            {
-                throw new ArgumentOutOfRangeException(nameof(lhsCount), lhsCount,
-                    "LHS count cannot be greater than transaction count.");
-            }
-
-            if (rhsCount > transactionCount)
-            {
-                throw new ArgumentOutOfRangeException(nameof(rhsCount), rhsCount,
-                    "RHS count cannot be greater than transaction count.");
-            }
-
-            if (pairCount > Math.Min(lhsCount, rhsCount))
-            {
-                throw new ArgumentOutOfRangeException(nameof(pairCount), pairCount,
-                    "Pair count cannot be greater than the minimum of LHS count and RHS count.");
-            }
-        }
-
-        private (double a, double b, double c, double d) GetContingencyTable()
-        {
-            var a = _pairCount;
-            var b = LeftHandSide.Count - _pairCount;
-            var c = RightHandSide.Count - _pairCount;
-            var d = _transactionCount - a - b - c;
-
-            return (a, b, c, d);
-        }
-
         /// <inheritdoc />
         public bool Equals(AssociationRule other)
         {
             if (ReferenceEquals(null, other))
+            {
                 return false;
+            }
 
             if (ReferenceEquals(this, other))
+            {
                 return true;
+            }
 
             return LeftHandSide.Equals(other.LeftHandSide) &&
                    RightHandSide.Equals(other.RightHandSide);
@@ -203,6 +157,73 @@ namespace MarketBasketAnalysis
         public override string ToString() =>
             $"{LeftHandSide} -> {RightHandSide}";
 
+        private static void ValidateParameters(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
+        {
+            if (lhsItem == null)
+            {
+                throw new ArgumentNullException(nameof(lhsItem));
+            }
+
+            if (rhsItem == null)
+            {
+                throw new ArgumentNullException(nameof(rhsItem));
+            }
+
+            if (lhsItem.Equals(rhsItem))
+            {
+                throw new ArgumentException("Items of left and right hand sides cannot be the same.");
+            }
+
+            if (transactionCount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(transactionCount),
+                    transactionCount,
+                    "Transaction count must be greater than zero.");
+            }
+
+            if (pairCount <= 0)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(pairCount),
+                    pairCount,
+                    "Pair count must be greater than zero.");
+            }
+
+            if (lhsCount > transactionCount)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(lhsCount),
+                    lhsCount,
+                    "LHS count cannot be greater than transaction count.");
+            }
+
+            if (rhsCount > transactionCount)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(rhsCount),
+                    rhsCount,
+                    "RHS count cannot be greater than transaction count.");
+            }
+
+            if (pairCount > Math.Min(lhsCount, rhsCount))
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(pairCount),
+                    pairCount,
+                    "Pair count cannot be greater than the minimum of LHS count and RHS count.");
+            }
+        }
+
+        private (double a, double b, double c, double d) GetContingencyTable()
+        {
+            var a = _pairCount;
+            var b = LeftHandSide.Count - _pairCount;
+            var c = RightHandSide.Count - _pairCount;
+            var d = _transactionCount - a - b - c;
+
+            return (a, b, c, d);
+        }
         #endregion
     }
 }

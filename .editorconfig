@@ -1,0 +1,21 @@
+root = true
+
+[*.cs]
+# Code Analysis
+dotnet_diagnostic.CA1859.severity = suggestion
+
+# StyleCop Rules
+dotnet_diagnostic.SA1010.severity = none
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1118.severity = suggestion
+dotnet_diagnostic.SA1124.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1407.severity = suggestion
+dotnet_diagnostic.SA1514.severity = suggestion
+dotnet_diagnostic.SA1515.severity = none
+dotnet_diagnostic.SA1633.severity = none
+
+# Sonar Analyzer
+dotnet_diagnostic.S1135.severity = suggestion

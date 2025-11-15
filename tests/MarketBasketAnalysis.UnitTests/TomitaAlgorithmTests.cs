@@ -1,4 +1,7 @@
-﻿using MarketBasketAnalysis.Analysis;
+﻿// Ignore Spelling: Tomita
+
+using MarketBasketAnalysis.Analysis;
+#pragma warning disable S3878 // Arrays should not be created for params parameters
 
 namespace MarketBasketAnalysis.UnitTests;
 
@@ -36,7 +39,7 @@ public class TomitaAlgorithmTests
     {
         // Arrange
         var graph = new Dictionary<int, HashSet<int>>();
-        
+
         // Act
         var cliques = _algorithm.Find(graph, 1, 10).ToList();
 
@@ -53,7 +56,7 @@ public class TomitaAlgorithmTests
             [1] = [2, 4],
             [2] = [1, 3],
             [3] = [2, 4],
-            [4] = [1, 3]
+            [4] = [1, 3],
         };
 
         // Act
@@ -72,7 +75,7 @@ public class TomitaAlgorithmTests
             [1] = [2, 3, 4],
             [2] = [1, 3, 4],
             [3] = [1, 2, 4],
-            [4] = [1, 2, 3]
+            [4] = [1, 2, 3],
         };
 
         // Act
@@ -92,7 +95,7 @@ public class TomitaAlgorithmTests
             [2] = [1, 3],
             [3] = [1, 2],
             [4] = [5],
-            [5] = [4]
+            [5] = [4],
         };
 
         // Act
@@ -111,7 +114,7 @@ public class TomitaAlgorithmTests
             [1] = [2, 3],
             [2] = [1, 3, 4],
             [3] = [1, 2, 4],
-            [4] = [2, 3]
+            [4] = [2, 3],
         };
 
         // Act
@@ -130,7 +133,7 @@ public class TomitaAlgorithmTests
             [1] = [2, 4],
             [2] = [1, 3],
             [3] = [2, 4],
-            [4] = [1, 3]
+            [4] = [1, 3],
         };
 
         // Act
@@ -144,7 +147,7 @@ public class TomitaAlgorithmTests
     public void Find_CancellationTokenIsActive_ThrowsOperationCanceledException()
     {
         // Arrange
-        var cancellationTokenSource = new CancellationTokenSource();
+        using var cancellationTokenSource = new CancellationTokenSource();
 
         // Act
         cancellationTokenSource.Cancel();

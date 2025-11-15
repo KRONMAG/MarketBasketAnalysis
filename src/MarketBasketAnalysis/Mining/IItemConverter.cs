@@ -3,16 +3,16 @@
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
-    /// Defines a method for determining whether an item should be replaced with its corresponding group representation.
+    /// Defines a method for determining whether an item should be replaced with its corresponding group.
     /// </summary>
     public interface IItemConverter
     {
         /// <summary>
-        /// Determines whether the specified item should be replaced with a group representation.
+        /// Determines whether the specified item should be replaced with a group.
         /// </summary>
         /// <param name="item">The <see cref="Item"/> to evaluate.</param>
         /// <param name="group">
-        /// When this method returns, contains the group representation of the specified <paramref name="item"/>, 
+        /// When this method returns, contains the group of the specified <paramref name="item"/>,
         /// if a replacement is required; otherwise, contains <c>null</c>.
         /// </param>
         /// <returns>
