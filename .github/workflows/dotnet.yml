@@ -26,4 +26,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Create NuGet package
-      run: dotnet pack ./src/MarketBasketAnalysis/MarketBasketAnalysis.csproj --no-build -c Release
+      run: dotnet pack ./src/MarketBasketAnalysis/MarketBasketAnalysis.csproj
