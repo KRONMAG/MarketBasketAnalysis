@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Ignore Spelling: Tomita
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,8 +11,8 @@ namespace MarketBasketAnalysis.Analysis
     public sealed class TomitaAlgorithm : IMaximalCliqueAlgorithm
     {
         #region Nested types
-
-        private sealed class LocalState<TVertex> where TVertex: struct
+        private sealed class LocalState<TVertex>
+            where TVertex : struct
         {
             public TVertex[] Clique { get; }
 
@@ -22,8 +24,11 @@ namespace MarketBasketAnalysis.Analysis
 
             private int _filteredCandidateVertexIndex;
 
-            public LocalState(TVertex[] clique, HashSet<TVertex> candidateVertices,
-                HashSet<TVertex> excludedVertices, IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList)
+            public LocalState(
+                TVertex[] clique,
+                HashSet<TVertex> candidateVertices,
+                HashSet<TVertex> excludedVertices,
+                IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList)
             {
                 Clique = clique;
                 CandidateVertices = candidateVertices;
@@ -47,8 +52,10 @@ namespace MarketBasketAnalysis.Analysis
                 return true;
             }
 
-            private static TVertex[] FilterCandidateVerticesByPivot(HashSet<TVertex> candidateVertices,
-                HashSet<TVertex> excludedVertices, IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList)
+            private static TVertex[] FilterCandidateVerticesByPivot(
+                HashSet<TVertex> candidateVertices,
+                HashSet<TVertex> excludedVertices,
+                IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList)
             {
                 TVertex pivot = default;
                 var pivotDegree = 0;
@@ -72,20 +79,20 @@ namespace MarketBasketAnalysis.Analysis
                 }
 
                 if (!isPivotFound)
+                {
                     return candidateVertices.ToArray();
+                }
 
                 var pivotAdjacentVertices = adjacencyList[pivot];
-                
+
                 return candidateVertices
                     .Where(candidateVertex => !pivotAdjacentVertices.Contains(candidateVertex))
                     .ToArray();
             }
         }
-
         #endregion
 
         #region Methods
-
         /// <inheritdoc />
         public IEnumerable<MaximalClique<TVertex>> Find<TVertex>(
             IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
@@ -106,20 +113,28 @@ namespace MarketBasketAnalysis.Analysis
             where TVertex : struct
         {
             if (adjacencyList == null)
+            {
                 throw new ArgumentNullException(nameof(adjacencyList));
+            }
 
             if (adjacencyList.Any(pair => pair.Value == null))
+            {
                 throw new ArgumentException("Adjacency list cannot contain null values.");
+            }
 
             if (minCliqueSize <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(minCliqueSize), minCliqueSize,
+                throw new ArgumentOutOfRangeException(
+                    nameof(minCliqueSize),
+                    minCliqueSize,
                     "Minimum clique size must be greater than zero.");
             }
 
             if (maxCliqueSize < minCliqueSize)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxCliqueSize), maxCliqueSize,
+                throw new ArgumentOutOfRangeException(
+                    nameof(maxCliqueSize),
+                    maxCliqueSize,
                     "Maximum clique size must be greater than or equal to minimum clique size");
             }
         }
@@ -133,8 +148,11 @@ namespace MarketBasketAnalysis.Analysis
         {
             token.ThrowIfCancellationRequested();
 
-            var currentState = new LocalState<TVertex>(Array.Empty<TVertex>(),
-                new HashSet<TVertex>(adjacencyList.Keys), new HashSet<TVertex>(), adjacencyList);
+            var currentState = new LocalState<TVertex>(
+                Array.Empty<TVertex>(),
+                new HashSet<TVertex>(adjacencyList.Keys),
+                new HashSet<TVertex>(),
+                adjacencyList);
 
             var stack = new Stack<LocalState<TVertex>>();
 
@@ -143,14 +161,18 @@ namespace MarketBasketAnalysis.Analysis
             bool MoveToNextCandidateVertex()
             {
                 if (currentState.TryGetNextCandidateVertex(out candidateVertex))
+                {
                     return true;
+                }
 
                 while (stack.Count > 0)
                 {
                     currentState = stack.Pop();
 
                     if (currentState.TryGetNextCandidateVertex(out candidateVertex))
+                    {
                         return true;
+                    }
                 }
 
                 return false;
@@ -184,12 +206,14 @@ namespace MarketBasketAnalysis.Analysis
                 {
                     stack.Push(currentState);
 
-                    currentState = new LocalState<TVertex>(augmentedClique, newCandidateVertices,
-                        newExcludedVertices, adjacencyList);
+                    currentState = new LocalState<TVertex>(
+                        augmentedClique,
+                        newCandidateVertices,
+                        newExcludedVertices,
+                        adjacencyList);
                 }
             }
         }
-
         #endregion
     }
 }

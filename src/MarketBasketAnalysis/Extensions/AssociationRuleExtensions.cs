@@ -8,11 +8,9 @@ namespace MarketBasketAnalysis.Extensions
     /// <summary>
     /// Defines set operations on sequences of association rules.
     /// </summary>
-    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs.")]
     public static class AssociationRuleExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Computes the difference between two sequences of association rules.
         /// </summary>
@@ -31,6 +29,9 @@ namespace MarketBasketAnalysis.Extensions
         /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="first"/> or <paramref name="second"/> contains <c>null</c> items.
         /// </exception>
+        /// <remarks>
+        /// The enumeration of the <paramref name="first"/> or <paramref name="second"/> may be performed multiple times.
+        /// </remarks>
         public static IEnumerable<AssociationRule> Except(
             this IEnumerable<AssociationRule> first,
             IEnumerable<AssociationRule> second,
@@ -55,6 +56,9 @@ namespace MarketBasketAnalysis.Extensions
         /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="first"/> or <paramref name="second"/> contains <c>null</c> items.
         /// </exception>
+        /// <remarks>
+        /// The enumeration of the <paramref name="first"/> or <paramref name="second"/> may be performed multiple times.
+        /// </remarks>
         public static IEnumerable<AssociationRule> Intersect(
             this IEnumerable<AssociationRule> first,
             IEnumerable<AssociationRule> second,
@@ -79,7 +83,7 @@ namespace MarketBasketAnalysis.Extensions
                     k.Contains((r.RightHandSide.Id, r.LeftHandSide.Id)))
                 : new Func<AssociationRule, HashSet<(int, int)>, bool>((r, k) =>
                     k.Contains((r.LeftHandSide.Id, r.RightHandSide.Id)));
-            
+
             return isIntersection ?
                 first.Where(r => containsDelegate(r, keys)) :
                 first.Where(r => !containsDelegate(r, keys));
@@ -88,12 +92,14 @@ namespace MarketBasketAnalysis.Extensions
         private static void ValidateAssociationRules(IEnumerable<AssociationRule> associationRules, string paramName)
         {
             if (associationRules == null)
+            {
                 throw new ArgumentNullException(paramName);
+            }
 
             if (associationRules.Any(item => item == null))
+            {
                 throw new ArgumentException("Sequence of association rules cannot contain null items.", paramName);
+            }
         }
-
-        #endregion
     }
 }

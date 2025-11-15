@@ -8,7 +8,6 @@ namespace MarketBasketAnalysis.Mining
     public sealed class ItemConversionRule : IEquatable<ItemConversionRule>
     {
         #region Fields and Properties
-
         /// <summary>
         /// Gets the source item that will be converted.
         /// </summary>
@@ -18,11 +17,9 @@ namespace MarketBasketAnalysis.Mining
         /// Gets the target item to which the source item will be converted.
         /// </summary>
         public Item TargetItem { get; }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemConversionRule"/> class with the specified source and target items.
         /// </summary>
@@ -37,7 +34,14 @@ namespace MarketBasketAnalysis.Mining
         public ItemConversionRule(Item sourceItem, Item targetItem)
         {
             if (sourceItem == null)
+            {
                 throw new ArgumentNullException(nameof(sourceItem));
+            }
+
+            if (targetItem == null)
+            {
+                throw new ArgumentNullException(nameof(targetItem));
+            }
 
             if (sourceItem.IsGroup)
             {
@@ -46,20 +50,17 @@ namespace MarketBasketAnalysis.Mining
                     nameof(sourceItem));
             }
 
-            if (targetItem == null)
-                throw new ArgumentNullException(nameof(targetItem));
-
             if (!targetItem.IsGroup)
+            {
                 throw new ArgumentException("Target item must be group.", nameof(targetItem));
+            }
 
             SourceItem = sourceItem;
             TargetItem = targetItem;
         }
-
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Determines whether the specified <see cref="ItemConversionRule"/> is equal to the current instance.
         /// </summary>
@@ -69,17 +70,6 @@ namespace MarketBasketAnalysis.Mining
         /// </returns>
         bool IEquatable<ItemConversionRule>.Equals(ItemConversionRule other) =>
             EqualsInternal(other);
-
-        private bool EqualsInternal(ItemConversionRule other)
-        {
-            if (ReferenceEquals(null, other))
-                return false;
-
-            if (ReferenceEquals(this, other))
-                return true;
-
-            return SourceItem.Equals(other.SourceItem) && TargetItem.Equals(other.TargetItem);
-        }
 
         /// <inheritdoc />
         public override bool Equals(object obj) =>
@@ -93,6 +83,20 @@ namespace MarketBasketAnalysis.Mining
         public override string ToString() =>
             $"{SourceItem.Name} -> {TargetItem.Name}";
 
-        #endregion 
+        private bool EqualsInternal(ItemConversionRule other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return SourceItem.Equals(other.SourceItem) && TargetItem.Equals(other.TargetItem);
+        }
+        #endregion
     }
 }

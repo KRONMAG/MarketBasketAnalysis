@@ -28,7 +28,7 @@ namespace MarketBasketAnalysis.Analysis
         /// Thrown if the operation is canceled via the <paramref name="token"/>.
         /// </exception>
         IEnumerable<IReadOnlyCollection<AssociationRule>> Find(
-            IEnumerable<AssociationRule> associationRules,
+            IReadOnlyCollection<AssociationRule> associationRules,
             MaximalCliqueFindingParameters parameters,
             CancellationToken token = default);
     }
