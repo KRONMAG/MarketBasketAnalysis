@@ -25,6 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Include="MarketBasketAnalysis.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
 			<_Parameter1>MarketBasketAnalysis.UnitTests</_Parameter1>
 		</AssemblyAttribute>
