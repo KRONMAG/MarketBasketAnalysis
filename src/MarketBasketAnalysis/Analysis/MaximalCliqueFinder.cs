@@ -6,7 +6,7 @@ using System.Threading;
 namespace MarketBasketAnalysis.Analysis
 {
     /// <inheritdoc />
-    public sealed class MaximalCliqueFinder : IMaximalCliqueFinder
+    internal sealed class MaximalCliqueFinder : IMaximalCliqueFinder
     {
         private readonly IMaximalCliqueAlgorithm _maximalCliqueAlgorithm;
 

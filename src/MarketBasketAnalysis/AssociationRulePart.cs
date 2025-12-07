@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis
 {
     /// <summary>
     /// Represents a part of an association rule, either the left-hand side or the right-hand side.
     /// </summary>
+    [PublicAPI]
     public sealed class AssociationRulePart : IEquatable<AssociationRulePart>
     {
         #region Method and Properties

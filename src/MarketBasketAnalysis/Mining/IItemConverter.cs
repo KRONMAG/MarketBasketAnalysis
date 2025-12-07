@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Defines a method for determining whether an item should be replaced with its corresponding group.
     /// </summary>
+    [PublicAPI]
     public interface IItemConverter
     {
         /// <summary>

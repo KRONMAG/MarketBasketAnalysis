@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace MarketBasketAnalysis.Analysis
 {
     /// <summary>
@@ -10,6 +12,7 @@ namespace MarketBasketAnalysis.Analysis
     /// and no additional vertex can be added without breaking this property.
     /// </summary>
     /// <typeparam name="TVertex">The type of the vertex.</typeparam>
+    [PublicAPI]
     public sealed class MaximalClique<TVertex> : IEnumerable<TVertex>
         where TVertex : struct
     {

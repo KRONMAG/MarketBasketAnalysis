@@ -8,7 +8,7 @@ using System.Threading;
 namespace MarketBasketAnalysis.Analysis
 {
     /// <inheritdoc />
-    public sealed class TomitaAlgorithm : IMaximalCliqueAlgorithm
+    internal sealed class TomitaAlgorithm : IMaximalCliqueAlgorithm
     {
         #region Nested types
         private sealed class LocalState<TVertex>

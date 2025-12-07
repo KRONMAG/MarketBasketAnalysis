@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Represents a rule for converting one item into another.
     /// </summary>
+    [PublicAPI]
     public sealed class ItemConversionRule : IEquatable<ItemConversionRule>
     {
         #region Fields and Properties

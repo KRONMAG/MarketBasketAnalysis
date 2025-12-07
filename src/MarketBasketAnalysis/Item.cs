@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis
 {
     /// <summary>
     /// Represents an item in a transaction.
     /// </summary>
+    [PublicAPI]
     public sealed class Item : IEquatable<Item>
     {
         #region Fields and Properties

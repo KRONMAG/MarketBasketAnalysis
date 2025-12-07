@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Analysis
 {
     /// <summary>
     /// Defines an interface for algorithm that find all maximal cliques in an undirected graph.
     /// </summary>
+    [PublicAPI]
     public interface IMaximalCliqueAlgorithm
     {
         /// <summary>

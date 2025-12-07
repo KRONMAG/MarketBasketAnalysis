@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Extensions
 {
     /// <summary>
     /// Defines set operations on sequences of association rules.
     /// </summary>
+    [PublicAPI]
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs.")]
     public static class AssociationRuleExtensions
     {
