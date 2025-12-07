@@ -19,11 +19,11 @@ where the presence of one item (left hand side) implies the presence of another 
 
 Represents a part of an association rule, either the left-hand side or the right-hand side.
 
- [DependencyInjection](MarketBasketAnalysis.DependencyInjection.md)
-
-Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
-
  [Item](MarketBasketAnalysis.Item.md)
 
 Represents an item in a transaction.
+
+ [ServiceCollectionExtensions](MarketBasketAnalysis.ServiceCollectionExtensions.md)
+
+Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
 

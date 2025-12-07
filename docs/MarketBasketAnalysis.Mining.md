@@ -6,27 +6,27 @@
 
 Represents a rule for converting one item into another.
 
- [ItemConverter](MarketBasketAnalysis.Mining.ItemConverter.md)
-
- [ItemExcluder](MarketBasketAnalysis.Mining.ItemExcluder.md)
-
  [ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)
 
 Represents a rule for excluding items or groups from association rule mining.
-
- [Miner](MarketBasketAnalysis.Mining.Miner.md)
-
- [MinerFactory](MarketBasketAnalysis.Mining.MinerFactory.md)
 
  [MiningParameters](MarketBasketAnalysis.Mining.MiningParameters.md)
 
 Represents the parameters used for mining association rules.
 
+ [MiningProgressChangedEventArgs](MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md)
+
+Provides data for the event that occurs when mining progress changes.
+
+ [MiningStageChangedEventArgs](MarketBasketAnalysis.Mining.MiningStageChangedEventArgs.md)
+
+Provides data for the event that occurs when the mining stage changes.
+
 ### Interfaces
 
  [IItemConverter](MarketBasketAnalysis.Mining.IItemConverter.md)
 
-Defines a method for determining whether an item should be replaced with its corresponding group representation.
+Defines a method for determining whether an item should be replaced with its corresponding group.
 
  [IItemExcluder](MarketBasketAnalysis.Mining.IItemExcluder.md)
 
@@ -38,7 +38,7 @@ Defines an interface for performing association rule mining based on transaction
 
  [IMinerFactory](MarketBasketAnalysis.Mining.IMinerFactory.md)
 
-Defines an interface for factory interface for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
+Defines an interface for factory for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
 
 ### Enums
 

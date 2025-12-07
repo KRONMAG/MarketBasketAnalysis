@@ -3,15 +3,16 @@
 Namespace: [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)  
 Assembly: MarketBasketAnalysis.dll  
 
-Defines an interface for factory interface for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
+Defines an interface for factory for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
 
 ```csharp
+[PublicAPI]
 public interface IMinerFactory
 ```
 
 ## Remarks
 
-Use this interface to obtain new miners for performing association rule mining on transaction data.
+Use this interface to obtain new association rule miners.
 
 ## Methods
 

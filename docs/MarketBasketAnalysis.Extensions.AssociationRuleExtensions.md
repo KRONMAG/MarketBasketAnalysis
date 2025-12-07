@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Defines set operations on sequences of association rules.
 
 ```csharp
+[PublicAPI]
 public static class AssociationRuleExtensions
 ```
 
@@ -55,6 +56,10 @@ If <code>true</code>, the difference will consider rules as equal regardless of 
 
 A sequence of association rules that are present in <code class="paramref">first</code> but not in <code class="paramref">second</code>.
 
+#### Remarks
+
+The enumeration of the <code class="paramref">first</code> or <code class="paramref">second</code> may be performed multiple times.
+
 #### Exceptions
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
@@ -93,6 +98,10 @@ If <code>true</code>, the intersection will consider rules as equal regardless o
  [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
 A sequence of association rules that are present in both <code class="paramref">first</code> and <code class="paramref">second</code>.
+
+#### Remarks
+
+The enumeration of the <code class="paramref">first</code> or <code class="paramref">second</code> may be performed multiple times.
 
 #### Exceptions
 

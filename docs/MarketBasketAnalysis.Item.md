@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Represents an item in a transaction.
 
 ```csharp
+[PublicAPI]
 public sealed class Item : IEquatable<Item>
 ```
 

@@ -8,22 +8,23 @@ A maximal clique is a subset of association rules where every rule is connected 
 and no additional rules can be added without breaking this property.
 
 ```csharp
+[PublicAPI]
 public interface IMaximalCliqueFinder
 ```
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> Find\(IEnumerable<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
+### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> Find\(IReadOnlyCollection<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
 
 Finds maximal cliques in the given collection of association rules.
 
 ```csharp
-IEnumerable<IReadOnlyCollection<AssociationRule>> Find(IEnumerable<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters, CancellationToken token = default)
+IEnumerable<IReadOnlyCollection<AssociationRule>> Find(IReadOnlyCollection<AssociationRule> associationRules, MaximalCliqueFindingParameters parameters, CancellationToken token = default)
 ```
 
 #### Parameters
 
-`associationRules` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`associationRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
 The collection of association rules to analyze.
 

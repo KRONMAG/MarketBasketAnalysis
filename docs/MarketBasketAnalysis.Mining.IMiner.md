@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Defines an interface for performing association rule mining based on transaction data.
 
 ```csharp
+[PublicAPI]
 public interface IMiner
 ```
 
@@ -39,6 +40,10 @@ A cancellation token to cancel the operation if needed.
 
 A collection of association rules that meet the specified parameters.
 
+#### Remarks
+
+The enumeration of the <code class="paramref">transactions</code> may be performed multiple times.
+
 #### Exceptions
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
@@ -54,22 +59,22 @@ Thrown if the operation is canceled via the <code class="paramref">token</code>.
 Event triggered when the mining progress changes.
 
 ```csharp
-event EventHandler<double> MiningProgressChanged
+event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged
 ```
 
 #### Event Type
 
- [EventHandler](https://learn.microsoft.com/dotnet/api/system.eventhandler\-1)<[double](https://learn.microsoft.com/dotnet/api/system.double)\>
+ [EventHandler](https://learn.microsoft.com/dotnet/api/system.eventhandler\-1)<[MiningProgressChangedEventArgs](MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md)\>
 
 ### <a id="MarketBasketAnalysis_Mining_IMiner_MiningStageChanged"></a> MiningStageChanged
 
 Event triggered when the mining stage changes.
 
 ```csharp
-event EventHandler<MiningStage> MiningStageChanged
+event EventHandler<MiningStageChangedEventArgs> MiningStageChanged
 ```
 
 #### Event Type
 
- [EventHandler](https://learn.microsoft.com/dotnet/api/system.eventhandler\-1)<[MiningStage](MarketBasketAnalysis.Mining.MiningStage.md)\>
+ [EventHandler](https://learn.microsoft.com/dotnet/api/system.eventhandler\-1)<[MiningStageChangedEventArgs](MarketBasketAnalysis.Mining.MiningStageChangedEventArgs.md)\>
 

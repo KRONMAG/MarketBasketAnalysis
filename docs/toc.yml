@@ -7,22 +7,18 @@
     href: MarketBasketAnalysis.AssociationRule.md
   - name: AssociationRulePart
     href: MarketBasketAnalysis.AssociationRulePart.md
-  - name: DependencyInjection
-    href: MarketBasketAnalysis.DependencyInjection.md
   - name: Item
     href: MarketBasketAnalysis.Item.md
+  - name: ServiceCollectionExtensions
+    href: MarketBasketAnalysis.ServiceCollectionExtensions.md
 - name: MarketBasketAnalysis.Analysis
   href: MarketBasketAnalysis.Analysis.md
   items:
   - name: Classes
   - name: MaximalClique<TVertex>
     href: MarketBasketAnalysis.Analysis.MaximalClique-1.md
-  - name: MaximalCliqueFinder
-    href: MarketBasketAnalysis.Analysis.MaximalCliqueFinder.md
   - name: MaximalCliqueFindingParameters
     href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md
-  - name: TomitaAlgorithm
-    href: MarketBasketAnalysis.Analysis.TomitaAlgorithm.md
   - name: Interfaces
   - name: IMaximalCliqueAlgorithm
     href: MarketBasketAnalysis.Analysis.IMaximalCliqueAlgorithm.md
@@ -40,18 +36,14 @@
   - name: Classes
   - name: ItemConversionRule
     href: MarketBasketAnalysis.Mining.ItemConversionRule.md
-  - name: ItemConverter
-    href: MarketBasketAnalysis.Mining.ItemConverter.md
-  - name: ItemExcluder
-    href: MarketBasketAnalysis.Mining.ItemExcluder.md
   - name: ItemExclusionRule
     href: MarketBasketAnalysis.Mining.ItemExclusionRule.md
-  - name: Miner
-    href: MarketBasketAnalysis.Mining.Miner.md
-  - name: MinerFactory
-    href: MarketBasketAnalysis.Mining.MinerFactory.md
   - name: MiningParameters
     href: MarketBasketAnalysis.Mining.MiningParameters.md
+  - name: MiningProgressChangedEventArgs
+    href: MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md
+  - name: MiningStageChangedEventArgs
+    href: MarketBasketAnalysis.Mining.MiningStageChangedEventArgs.md
   - name: Interfaces
   - name: IItemConverter
     href: MarketBasketAnalysis.Mining.IItemConverter.md

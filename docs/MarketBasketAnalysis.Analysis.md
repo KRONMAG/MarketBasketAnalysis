@@ -7,13 +7,9 @@
 Represents a maximal clique in a graph, defined as a set of vertices where every two distinct vertices are adjacent,
 and no additional vertex can be added without breaking this property.
 
- [MaximalCliqueFinder](MarketBasketAnalysis.Analysis.MaximalCliqueFinder.md)
-
  [MaximalCliqueFindingParameters](MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md)
 
 Represents the parameters used for finding maximal cliques in a graph of association rules.
-
- [TomitaAlgorithm](MarketBasketAnalysis.Analysis.TomitaAlgorithm.md)
 
 ### Interfaces
 
