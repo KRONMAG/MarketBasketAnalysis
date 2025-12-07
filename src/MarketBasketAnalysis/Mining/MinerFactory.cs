@@ -1,7 +1,7 @@
 ﻿namespace MarketBasketAnalysis.Mining
 {
     /// <inheritdoc />
-    public class MinerFactory : IMinerFactory
+    internal sealed class MinerFactory : IMinerFactory
     {
         /// <inheritdoc />
         public IMiner Create() =>

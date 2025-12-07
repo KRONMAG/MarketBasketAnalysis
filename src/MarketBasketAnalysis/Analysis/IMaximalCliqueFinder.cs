@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Analysis
 {
@@ -9,6 +10,7 @@ namespace MarketBasketAnalysis.Analysis
     /// A maximal clique is a subset of association rules where every rule is connected to every other rule,
     /// and no additional rules can be added without breaking this property.
     /// </summary>
+    [PublicAPI]
     public interface IMaximalCliqueFinder
     {
         /// <summary>
@@ -28,7 +30,7 @@ namespace MarketBasketAnalysis.Analysis
         /// Thrown if the operation is canceled via the <paramref name="token"/>.
         /// </exception>
         IEnumerable<IReadOnlyCollection<AssociationRule>> Find(
-            IEnumerable<AssociationRule> associationRules,
+            IReadOnlyCollection<AssociationRule> associationRules,
             MaximalCliqueFindingParameters parameters,
             CancellationToken token = default);
     }
