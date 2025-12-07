@@ -7,6 +7,7 @@ Represents an association rule - a relationship between two items in market bask
 where the presence of one item (left hand side) implies the presence of another (right hand side).
 
 ```csharp
+[PublicAPI]
 public sealed class AssociationRule : IEquatable<AssociationRule>
 ```
 

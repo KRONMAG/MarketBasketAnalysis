@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<PackageId>MarketBasketAnalysis</PackageId>
-		<Version>1.0.0-alpha.1</Version>
+		<Version>1.0.0-alpha.2</Version>
 		<Authors>KRONMAG</Authors>
 		<Description>Library for discovering and analyzing association rules from transactional data, supporting advanced operations such as generalized rule mining, exclusion of specific items, comparison between rule sets, and identification of maximal cliques in the rule graph.</Description>
 		<RepositoryUrl>https://github.com/KRONMAG/MarketBasketAnalysis</RepositoryUrl>

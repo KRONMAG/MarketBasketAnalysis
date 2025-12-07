@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Defines a method to determine whether a specific item should be excluded during association rule mining.
 
 ```csharp
+[PublicAPI]
 public interface IItemExcluder
 ```
 

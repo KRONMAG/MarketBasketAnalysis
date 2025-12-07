@@ -3,9 +3,10 @@
 Namespace: [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)  
 Assembly: MarketBasketAnalysis.dll  
 
-Defines a method for determining whether an item should be replaced with its corresponding group representation.
+Defines a method for determining whether an item should be replaced with its corresponding group.
 
 ```csharp
+[PublicAPI]
 public interface IItemConverter
 ```
 
@@ -13,7 +14,7 @@ public interface IItemConverter
 
 ### <a id="MarketBasketAnalysis_Mining_IItemConverter_TryConvert_MarketBasketAnalysis_Item_MarketBasketAnalysis_Item__"></a> TryConvert\(Item, out Item\)
 
-Determines whether the specified item should be replaced with a group representation.
+Determines whether the specified item should be replaced with a group.
 
 ```csharp
 bool TryConvert(Item item, out Item group)
@@ -27,7 +28,7 @@ The <xref href="MarketBasketAnalysis.Item" data-throw-if-not-resolved="false"></
 
 `group` [Item](MarketBasketAnalysis.Item.md)
 
-When this method returns, contains the group representation of the specified <code class="paramref">item</code>, 
+When this method returns, contains the group of the specified <code class="paramref">item</code>,
 if a replacement is required; otherwise, contains <code>null</code>.
 
 #### Returns

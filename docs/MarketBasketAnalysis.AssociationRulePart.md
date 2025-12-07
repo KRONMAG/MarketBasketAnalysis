@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Represents a part of an association rule, either the left-hand side or the right-hand side.
 
 ```csharp
+[PublicAPI]
 public sealed class AssociationRulePart : IEquatable<AssociationRulePart>
 ```
 
@@ -59,7 +60,7 @@ Thrown if <code class="paramref">item</code> is <code>null</code>.
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
 
-Thrown if <code class="paramref">itemCount</code> is less than 1 or 
+Thrown if <code class="paramref">itemCount</code> is less than 1 or
 if <code class="paramref">transactionCount</code> is less than <code class="paramref">itemCount</code>.
 
 ## Properties
@@ -102,7 +103,7 @@ public Item Item { get; }
 
 ### <a id="MarketBasketAnalysis_AssociationRulePart_Support"></a> Support
 
-Gets the support of the item in this part of the rule, 
+Gets the support of the item in this part of the rule,
 which is the proportion of transactions that contain the item.
 
 ```csharp

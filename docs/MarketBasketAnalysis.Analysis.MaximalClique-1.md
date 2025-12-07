@@ -7,7 +7,8 @@ Represents a maximal clique in a graph, defined as a set of vertices where every
 and no additional vertex can be added without breaking this property.
 
 ```csharp
-public class MaximalClique<TVertex> : IEnumerable<TVertex>, IEnumerable where TVertex : struct
+[PublicAPI]
+public sealed class MaximalClique<TVertex> : IEnumerable<TVertex>, IEnumerable where TVertex : struct
 ```
 
 #### Type Parameters
@@ -32,7 +33,6 @@ The type of the vertex.
 [object.Equals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.equals\#system\-object\-equals\(system\-object\-system\-object\)), 
 [object.GetHashCode\(\)](https://learn.microsoft.com/dotnet/api/system.object.gethashcode), 
 [object.GetType\(\)](https://learn.microsoft.com/dotnet/api/system.object.gettype), 
-[object.MemberwiseClone\(\)](https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone), 
 [object.ReferenceEquals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.referenceequals), 
 [object.ToString\(\)](https://learn.microsoft.com/dotnet/api/system.object.tostring)
 
@@ -56,7 +56,7 @@ The collection of vertices that form the maximal clique.
 
  [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
 
-Thrown if <code class="paramref">vertices</code> is <code>null</code>.
+Thrown if <code class="paramref">vertices</code> is <code>null</code>, empty or contains duplicates.
 
 ## Methods
 

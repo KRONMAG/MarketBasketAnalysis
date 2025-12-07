@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Defines an interface for algorithm that find all maximal cliques in an undirected graph.
 
 ```csharp
+[PublicAPI]
 public interface IMaximalCliqueAlgorithm
 ```
 

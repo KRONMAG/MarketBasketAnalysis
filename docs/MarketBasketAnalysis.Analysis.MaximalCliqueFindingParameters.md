@@ -6,7 +6,8 @@ Assembly: MarketBasketAnalysis.dll
 Represents the parameters used for finding maximal cliques in a graph of association rules.
 
 ```csharp
-public class MaximalCliqueFindingParameters
+[PublicAPI]
+public sealed class MaximalCliqueFindingParameters
 ```
 
 #### Inheritance
@@ -20,7 +21,6 @@ public class MaximalCliqueFindingParameters
 [object.Equals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.equals\#system\-object\-equals\(system\-object\-system\-object\)), 
 [object.GetHashCode\(\)](https://learn.microsoft.com/dotnet/api/system.object.gethashcode), 
 [object.GetType\(\)](https://learn.microsoft.com/dotnet/api/system.object.gettype), 
-[object.MemberwiseClone\(\)](https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone), 
 [object.ReferenceEquals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.referenceequals), 
 [object.ToString\(\)](https://learn.microsoft.com/dotnet/api/system.object.tostring)
 
@@ -52,7 +52,7 @@ A value indicating whether one-way links should be ignored.
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
 
-Thrown if <code class="paramref">minCliqueSize</code> is less than or equal to zero, 
+Thrown if <code class="paramref">minCliqueSize</code> is less than two,
 or if <code class="paramref">maxCliqueSize</code> is less than <code class="paramref">minCliqueSize</code>.
 
 ## Properties
@@ -103,5 +103,5 @@ public int MinCliqueSize { get; }
 
 #### Remarks
 
-The value must be greater than zero.
+The value must be greater than or equal to two.
 

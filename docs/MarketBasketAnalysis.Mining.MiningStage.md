@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Represents the stages of the association rule mining process.
 
 ```csharp
+[PublicAPI]
 public enum MiningStage
 ```
 

@@ -6,6 +6,7 @@ Assembly: MarketBasketAnalysis.dll
 Represents the parameters used for mining association rules.
 
 ```csharp
+[PublicAPI]
 public sealed class MiningParameters
 ```
 
@@ -68,7 +69,7 @@ The degree of parallelism to use during the mining process.
  [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
 
 <p><strong>Thrown if:</strong></p><ol><li>
-            <code class="paramref">itemConversionRules</code> is empty or contains <code>null</code> or same items;
+            <code class="paramref">itemConversionRules</code> is empty or contains <code>null</code> or duplicates;
         </li><li>
             <code class="paramref">itemExclusionRules</code> is empty or contains <code>null</code> items.
         </li></ol>
@@ -129,8 +130,7 @@ public double MinConfidence { get; }
 
 #### Remarks
 
-The value must be between 0 and 1, where 0 means no confidence is required, 
-and 1 means the rule must always hold true.
+The value must be between 0 and 1, where 0 means no confidence is required, and 1 means the rule must always hold true.
 
 ### <a id="MarketBasketAnalysis_Mining_MiningParameters_MinSupport"></a> MinSupport
 
@@ -146,6 +146,5 @@ public double MinSupport { get; }
 
 #### Remarks
 
-The value must be between 0 and 1, where 0 means no support is required, 
-and 1 means the itemset must appear in all transactions.
+The value must be between 0 and 1, where 0 means no support is required, and 1 means the itemset must appear in all transactions.
 
