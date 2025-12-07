@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using MarketBasketAnalysis.Analysis;
 using MarketBasketAnalysis.Mining;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,8 @@ namespace MarketBasketAnalysis
     /// <summary>
     /// Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
     /// </summary>
-    public static class DependencyInjection
+    [PublicAPI]
+    public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// Registers all core Market Basket Analysis services in the provided <see cref="IServiceCollection"/>.
@@ -29,7 +31,9 @@ namespace MarketBasketAnalysis
         public static IServiceCollection AddMarketBasketAnalysis(this IServiceCollection services)
         {
             if (services == null)
+            {
                 throw new ArgumentNullException(nameof(services));
+            }
 
             services.AddSingleton<IMaximalCliqueAlgorithm, TomitaAlgorithm>();
             services.AddSingleton<IMaximalCliqueFinder, MaximalCliqueFinder>();

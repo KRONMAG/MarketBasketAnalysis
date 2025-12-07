@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using static System.StringComparison;
 
 namespace MarketBasketAnalysis.Mining
@@ -6,10 +7,10 @@ namespace MarketBasketAnalysis.Mining
     /// <summary>
     /// Represents a rule for excluding items or groups from association rule mining.
     /// </summary>
-    public class ItemExclusionRule
+    [PublicAPI]
+    public sealed class ItemExclusionRule
     {
         #region Fields and Properties
-
         /// <summary>
         /// Gets the pattern used to match item names for exclusion.
         /// </summary>
@@ -34,11 +35,9 @@ namespace MarketBasketAnalysis.Mining
         /// Gets a value indicating whether the rule applies to groups of items.
         /// </summary>
         public bool ApplyToGroups { get; }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemExclusionRule"/> class with the specified parameters.
         /// </summary>
@@ -49,24 +48,28 @@ namespace MarketBasketAnalysis.Mining
         /// <param name="applyToGroups">A value indicating whether the rule applies to groups of items.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="pattern"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException">Thrown if both <paramref name="applyToItems"/> and <paramref name="applyToGroups"/> are <c>false</c>.</exception>
-        public ItemExclusionRule(string pattern, bool exactMatch, bool ignoreCase,
-            bool applyToItems, bool applyToGroups)
+        public ItemExclusionRule(
+            string pattern,
+            bool exactMatch,
+            bool ignoreCase,
+            bool applyToItems,
+            bool applyToGroups)
         {
             Pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
 
             if (!applyToItems && !applyToGroups)
+            {
                 throw new ArgumentException("Item exclusion rule must be applicable to items or groups.");
+            }
 
             ExactMatch = exactMatch;
             IgnoreCase = ignoreCase;
             ApplyToItems = applyToItems;
             ApplyToGroups = applyToGroups;
         }
-
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Determines whether the specified item should be excluded based on the rule.
         /// </summary>
@@ -78,10 +81,14 @@ namespace MarketBasketAnalysis.Mining
         public bool ShouldExclude(Item item)
         {
             if (item == null)
+            {
                 throw new ArgumentNullException(nameof(item));
+            }
 
-            if (!item.IsGroup && !ApplyToItems || item.IsGroup && !ApplyToGroups)
+            if ((!item.IsGroup && !ApplyToItems) || (item.IsGroup && !ApplyToGroups))
+            {
                 return false;
+            }
 
             var comparisonType = IgnoreCase ? OrdinalIgnoreCase : Ordinal;
 
@@ -89,7 +96,6 @@ namespace MarketBasketAnalysis.Mining
                 ? item.Name.Equals(Pattern, comparisonType)
                 : item.Name.IndexOf(Pattern, comparisonType) != -1;
         }
-
         #endregion
     }
 }

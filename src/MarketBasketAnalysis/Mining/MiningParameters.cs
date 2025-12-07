@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using MarketBasketAnalysis.Extensions;
 
 namespace MarketBasketAnalysis.Mining
@@ -7,16 +8,15 @@ namespace MarketBasketAnalysis.Mining
     /// <summary>
     /// Represents the parameters used for mining association rules.
     /// </summary>
+    [PublicAPI]
     public sealed class MiningParameters
     {
         #region Fields and Properties
-
         /// <summary>
         /// Gets the minimum support threshold for identifying frequent itemsets.
         /// </summary>
         /// <remarks>
-        /// The value must be between 0 and 1, where 0 means no support is required, 
-        /// and 1 means the itemset must appear in all transactions.
+        /// The value must be between 0 and 1, where 0 means no support is required, and 1 means the itemset must appear in all transactions.
         /// </remarks>
         public double MinSupport { get; }
 
@@ -24,8 +24,7 @@ namespace MarketBasketAnalysis.Mining
         /// Gets the minimum confidence threshold for generating association rules.
         /// </summary>
         /// <remarks>
-        /// The value must be between 0 and 1, where 0 means no confidence is required, 
-        /// and 1 means the rule must always hold true.
+        /// The value must be between 0 and 1, where 0 means no confidence is required, and 1 means the rule must always hold true.
         /// </remarks>
         public double MinConfidence { get; }
 
@@ -46,11 +45,9 @@ namespace MarketBasketAnalysis.Mining
         /// The value must be between 1 and 512, where higher values allow for more parallel processing.
         /// </remarks>
         public int DegreeOfParallelism { get; }
-
         #endregion
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MiningParameters"/> class.
         /// </summary>
@@ -83,7 +80,7 @@ namespace MarketBasketAnalysis.Mining
         ///     </listheader>
         ///     <item>
         ///         <description>
-        ///             <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or same items;
+        ///             <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or duplicates;
         ///         </description>
         ///     </item>
         ///     <item>
@@ -97,24 +94,30 @@ namespace MarketBasketAnalysis.Mining
             double minSupport,
             double minConfidence,
             IReadOnlyCollection<ItemConversionRule> itemConversionRules = null,
-            IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null, 
+            IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null,
             int degreeOfParallelism = 1)
         {
             if (minSupport < 0 || minSupport > 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(minSupport), minSupport,
+                throw new ArgumentOutOfRangeException(
+                    nameof(minSupport),
+                    minSupport,
                     "Minimum support threshold must be between 0 and 1.");
             }
 
             if (minConfidence < 0 || minConfidence > 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(minConfidence), minConfidence,
+                throw new ArgumentOutOfRangeException(
+                    nameof(minConfidence),
+                    minConfidence,
                     "Minimum confidence threshold must be between 0 and 1.");
             }
 
             if (degreeOfParallelism < 1 || degreeOfParallelism > 512)
             {
-                throw new ArgumentOutOfRangeException(nameof(degreeOfParallelism), degreeOfParallelism,
+                throw new ArgumentOutOfRangeException(
+                    nameof(degreeOfParallelism),
+                    degreeOfParallelism,
                     "Degree of parallelism must be between 1 and 512.");
             }
 
@@ -134,7 +137,6 @@ namespace MarketBasketAnalysis.Mining
             ItemExclusionRules = itemExclusionRules;
             DegreeOfParallelism = degreeOfParallelism;
         }
-
         #endregion
     }
 }
