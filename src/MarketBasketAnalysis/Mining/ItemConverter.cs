@@ -6,15 +6,10 @@ using MarketBasketAnalysis.Extensions;
 namespace MarketBasketAnalysis.Mining
 {
     /// <inheritdoc />
-    public sealed class ItemConverter : IItemConverter
+    internal sealed class ItemConverter : IItemConverter
     {
         #region Fields and Properties
-
         private readonly Dictionary<Item, ItemConversionRule> _itemConversionRules;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemConverter"/> class with the specified collection of conversion rules.
@@ -26,27 +21,24 @@ namespace MarketBasketAnalysis.Mining
         /// Thrown if <paramref name="itemConversionRules"/> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown if <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or same rules.
+        /// Thrown if <paramref name="itemConversionRules"/> is empty or contains <c>null</c> or duplicates.
         /// </exception>
         public ItemConverter(IReadOnlyCollection<ItemConversionRule> itemConversionRules)
         {
-            if (itemConversionRules == null)
-                throw new ArgumentNullException(nameof(itemConversionRules));
-
             itemConversionRules.Validate(nameof(itemConversionRules));
 
             _itemConversionRules = itemConversionRules.ToDictionary(rule => rule.SourceItem);
         }
-
         #endregion
 
         #region Methods
-
         /// <inheritdoc />
         public bool TryConvert(Item item, out Item group)
         {
             if (item == null)
+            {
                 throw new ArgumentNullException(nameof(item));
+            }
 
             if (_itemConversionRules.TryGetValue(item, out var replacementRule))
             {
@@ -59,7 +51,6 @@ namespace MarketBasketAnalysis.Mining
 
             return false;
         }
-
         #endregion
     }
 }

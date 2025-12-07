@@ -1,11 +1,14 @@
-﻿namespace MarketBasketAnalysis.Mining
+﻿using JetBrains.Annotations;
+
+namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
-    /// Defines an interface for factory interface for creating <see cref="IMiner"/> instances.
+    /// Defines an interface for factory for creating <see cref="IMiner"/> instances.
     /// </summary>
     /// <remarks>
-    /// Use this interface to obtain new miners for performing association rule mining on transaction data.
+    /// Use this interface to obtain new association rule miners.
     /// </remarks>
+    [PublicAPI]
     public interface IMinerFactory
     {
         /// <summary>

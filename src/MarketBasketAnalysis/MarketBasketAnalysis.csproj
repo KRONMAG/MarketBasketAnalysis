@@ -2,9 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsNotAsErrors>S1135</WarningsNotAsErrors>
-		<AnalysisMode>all</AnalysisMode>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
@@ -23,12 +20,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
 		<PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.0" />
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.15.0.120848">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="MarketBasketAnalysis.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>

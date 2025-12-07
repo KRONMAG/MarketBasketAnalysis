@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-// ReSharper disable UnusedMemberInSuper.Global
+using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Defines an interface for performing association rule mining based on transaction data.
     /// </summary>
+    [PublicAPI]
     public interface IMiner
     {
         /// <summary>
         /// Event triggered when the mining progress changes.
         /// </summary>
-        event EventHandler<double> MiningProgressChanged;
+        event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
 
         /// <summary>
         /// Event triggered when the mining stage changes.
         /// </summary>
-        event EventHandler<MiningStage> MiningStageChanged;
+        event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
 
         /// <summary>
         /// Performs association rule mining.
@@ -31,6 +32,12 @@ namespace MarketBasketAnalysis.Mining
         /// <exception cref="OperationCanceledException">
         /// Thrown if the operation is canceled via the <paramref name="token"/>.
         /// </exception>
-        IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default);
+        /// <remarks>
+        /// The enumeration of the <paramref name="transactions"/> may be performed multiple times.
+        /// </remarks>
+        IReadOnlyCollection<AssociationRule> Mine(
+            IEnumerable<Item[]> transactions,
+            MiningParameters parameters,
+            CancellationToken token = default);
     }
 }

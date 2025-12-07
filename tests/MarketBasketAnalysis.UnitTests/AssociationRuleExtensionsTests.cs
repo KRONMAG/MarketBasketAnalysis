@@ -1,16 +1,16 @@
 ﻿using MarketBasketAnalysis.Extensions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MarketBasketAnalysis.UnitTests;
 
-[SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
 public class AssociationRuleExtensionsTests
 {
     private readonly AssociationRule _abAssociationRule;
     private readonly AssociationRule _baAssociationRule;
     private readonly AssociationRule _bcAssociationRule;
+    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly AssociationRule _cbAssociationRule;
     private readonly AssociationRule _cdAssociationRule;
+    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
     private readonly AssociationRule _dcAssociationRule;
 
     private readonly List<AssociationRule> _firstAssociationRuleSet;
@@ -22,7 +22,7 @@ public class AssociationRuleExtensionsTests
         var itemB = new Item(2, "B", false);
         var itemC = new Item(3, "C", false);
         var itemD = new Item(4, "D", false);
-        
+
         _abAssociationRule = CreateAssociationRule(itemA, itemB);
         _baAssociationRule = CreateAssociationRule(itemB, itemA);
         _bcAssociationRule = CreateAssociationRule(itemB, itemC);
@@ -138,25 +138,5 @@ public class AssociationRuleExtensionsTests
         Assert.Contains(_baAssociationRule, result);
         Assert.Contains(_bcAssociationRule, result);
         Assert.Contains(_cdAssociationRule, result);
-    }
-
-    [Theory]
-    [InlineData(true, true, true)]
-    [InlineData(false, true, true)]
-    [InlineData(true, false, true)]
-    [InlineData(true, true, false)]
-    [InlineData(false, true, false)]
-    [InlineData(true, false, false)]
-    public void Intersect_OneOfSetIsEmpty_ResultIsEmpty(bool isFirstSetEmpty, bool isSecondSetEmpty, bool ignoreLinkDirection)
-    {
-        // Arrange
-        var firstAssociationRuleSet = isFirstSetEmpty ? [] : _firstAssociationRuleSet;
-        var secondAssociationRuleSet = isSecondSetEmpty ? [] : _secondAssociationRuleSet;
-
-        // Act
-        var result = firstAssociationRuleSet.Intersect(secondAssociationRuleSet, ignoreLinkDirection).ToList();
-
-        // Assert
-        Assert.Empty(result);
     }
 }

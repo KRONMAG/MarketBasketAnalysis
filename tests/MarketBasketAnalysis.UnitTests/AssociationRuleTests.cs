@@ -2,7 +2,7 @@
 
 namespace MarketBasketAnalysis.UnitTests;
 
-[SuppressMessage("ReSharper", "ObjectCreationAsStatement")]
+[SuppressMessage("ReSharper", "ObjectCreationAsStatement", Justification = "Object is created to check ctor precondition validation.")]
 public class AssociationRuleTests
 {
     private readonly Item _lhsItem = new Item(1, "Left", false);
@@ -136,7 +136,9 @@ public class AssociationRuleTests
         var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
 
         // Act
+#pragma warning disable CA1508 // Avoid dead conditional code
         var result = rule.Equals(null);
+#pragma warning restore CA1508 // Avoid dead conditional code
 
         // Assert
         Assert.False(result);
