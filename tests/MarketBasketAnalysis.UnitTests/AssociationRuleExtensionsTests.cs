@@ -53,20 +53,20 @@ public class AssociationRuleExtensionsTests
     public void Except_PassInvalidArguments_ThrowsArgumentException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Except(null, []));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Except([null], []));
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Except([], null));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Except([], [null]));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Difference(null, []));
+        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Difference([null], []));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Difference([], null));
+        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Difference([], [null]));
     }
 
     [Fact]
     public void Intersect_PassInvalidArguments_ThrowsArgumentException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Intersect(null, []));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Intersect([null], []));
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Intersect([], null));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Intersect([], [null]));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Common(null, []));
+        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Common([null], []));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Common([], null));
+        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Common([], [null]));
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public class AssociationRuleExtensionsTests
         var secondAssociationRuleSet = isSecondSetEmpty ? [] : _secondAssociationRuleSet;
 
         // Act
-        var result = firstAssociationRuleSet.Intersect(secondAssociationRuleSet, ignoreLinkDirection).ToList();
+        var result = firstAssociationRuleSet.Common(secondAssociationRuleSet, ignoreLinkDirection).ToList();
 
         // Assert
         Assert.Empty(result);
@@ -106,7 +106,7 @@ public class AssociationRuleExtensionsTests
     public void Except_IgnoreLinkDirection_ReturnsCorrectResult()
     {
         // Act
-        var result = _firstAssociationRuleSet.Except(_secondAssociationRuleSet, true).ToList();
+        var result = _firstAssociationRuleSet.Difference(_secondAssociationRuleSet, true).ToList();
 
         // Assert
         Assert.Empty(result);
@@ -129,7 +129,7 @@ public class AssociationRuleExtensionsTests
     public void Intersect_IgnoreLinkDirection_ReturnsCorrectResult()
     {
         // Act
-        var result = _firstAssociationRuleSet.Intersect(_secondAssociationRuleSet, true).ToList();
+        var result = _firstAssociationRuleSet.Common(_secondAssociationRuleSet, true).ToList();
 
         // Assert
         Assert.NotNull(result);

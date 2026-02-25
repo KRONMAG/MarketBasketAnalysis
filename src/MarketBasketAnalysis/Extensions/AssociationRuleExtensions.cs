@@ -34,7 +34,7 @@ namespace MarketBasketAnalysis.Extensions
         /// <remarks>
         /// The enumeration of the <paramref name="first"/> or <paramref name="second"/> may be performed multiple times.
         /// </remarks>
-        public static IEnumerable<AssociationRule> Except(
+        public static IEnumerable<AssociationRule> Difference(
             this IEnumerable<AssociationRule> first,
             IEnumerable<AssociationRule> second,
             bool ignoreLinkDirection = false) =>
@@ -61,7 +61,7 @@ namespace MarketBasketAnalysis.Extensions
         /// <remarks>
         /// The enumeration of the <paramref name="first"/> or <paramref name="second"/> may be performed multiple times.
         /// </remarks>
-        public static IEnumerable<AssociationRule> Intersect(
+        public static IEnumerable<AssociationRule> Common(
             this IEnumerable<AssociationRule> first,
             IEnumerable<AssociationRule> second,
             bool ignoreLinkDirection = false) =>
