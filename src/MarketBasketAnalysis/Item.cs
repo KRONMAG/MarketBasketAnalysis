@@ -34,7 +34,7 @@ namespace MarketBasketAnalysis
         /// <param name="name">The name of the item.</param>
         /// <param name="isGroup">A value indicating whether the item is a group of other items.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is <c>null</c>.</exception>
-        public Item(int id, string name, bool isGroup)
+        public Item(int id, string name, bool isGroup = false)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
 
