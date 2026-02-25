@@ -24,7 +24,7 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Performs association rule mining.
         /// </summary>
-        /// <param name="transactions">A collection of transactions, where each transaction is represented as an array of items.</param>
+        /// <param name="transactions">A collection of transactions, where each transaction is represented as an collection of items.</param>
         /// <param name="parameters">The mining parameters, including minimum support and confidence thresholds.</param>
         /// <param name="token">A cancellation token to cancel the operation if needed.</param>
         /// <returns>A collection of association rules that meet the specified parameters.</returns>
@@ -36,7 +36,7 @@ namespace MarketBasketAnalysis.Mining
         /// The enumeration of the <paramref name="transactions"/> may be performed multiple times.
         /// </remarks>
         IReadOnlyCollection<AssociationRule> Mine(
-            IEnumerable<Item[]> transactions,
+            IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             CancellationToken token = default);
     }
