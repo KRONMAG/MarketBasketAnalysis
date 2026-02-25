@@ -1,13 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis", "src\MarketBasketAnalysis\MarketBasketAnalysis.csproj", "{65C86DA5-4361-4BC8-8DDB-8427F541D8B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.UnitTests", "tests\MarketBasketAnalysis.UnitTests\MarketBasketAnalysis.UnitTests.csproj", "{49455099-4B68-CC47-4EEC-4684955E4FFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.Examples.QuickStart", "examples\MarketBasketAnalysis.Examples.QuickStart\MarketBasketAnalysis.Examples.QuickStart.csproj", "{28CD5D74-C65D-4AB6-ACA4-A0E6513A0795}"
 EndProject
@@ -18,6 +21,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.Examples", "examples\MarketBasketAnalysis.Examples.Shared\MarketBasketAnalysis.Examples.csproj", "{0E40DAE9-9854-4664-941C-312E445EC812}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules", "examples\MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules\MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules.csproj", "{ABA046BE-BD20-4B88-A0A2-35EAA89F684B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.Examples.FindMaximalCliques", "examples\MarketBasketAnalysis.Examples.FindMaximalCliques\MarketBasketAnalysis.Examples.FindMaximalCliques.csproj", "{B78F8D36-3C33-4D8A-BC51-81CC15C49385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules", "examples\MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules\MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules.csproj", "{1FE338FB-3C4F-4C34-A607-5DA58DF2000F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +56,14 @@ Global
 		{ABA046BE-BD20-4B88-A0A2-35EAA89F684B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABA046BE-BD20-4B88-A0A2-35EAA89F684B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABA046BE-BD20-4B88-A0A2-35EAA89F684B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B78F8D36-3C33-4D8A-BC51-81CC15C49385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B78F8D36-3C33-4D8A-BC51-81CC15C49385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B78F8D36-3C33-4D8A-BC51-81CC15C49385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B78F8D36-3C33-4D8A-BC51-81CC15C49385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE338FB-3C4F-4C34-A607-5DA58DF2000F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE338FB-3C4F-4C34-A607-5DA58DF2000F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE338FB-3C4F-4C34-A607-5DA58DF2000F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE338FB-3C4F-4C34-A607-5DA58DF2000F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +73,8 @@ Global
 		{6F5558C0-83B0-4FD3-9A26-3E5FDA4E6CE3} = {EDBA92F7-C1F9-4039-A7C1-BBFBEDD3FCEB}
 		{0E40DAE9-9854-4664-941C-312E445EC812} = {EDBA92F7-C1F9-4039-A7C1-BBFBEDD3FCEB}
 		{ABA046BE-BD20-4B88-A0A2-35EAA89F684B} = {EDBA92F7-C1F9-4039-A7C1-BBFBEDD3FCEB}
+		{B78F8D36-3C33-4D8A-BC51-81CC15C49385} = {EDBA92F7-C1F9-4039-A7C1-BBFBEDD3FCEB}
+		{1FE338FB-3C4F-4C34-A607-5DA58DF2000F} = {EDBA92F7-C1F9-4039-A7C1-BBFBEDD3FCEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FEBC96E-F36C-499F-8189-28C75ED97A20}
