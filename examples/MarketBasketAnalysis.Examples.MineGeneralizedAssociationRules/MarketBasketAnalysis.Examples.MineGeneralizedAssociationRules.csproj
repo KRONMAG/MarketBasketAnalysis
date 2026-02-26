@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarketBasketAnalysis.Examples.Shared\MarketBasketAnalysis.Examples.csproj" />
+  </ItemGroup>
+
+</Project>

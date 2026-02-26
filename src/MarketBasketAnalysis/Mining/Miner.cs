@@ -57,7 +57,7 @@ namespace MarketBasketAnalysis.Mining
         /// <inheritdoc />
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs for IMiner.")]
         public IReadOnlyCollection<AssociationRule> Mine(
-            IEnumerable<Item[]> transactions,
+            IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             CancellationToken token = default)
         {
@@ -99,7 +99,7 @@ namespace MarketBasketAnalysis.Mining
             }
         }
 
-        private static void ThrowIfTransactionIsNull(Item[] transaction)
+        private static void ThrowIfTransactionIsNull(IReadOnlyList<Item> transaction)
         {
             if (transaction == null)
             {
@@ -112,7 +112,7 @@ namespace MarketBasketAnalysis.Mining
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
 
         private Dictionary<Item, int> SearchForFrequentItems(
-            IEnumerable<Item[]> transactions,
+            IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             CancellationToken token,
             out int transactionCount)
@@ -172,7 +172,7 @@ namespace MarketBasketAnalysis.Mining
         }
 
         private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(
-            IEnumerable<Item[]> transactions,
+            IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             Dictionary<Item, int> frequentItems,
             int transactionCount,
@@ -204,9 +204,9 @@ namespace MarketBasketAnalysis.Mining
 
                         var itemsets = itemsetsPool.Get();
 
-                        for (var i = 0; i < transaction.Length; i++)
+                        for (var i = 0; i < transaction.Count; i++)
                         {
-                            for (var j = i + 1; j < transaction.Length; j++)
+                            for (var j = i + 1; j < transaction.Count; j++)
                             {
                                 var itemset = transaction[i].Id < transaction[j].Id
                                     ? (transaction[i], transaction[j])
