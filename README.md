@@ -23,13 +23,13 @@ Library for discovering and analyzing association rules from transactional data
 Package Manager
 
 ```powershell
-Install-Package MarketBasketAnalysis -Version 1.0.0-alpha.2
+Install-Package MarketBasketAnalysis -Version 1.0.0-alpha.3
 ```
 
 .NET CLI
 
 ```powershell
-dotnet add package MarketBasketAnalysis --version 1.0.0-alpha.2
+dotnet add package MarketBasketAnalysis --version 1.0.0-alpha.3
 ```
 
 ## Quick Start
