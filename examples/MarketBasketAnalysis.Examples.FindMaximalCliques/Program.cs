@@ -2,7 +2,7 @@
 using MarketBasketAnalysis.Analysis;
 using MarketBasketAnalysis.Examples;
 
-// 1. Define transactions
+// 1. Define items
 var beef = new Item(1, "Beef");
 var chicken = new Item(2, "Chicken");
 var milk = new Item(3, "Milk");
@@ -10,6 +10,7 @@ var cheese = new Item(4, "Cheese");
 var boots = new Item(5, "Boots");
 var clothes = new Item(6, "Clothes");
 
+// 2. Define transactions
 IEnumerable<Item[]> transactions =
 [
     [beef, chicken, milk],
@@ -21,25 +22,25 @@ IEnumerable<Item[]> transactions =
     [chicken, milk, clothes],
 ];
 
-// 2. Create miner instance
+// 3. Create miner instance
 var miner = ExampleHelper.CreateMiner();
 
-// 3. Mine association rules
-var associationRules = miner.Mine(transactions, parameters: new (minSupport: 0.2, minConfidence: 0.4));
+// 4. Mine association rules
+var associationRules = miner.Mine(transactions, parameters: new(minSupport: 0.2, minConfidence: 0.4));
 
-// 4. Create maximal clique finder instance
+// 5. Create maximal clique finder instance
 var maximalCliqueFinder = ExampleHelper.CreateMaximalCliqueFinder();
 
-// 5. Configure parameters to search maximal cliques containing from 3 to 5 vertices among symmetric association rules
+// 6. Configure parameters to search maximal cliques containing from 3 to 5 vertices among symmetric association rules
 var maximalCliqueFindingParameters = new MaximalCliqueFindingParameters(
     minCliqueSize: 3,
     maxCliqueSize: 5,
     ignoreOneWayLinks: true);
 
-// 6. Search maximal cliques
+// 7. Search maximal cliques
 var maximalCliques = maximalCliqueFinder.Find(associationRules, maximalCliqueFindingParameters);
 
-// 7. Output found maximal cliques
+// 8. Output found maximal cliques
 ExampleHelper.Print(maximalCliques);
 
 // Example output:

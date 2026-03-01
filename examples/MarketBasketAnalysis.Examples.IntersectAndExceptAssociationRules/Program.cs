@@ -46,10 +46,10 @@ var miner = ExampleHelper.CreateMiner();
 // 5. Mine association rules
 var summerAssociationRules = miner.Mine(
     transactions: summerTransactions,
-    parameters: new (minSupport: 0.2, minConfidence: 0.5));
+    parameters: new(minSupport: 0.2, minConfidence: 0.5));
 var autumnAssociationRules = miner.Mine(
     transactions: autumnTransactions,
-    parameters: new (minSupport: 0.2, minConfidence: 0.5));
+    parameters: new(minSupport: 0.2, minConfidence: 0.5));
 
 // 6. Find and print association rules that are common to both summer and autumn transactions
 var commonAssociationRules = summerAssociationRules.Common(autumnAssociationRules);

@@ -1,14 +1,16 @@
 ﻿using MarketBasketAnalysis;
 using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Mining;
+// ReSharper disable PossibleMultipleEnumeration
 
 // 1. Define items
-var beef = new Item(1, "Beef", false);
-var chicken = new Item(2, "Chicken", false);
-var milk = new Item(3, "Milk", false);
-var cheese = new Item(4, "Cheese", false);
-var boots = new Item(5, "Boots", false);
-var clothes = new Item(6, "Clothes", false);
-var dairyProducts = new Item(7, "Dairy products", true);
+var beef = new Item(1, "Beef", isGroup: false);
+var chicken = new Item(2, "Chicken", isGroup: false);
+var milk = new Item(3, "Milk", isGroup: false);
+var cheese = new Item(4, "Cheese", isGroup: false);
+var boots = new Item(5, "Boots", isGroup: false);
+var clothes = new Item(6, "Clothes", isGroup: false);
+var dairyProducts = new Item(7, "Dairy products", isGroup: true);
 
 // 2. Define transactions
 IEnumerable<Item[]> transactions =
@@ -25,27 +27,29 @@ IEnumerable<Item[]> transactions =
 // 3. Create miner instance
 var miner = ExampleHelper.CreateMiner();
 
-// 4. Mine association rules without converting any item to the group
+// 4. Mine association rules without converting any item to group
 var basicAssociationRules = miner.Mine(
     transactions: transactions,
-    parameters: new (minSupport: 0.4, minConfidence: 0.5));
+    parameters: new(minSupport: 0.4, minConfidence: 0.5));
 
-// 5. Mine generalized association rules: converting items "Cheese" and "Milk" to the group "Dairy products"
+// 5. Define item conversion rules to convert items "Cheese" and "Milk" to group "Dairy products"
+var itemConversionRules = new List<ItemConversionRule>
+{
+    new(cheese, dairyProducts),
+    new(milk, dairyProducts),
+};
+
+// 6. Mine generalized association rules
 var basicAndGeneralizedAssociationRules = miner.Mine(
     transactions: transactions,
-    parameters: new (
-        minSupport: 0.4,
-        minConfidence: 0.5,
-        itemConversionRules:
-        [
-            new (cheese, dairyProducts),
-            new (milk, dairyProducts)
-        ]));
+    parameters: new(minSupport: 0.4, minConfidence: 0.5, itemConversionRules: itemConversionRules));
 
-// 5. Print found association rules
+// 7. Print found association rules
 Console.WriteLine("Basic association rules:");
 ExampleHelper.Print(basicAssociationRules);
+
 Console.WriteLine();
+
 Console.WriteLine("Basic and generalized association rules:");
 ExampleHelper.Print(basicAndGeneralizedAssociationRules);
 
