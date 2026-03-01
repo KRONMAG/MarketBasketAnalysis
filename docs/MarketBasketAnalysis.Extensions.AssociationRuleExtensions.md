@@ -27,55 +27,12 @@ public static class AssociationRuleExtensions
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Except_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Except\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
-
-Computes the difference between two sequences of association rules.
-
-```csharp
-public static IEnumerable<AssociationRule> Except(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
-```
-
-#### Parameters
-
-`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-The first sequence of association rules.
-
-`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-The second sequence of association rules.
-
-`ignoreLinkDirection` [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
-
-A value indicating whether the direction of links between association rules should be ignored.
-If <code>true</code>, the difference will consider rules as equal regardless of their direction.
-
-#### Returns
-
- [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
-
-A sequence of association rules that are present in <code class="paramref">first</code> but not in <code class="paramref">second</code>.
-
-#### Remarks
-
-The enumeration of the <code class="paramref">first</code> or <code class="paramref">second</code> may be performed multiple times.
-
-#### Exceptions
-
- [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
-
-Thrown if <code class="paramref">first</code> or <code class="paramref">second</code> is <code>null</code>.
-
- [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
-
-Thrown if <code class="paramref">first</code> or <code class="paramref">second</code> contains <code>null</code> items.
-
-### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Intersect_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Intersect\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
+### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Common_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Common\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
 
 Computes the intersection of two sequences of association rules.
 
 ```csharp
-public static IEnumerable<AssociationRule> Intersect(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
+public static IEnumerable<AssociationRule> Common(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
 ```
 
 #### Parameters
@@ -98,6 +55,49 @@ If <code>true</code>, the intersection will consider rules as equal regardless o
  [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
 
 A sequence of association rules that are present in both <code class="paramref">first</code> and <code class="paramref">second</code>.
+
+#### Remarks
+
+The enumeration of the <code class="paramref">first</code> or <code class="paramref">second</code> may be performed multiple times.
+
+#### Exceptions
+
+ [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
+
+Thrown if <code class="paramref">first</code> or <code class="paramref">second</code> is <code>null</code>.
+
+ [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
+
+Thrown if <code class="paramref">first</code> or <code class="paramref">second</code> contains <code>null</code> items.
+
+### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Difference_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Difference\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
+
+Computes the difference between two sequences of association rules.
+
+```csharp
+public static IEnumerable<AssociationRule> Difference(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
+```
+
+#### Parameters
+
+`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+
+The first sequence of association rules.
+
+`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+
+The second sequence of association rules.
+
+`ignoreLinkDirection` [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
+
+A value indicating whether the direction of links between association rules should be ignored.
+If <code>true</code>, the difference will consider rules as equal regardless of their direction.
+
+#### Returns
+
+ [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+
+A sequence of association rules that are present in <code class="paramref">first</code> but not in <code class="paramref">second</code>.
 
 #### Remarks
 
