@@ -35,7 +35,7 @@ public sealed class Item : IEquatable<Item>
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Item" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public Item(int id, string name, bool isGroup)
+public Item(int id, string name, bool isGroup = false)
 ```
 
 #### Parameters

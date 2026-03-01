@@ -1,0 +1,9 @@
+[*.cs]
+# Code Analysis
+dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA2007.severity = none
+
+# StyleCop Rules
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1516.severity = none

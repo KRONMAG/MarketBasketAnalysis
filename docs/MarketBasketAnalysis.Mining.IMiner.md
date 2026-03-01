@@ -12,19 +12,19 @@ public interface IMiner
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Mining_IMiner_Mine_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Item____MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> Mine\(IEnumerable<Item\[\]\>, MiningParameters, CancellationToken\)
+### <a id="MarketBasketAnalysis_Mining_IMiner_Mine_System_Collections_Generic_IEnumerable_System_Collections_Generic_IReadOnlyList_MarketBasketAnalysis_Item___MarketBasketAnalysis_Mining_MiningParameters_System_Threading_CancellationToken_"></a> Mine\(IEnumerable<IReadOnlyList<Item\>\>, MiningParameters, CancellationToken\)
 
 Performs association rule mining.
 
 ```csharp
-IReadOnlyCollection<AssociationRule> Mine(IEnumerable<Item[]> transactions, MiningParameters parameters, CancellationToken token = default)
+IReadOnlyCollection<AssociationRule> Mine(IEnumerable<IReadOnlyList<Item>> transactions, MiningParameters parameters, CancellationToken token = default)
 ```
 
 #### Parameters
 
-`transactions` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[Item](MarketBasketAnalysis.Item.md)\[\]\>
+`transactions` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[IReadOnlyList](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist\-1)<[Item](MarketBasketAnalysis.Item.md)\>\>
 
-A collection of transactions, where each transaction is represented as an array of items.
+A collection of transactions, where each transaction is represented as an collection of items.
 
 `parameters` [MiningParameters](MarketBasketAnalysis.Mining.MiningParameters.md)
 

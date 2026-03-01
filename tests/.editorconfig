@@ -5,5 +5,4 @@ dotnet_diagnostic.CA1806.severity = none
 
 # StyleCop Rules
 dotnet_diagnostic.SA0001.severity = none
-dotnet_diagnostic.SA1000.severity = none
 dotnet_diagnostic.SA1600.severity = none
