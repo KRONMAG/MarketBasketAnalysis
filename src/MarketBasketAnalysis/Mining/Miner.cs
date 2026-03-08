@@ -13,14 +13,13 @@ using Timer = System.Timers.Timer;
 namespace MarketBasketAnalysis.Mining
 {
     /// <inheritdoc />
-    internal sealed class Miner : IMiner
+    internal sealed partial class Miner : IMiner
     {
         #region Fields and Properties
         private readonly Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> _itemConverterFactory;
         private readonly Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> _itemExcluderFactory;
 
         private IItemConverter _itemConverter;
-        private IItemExcluder _itemExcluder;
 
         /// <inheritdoc />
         public event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
@@ -76,13 +75,19 @@ namespace MarketBasketAnalysis.Mining
                 _itemConverter = parameters.ItemConversionRules != null
                     ? _itemConverterFactory(parameters.ItemConversionRules)
                     : null;
-                _itemExcluder = parameters.ItemExclusionRules != null
+                var itemExcluder = parameters.ItemExclusionRules != null
                     ? _itemExcluderFactory(parameters.ItemExclusionRules)
                     : null;
 
                 OnMiningStageChanged(MiningStage.FrequentItemSearch);
 
-                var frequentItems = SearchForFrequentItems(transactions, parameters, token, out var transactionCount);
+                var frequentItems = SearchForFrequentItems(
+                    transactions,
+                    parameters,
+                    itemExcluder,
+                    _itemConverter,
+                    token,
+                    out var transactionCount);
 
                 OnMiningStageChanged(MiningStage.ItemsetSearch);
 
@@ -95,7 +100,6 @@ namespace MarketBasketAnalysis.Mining
             finally
             {
                 _itemConverter = null;
-                _itemExcluder = null;
             }
         }
 
@@ -107,69 +111,21 @@ namespace MarketBasketAnalysis.Mining
             }
         }
 
+        private static void UpdateFrequency<TKey>(Dictionary<TKey, int> frequencies, TKey key)
+        {
+            if (frequencies.TryGetValue(key, out var value))
+            {
+                frequencies[key] = value + 1;
+            }
+            else
+            {
+                frequencies[key] = 1;
+            }
+        }
+
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
         private static int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-
-        private Dictionary<Item, int> SearchForFrequentItems(
-            IEnumerable<IReadOnlyList<Item>> transactions,
-            MiningParameters parameters,
-            CancellationToken token,
-            out int transactionCount)
-        {
-            var itemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
-            var itemsPool = new DefaultObjectPool<HashSet<Item>>(
-                new DefaultPooledObjectPolicy<HashSet<Item>>(),
-                parameters.DegreeOfParallelism);
-
-            transactionCount = transactions
-                .AsParallel()
-                .WithDegreeOfParallelism(parameters.DegreeOfParallelism)
-                .WithCancellation(token)
-                .Sum(transaction =>
-                {
-                    ThrowIfTransactionIsNull(transaction);
-
-                    var items = itemsPool.Get();
-
-                    foreach (var item in transaction)
-                    {
-                        if (items.Contains(item) || _itemExcluder?.ShouldExclude(item) == true)
-                        {
-                            continue;
-                        }
-
-                        items.Add(item);
-
-                        if (_itemConverter?.TryConvert(item, out var group) == true)
-                        {
-                            if (items.Contains(group) || _itemExcluder?.ShouldExclude(group) == true)
-                            {
-                                continue;
-                            }
-
-                            items.Add(group);
-
-                            itemFrequencies.AddOrUpdate(group, 1, UpdateFrequency);
-                        }
-                        else
-                        {
-                            itemFrequencies.AddOrUpdate(item, 1, UpdateFrequency);
-                        }
-                    }
-
-                    items.Clear();
-                    itemsPool.Return(items);
-
-                    return 1;
-                });
-
-            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
-
-            return itemFrequencies
-                .Where(keyValuePair => keyValuePair.Value >= frequencyThreshold)
-                .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
-        }
 
         private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(
             IEnumerable<IReadOnlyList<Item>> transactions,
