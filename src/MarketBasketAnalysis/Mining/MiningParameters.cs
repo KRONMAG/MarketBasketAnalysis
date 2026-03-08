@@ -113,12 +113,12 @@ namespace MarketBasketAnalysis.Mining
                     "Minimum confidence threshold must be between 0 and 1.");
             }
 
-            if (degreeOfParallelism < 1 || degreeOfParallelism > 512)
+            if (degreeOfParallelism < 1)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(degreeOfParallelism),
                     degreeOfParallelism,
-                    "Degree of parallelism must be between 1 and 512.");
+                    "Degree of parallelism must be greater than zero.");
             }
 
             if (itemConversionRules != null)
