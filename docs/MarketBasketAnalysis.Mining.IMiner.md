@@ -17,7 +17,7 @@ public interface IMiner
 Performs association rule mining.
 
 ```csharp
-IReadOnlyCollection<AssociationRule> Mine(IEnumerable<IReadOnlyList<Item>> transactions, MiningParameters parameters, CancellationToken token = default)
+IReadOnlyCollection<AssociationRule> Mine(IEnumerable<IReadOnlyList<Item>> transactions, MiningParameters parameters, CancellationToken cancellationToken = default)
 ```
 
 #### Parameters
@@ -30,7 +30,7 @@ A collection of transactions, where each transaction is represented as an collec
 
 The mining parameters, including minimum support and confidence thresholds.
 
-`token` [CancellationToken](https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken)
+`cancellationToken` [CancellationToken](https://learn.microsoft.com/dotnet/api/system.threading.cancellationtoken)
 
 A cancellation token to cancel the operation if needed.
 
@@ -52,19 +52,23 @@ Thrown if <code class="paramref">transactions</code> or <code class="paramref">p
 
  [OperationCanceledException](https://learn.microsoft.com/dotnet/api/system.operationcanceledexception)
 
-Thrown if the operation is canceled via the <code class="paramref">token</code>.
+Thrown if the operation is canceled via the <code class="paramref">cancellationToken</code>.
 
-### <a id="MarketBasketAnalysis_Mining_IMiner_MiningProgressChanged"></a> MiningProgressChanged
+### <a id="MarketBasketAnalysis_Mining_IMiner_MiningProgressUpdated"></a> MiningProgressUpdated
 
-Event triggered when the mining progress changes.
+Event triggered when the mining progress updates.
 
 ```csharp
-event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged
+event EventHandler<MiningProgressChangedEventArgs> MiningProgressUpdated
 ```
 
 #### Event Type
 
  [EventHandler](https://learn.microsoft.com/dotnet/api/system.eventhandler\-1)<[MiningProgressChangedEventArgs](MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md)\>
+
+#### Remarks
+
+The event is triggered at intervals specified by the <xref href="MarketBasketAnalysis.Mining.MiningParameters.MiningProgressInterval" data-throw-if-not-resolved="false"></xref>.
 
 ### <a id="MarketBasketAnalysis_Mining_IMiner_MiningStageChanged"></a> MiningStageChanged
 
