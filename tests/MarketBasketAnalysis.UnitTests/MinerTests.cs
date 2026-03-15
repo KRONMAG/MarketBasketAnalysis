@@ -20,9 +20,9 @@ public class MinerTests
 
     public MinerTests()
     {
-        _itemA = new(1, "A", false);
-        _itemB = new(2, "B", false);
-        _itemC = new(3, "C", false);
+        _itemA = new(1, "A");
+        _itemB = new(2, "B");
+        _itemC = new(3, "C");
         _group = new(4, "Group", true);
 
         _transactions =
@@ -96,7 +96,7 @@ public class MinerTests
         // Arrange
         var progressValues = new List<double>();
 
-        _miner.MiningProgressChanged += (_, e) => progressValues.Add(e.Progress);
+        _miner.MiningProgressUpdated += (_, e) => progressValues.Add(e.Progress);
 
         // Act
         _miner.Mine(GenerateTransactions(), new(0, 0));
