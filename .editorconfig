@@ -1,5 +1,8 @@
 root = true
 
+[*]
+trim_trailing_whitespace = true
+
 [*.cs]
 # Code Analysis
 dotnet_diagnostic.CA1859.severity = suggestion
