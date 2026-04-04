@@ -187,14 +187,39 @@ public class MinerTests
         AssertEqualAssociationRules(expected, actual);
     }
 
-    [Fact]
-    public void Mine_WithDegreeOfParallelism_ReturnsAllRules()
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(10)]
+    public void Mine_WithDegreeOfParallelism_ReturnsAllRules(int degreeOfParallelism)
     {
         // Arrange
         var expected = GetAllAssociationRules();
 
         // Act
-        var actual = _miner.Mine(_transactions, new(0, 0, degreeOfParallelism: expected.Count));
+        var actual = _miner.Mine(_transactions, new(0, 0, degreeOfParallelism: degreeOfParallelism));
+
+        // Assert
+        AssertEqualAssociationRules(expected, actual);
+    }
+
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(2, 1)]
+    [InlineData(2, 2)]
+    [InlineData(10, 1)]
+    [InlineData(10, 5)]
+    [InlineData(10, 10)]
+    public void Mine_WithStatePartitionCount_ReturnsAllRules(
+        int degreeOfParallelism, int statePartitionCount)
+    {
+        // Arrange
+        var parameters = new MiningParameters(
+            0, 0, degreeOfParallelism: degreeOfParallelism, statePartitionCount: statePartitionCount);
+        var expected = GetAllAssociationRules();
+
+        // Act
+        var actual = _miner.Mine(_transactions, parameters);
 
         // Assert
         AssertEqualAssociationRules(expected, actual);
