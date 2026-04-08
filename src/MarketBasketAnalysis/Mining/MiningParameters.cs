@@ -15,17 +15,11 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Gets the minimum support threshold for identifying frequent itemsets.
         /// </summary>
-        /// <remarks>
-        /// The value must be between 0 and 1, where 0 means no support is required, and 1 means the itemset must appear in all transactions.
-        /// </remarks>
         public double MinSupport { get; }
 
         /// <summary>
         /// Gets the minimum confidence threshold for generating association rules.
         /// </summary>
-        /// <remarks>
-        /// The value must be between 0 and 1, where 0 means no confidence is required, and 1 means the rule must always hold true.
-        /// </remarks>
         public double MinConfidence { get; }
 
         /// <summary>
@@ -41,10 +35,17 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Gets the degree of parallelism to use during the mining process.
         /// </summary>
-        /// <remarks>
-        /// The value must be between 1 and 512, where higher values allow for more parallel processing.
-        /// </remarks>
         public int DegreeOfParallelism { get; }
+
+        /// <summary>
+        /// Gets the number of state partitions used to store shared state across worker threads.
+        /// </summary>
+        public int StatePartitionCount { get; }
+
+        /// <summary>
+        /// Gets the interval in milliseconds at which the <see cref="IMiner.MiningProgressUpdated"/> event is generated.
+        /// </summary>
+        public int MiningProgressInterval { get; }
         #endregion
 
         #region Constructors
@@ -56,6 +57,8 @@ namespace MarketBasketAnalysis.Mining
         /// <param name="itemConversionRules">An optional collection of <see cref="ItemConversionRule"/> objects that define the rules for converting items.</param>
         /// <param name="itemExclusionRules">An optional collection of <see cref="ItemExclusionRule"/> objects that define the rules for excluding items.</param>
         /// <param name="degreeOfParallelism">The degree of parallelism to use during the mining process.</param>
+        /// <param name="statePartitionCount">The number of state partitions used to store shared state across worker threads.</param>
+        /// <param name="miningProgressInterval">The interval in milliseconds at which the <see cref="IMiner.MiningProgressUpdated"/> event is generated.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <list type="number">
         ///     <listheader>
@@ -68,7 +71,17 @@ namespace MarketBasketAnalysis.Mining
         ///     </item>
         ///     <item>
         ///         <description>
-        ///             <paramref name="degreeOfParallelism"/> is not between 1 and 512.
+        ///             <paramref name="degreeOfParallelism"/> is not positive;
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="statePartitionCount"/> is not positive or greater than <paramref name="degreeOfParallelism"/>;
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <description>
+        ///             <paramref name="miningProgressInterval"/> is not positive.
         ///         </description>
         ///     </item>
         /// </list>
@@ -95,7 +108,36 @@ namespace MarketBasketAnalysis.Mining
             double minConfidence,
             IReadOnlyCollection<ItemConversionRule> itemConversionRules = null,
             IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null,
-            int degreeOfParallelism = 1)
+            int degreeOfParallelism = 1,
+            int statePartitionCount = 1,
+            int miningProgressInterval = 100)
+        {
+            ValidateParameters(
+                minSupport,
+                minConfidence,
+                itemConversionRules,
+                itemExclusionRules,
+                degreeOfParallelism,
+                statePartitionCount,
+                miningProgressInterval);
+
+            MinSupport = minSupport;
+            MinConfidence = minConfidence;
+            ItemConversionRules = itemConversionRules;
+            ItemExclusionRules = itemExclusionRules;
+            DegreeOfParallelism = degreeOfParallelism;
+            StatePartitionCount = statePartitionCount;
+            MiningProgressInterval = miningProgressInterval;
+        }
+
+        private static void ValidateParameters(
+            double minSupport,
+            double minConfidence,
+            IReadOnlyCollection<ItemConversionRule> itemConversionRules,
+            IReadOnlyCollection<ItemExclusionRule> itemExclusionRules,
+            int degreeOfParallelism,
+            int statePartitionCount,
+            int miningProgressInterval)
         {
             if (minSupport < 0 || minSupport > 1)
             {
@@ -113,29 +155,32 @@ namespace MarketBasketAnalysis.Mining
                     "Minimum confidence threshold must be between 0 and 1.");
             }
 
-            if (degreeOfParallelism < 1 || degreeOfParallelism > 512)
+            if (degreeOfParallelism < 1)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(degreeOfParallelism),
                     degreeOfParallelism,
-                    "Degree of parallelism must be between 1 and 512.");
+                    "Degree of parallelism must be positive.");
             }
 
-            if (itemConversionRules != null)
+            if (statePartitionCount < 1 || statePartitionCount > degreeOfParallelism)
             {
-                itemConversionRules.Validate(nameof(itemConversionRules));
+                throw new ArgumentOutOfRangeException(
+                    nameof(statePartitionCount),
+                    statePartitionCount,
+                    "State partition count must be positive and less than or equal to degree of parallelism.");
             }
 
-            if (itemExclusionRules != null)
+            if (miningProgressInterval < 1)
             {
-                itemExclusionRules.Validate(nameof(itemExclusionRules));
+                throw new ArgumentOutOfRangeException(
+                    nameof(miningProgressInterval),
+                    miningProgressInterval,
+                    "Mining progress interval must be positive.");
             }
 
-            MinSupport = minSupport;
-            MinConfidence = minConfidence;
-            ItemConversionRules = itemConversionRules;
-            ItemExclusionRules = itemExclusionRules;
-            DegreeOfParallelism = degreeOfParallelism;
+            itemConversionRules?.Validate(nameof(itemConversionRules));
+            itemExclusionRules?.Validate(nameof(itemExclusionRules));
         }
         #endregion
     }
