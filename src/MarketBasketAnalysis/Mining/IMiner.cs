@@ -20,6 +20,7 @@ namespace MarketBasketAnalysis.Mining
         /// <summary>
         /// Event triggered when the mining stage changes.
         /// </summary>
+        // ReSharper disable once UnusedMemberInSuper.Global
         event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
 
         /// <summary>
