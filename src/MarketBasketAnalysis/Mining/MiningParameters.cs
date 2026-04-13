@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using MarketBasketAnalysis.Extensions;
 
 namespace MarketBasketAnalysis.Mining
@@ -8,7 +7,6 @@ namespace MarketBasketAnalysis.Mining
     /// <summary>
     /// Represents the parameters used for mining association rules.
     /// </summary>
-    [PublicAPI]
     public sealed class MiningParameters
     {
         #region Fields and Properties

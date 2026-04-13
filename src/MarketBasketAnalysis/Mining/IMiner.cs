@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Defines an interface for performing association rule mining based on transaction data.
     /// </summary>
-    [PublicAPI]
     public interface IMiner
     {
         /// <summary>

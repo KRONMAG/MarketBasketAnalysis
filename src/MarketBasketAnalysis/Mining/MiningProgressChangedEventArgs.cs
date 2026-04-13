@@ -1,12 +1,10 @@
 ﻿using System;
-using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Provides data for the event that occurs when mining progress changes.
     /// </summary>
-    [PublicAPI]
     public sealed class MiningProgressChangedEventArgs : EventArgs
     {
         /// <summary>

@@ -1,14 +1,12 @@
 ﻿// Ignore Spelling: Excluder
 
 using System;
-using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Defines a method to determine whether a specific item should be excluded during association rule mining.
     /// </summary>
-    [PublicAPI]
     public interface IItemExcluder
     {
         /// <summary>
