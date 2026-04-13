@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/MarketBasketAnalysis.Examples.ExcludeItemFromMining/MarketBasketAnalysis.Examples.ExcludeItemFromMining.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.FindMaximalCliques/MarketBasketAnalysis.Examples.FindMaximalCliques.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules/MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules/MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.QuickStart/MarketBasketAnalysis.Examples.QuickStart.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.Shared/MarketBasketAnalysis.Examples.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/MarketBasketAnalysis/MarketBasketAnalysis.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MarketBasketAnalysis.UnitTests/MarketBasketAnalysis.UnitTests.csproj" />
+  </Folder>
+</Solution>

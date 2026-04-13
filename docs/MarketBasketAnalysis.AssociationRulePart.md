@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Represents a part of an association rule, either the left-hand side or the right-hand side.
 
 ```csharp
-[PublicAPI]
 public sealed class AssociationRulePart : IEquatable<AssociationRulePart>
 ```
 

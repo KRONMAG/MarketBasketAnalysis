@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Represents a rule for excluding items or groups from association rule mining.
 
 ```csharp
-[PublicAPI]
 public sealed class ItemExclusionRule
 ```
 

@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Defines set operations on sequences of association rules.
 
 ```csharp
-[PublicAPI]
 public static class AssociationRuleExtensions
 ```
 

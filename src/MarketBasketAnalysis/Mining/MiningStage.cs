@@ -1,11 +1,8 @@
-﻿using JetBrains.Annotations;
-
-namespace MarketBasketAnalysis.Mining
+﻿namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Represents the stages of the association rule mining process.
     /// </summary>
-    [PublicAPI]
     public enum MiningStage
     {
         /// <summary>

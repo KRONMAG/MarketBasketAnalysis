@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Provides data for the event that occurs when mining progress changes.
 
 ```csharp
-[PublicAPI]
 public sealed class MiningProgressChangedEventArgs : EventArgs
 ```
 

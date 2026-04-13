@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
 
 ```csharp
-[PublicAPI]
 public static class ServiceCollectionExtensions
 ```
 

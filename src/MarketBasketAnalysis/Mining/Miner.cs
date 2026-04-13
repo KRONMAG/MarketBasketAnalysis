@@ -1,29 +1,21 @@
 ﻿// Ignore Spelling: Excluder
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
-using System.Timers;
-using Microsoft.Extensions.ObjectPool;
-using Timer = System.Timers.Timer;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <inheritdoc />
-    internal sealed class Miner : IMiner
+    internal sealed partial class Miner : IMiner
     {
         #region Fields and Properties
         private readonly Func<IReadOnlyCollection<ItemConversionRule>, IItemConverter> _itemConverterFactory;
         private readonly Func<IReadOnlyCollection<ItemExclusionRule>, IItemExcluder> _itemExcluderFactory;
 
-        private IItemConverter _itemConverter;
-        private IItemExcluder _itemExcluder;
-
         /// <inheritdoc />
-        public event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
+        public event EventHandler<MiningProgressChangedEventArgs> MiningProgressUpdated;
 
         /// <inheritdoc />
         public event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
@@ -59,7 +51,7 @@ namespace MarketBasketAnalysis.Mining
         public IReadOnlyCollection<AssociationRule> Mine(
             IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
-            CancellationToken token = default)
+            CancellationToken cancellationToken = default)
         {
             if (transactions == null)
             {
@@ -71,32 +63,41 @@ namespace MarketBasketAnalysis.Mining
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            try
-            {
-                _itemConverter = parameters.ItemConversionRules != null
-                    ? _itemConverterFactory(parameters.ItemConversionRules)
-                    : null;
-                _itemExcluder = parameters.ItemExclusionRules != null
-                    ? _itemExcluderFactory(parameters.ItemExclusionRules)
-                    : null;
+            var itemExcluder = parameters.ItemExclusionRules != null
+                ? _itemExcluderFactory(parameters.ItemExclusionRules)
+                : null;
+            var itemConverter = parameters.ItemConversionRules != null
+                ? _itemConverterFactory(parameters.ItemConversionRules)
+                : null;
 
-                OnMiningStageChanged(MiningStage.FrequentItemSearch);
+            OnMiningStageChanged(MiningStage.FrequentItemSearch);
 
-                var frequentItems = SearchForFrequentItems(transactions, parameters, token, out var transactionCount);
+            var frequentItems = SearchForFrequentItems(
+                transactions,
+                parameters,
+                itemExcluder,
+                itemConverter,
+                cancellationToken,
+                out var transactionCount);
 
-                OnMiningStageChanged(MiningStage.ItemsetSearch);
+            OnMiningStageChanged(MiningStage.ItemsetSearch);
 
-                var itemsets = SearchForItemsets(transactions, parameters, frequentItems, transactionCount, token);
+            var itemsets = SearchForItemsets(
+                transactions,
+                parameters,
+                itemConverter,
+                frequentItems,
+                transactionCount,
+                cancellationToken);
 
-                OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
+            OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
 
-                return GenerateAssociationRules(itemsets, frequentItems, transactionCount, parameters, token);
-            }
-            finally
-            {
-                _itemConverter = null;
-                _itemExcluder = null;
-            }
+            return GenerateAssociationRules(
+                parameters,
+                frequentItems,
+                itemsets,
+                transactionCount,
+                cancellationToken);
         }
 
         private static void ThrowIfTransactionIsNull(IReadOnlyList<Item> transaction)
@@ -107,238 +108,29 @@ namespace MarketBasketAnalysis.Mining
             }
         }
 
+        private static void ThrowIfItemIsNull(Item item)
+        {
+            if (item == null)
+            {
+                throw new InvalidOperationException("Item cannot be null.");
+            }
+        }
+
+        private static bool IsTransactionsEmptyCollection(IEnumerable<IReadOnlyCollection<Item>> transactions) =>
+            (transactions is ICollection<IReadOnlyList<Item>> collection &&
+             collection.Count == 0) ||
+            (transactions is IReadOnlyCollection<IReadOnlyList<Item>> readOnlyCollection &&
+             readOnlyCollection.Count == 0);
+
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
         private static int UpdateFrequency<TKey>(TKey _, int frequency) => frequency + 1;
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-
-        private Dictionary<Item, int> SearchForFrequentItems(
-            IEnumerable<IReadOnlyList<Item>> transactions,
-            MiningParameters parameters,
-            CancellationToken token,
-            out int transactionCount)
-        {
-            var itemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
-            var itemsPool = new DefaultObjectPool<HashSet<Item>>(
-                new DefaultPooledObjectPolicy<HashSet<Item>>(),
-                parameters.DegreeOfParallelism);
-
-            transactionCount = transactions
-                .AsParallel()
-                .WithDegreeOfParallelism(parameters.DegreeOfParallelism)
-                .WithCancellation(token)
-                .Sum(transaction =>
-                {
-                    ThrowIfTransactionIsNull(transaction);
-
-                    var items = itemsPool.Get();
-
-                    foreach (var item in transaction)
-                    {
-                        if (items.Contains(item) || _itemExcluder?.ShouldExclude(item) == true)
-                        {
-                            continue;
-                        }
-
-                        items.Add(item);
-
-                        if (_itemConverter?.TryConvert(item, out var group) == true)
-                        {
-                            if (items.Contains(group) || _itemExcluder?.ShouldExclude(group) == true)
-                            {
-                                continue;
-                            }
-
-                            items.Add(group);
-
-                            itemFrequencies.AddOrUpdate(group, 1, UpdateFrequency);
-                        }
-                        else
-                        {
-                            itemFrequencies.AddOrUpdate(item, 1, UpdateFrequency);
-                        }
-                    }
-
-                    items.Clear();
-                    itemsPool.Return(items);
-
-                    return 1;
-                });
-
-            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
-
-            return itemFrequencies
-                .Where(keyValuePair => keyValuePair.Value >= frequencyThreshold)
-                .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
-        }
-
-        private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(
-            IEnumerable<IReadOnlyList<Item>> transactions,
-            MiningParameters parameters,
-            Dictionary<Item, int> frequentItems,
-            int transactionCount,
-            CancellationToken token)
-        {
-            var previousProcessedTransactionsCount = 0;
-            var processedTransactionCount = 0;
-
-            // ToDo: calculate progress value more accurately
-            var timer = new Timer(100);
-
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
-
-            var itemsetFrequencies = new ConcurrentDictionary<(Item, Item), int>(parameters.DegreeOfParallelism, 0);
-            var itemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
-                new DefaultPooledObjectPolicy<HashSet<(Item, Item)>>(),
-                parameters.DegreeOfParallelism);
-
-            try
-            {
-                transactions
-                    .AsParallel()
-                    .WithCancellation(token)
-                    .WithDegreeOfParallelism(parameters.DegreeOfParallelism)
-                    .ForAll(transaction =>
-                    {
-                        ThrowIfTransactionIsNull(transaction);
-
-                        var itemsets = itemsetsPool.Get();
-
-                        for (var i = 0; i < transaction.Count; i++)
-                        {
-                            for (var j = i + 1; j < transaction.Count; j++)
-                            {
-                                var itemset = transaction[i].Id < transaction[j].Id
-                                    ? (transaction[i], transaction[j])
-                                    : (transaction[j], transaction[i]);
-
-                                if (itemset.Item1.Equals(itemset.Item2) || !itemsets.Add(itemset))
-                                {
-                                    continue;
-                                }
-
-                                if (_itemConverter != null)
-                                {
-                                    var isItem1Converted = _itemConverter.TryConvert(itemset.Item1, out var item1Group);
-                                    var isItem2Converted = _itemConverter.TryConvert(itemset.Item2, out var item2Group);
-
-                                    if (isItem1Converted)
-                                    {
-                                        itemset.Item1 = item1Group;
-                                    }
-
-                                    if (isItem2Converted)
-                                    {
-                                        itemset.Item2 = item2Group;
-                                    }
-
-                                    var shouldSkipItemset = (isItem1Converted || isItem2Converted) &&
-                                        (!itemsets.Add(itemset) || itemset.Item1.Equals(itemset.Item2));
-
-                                    if (shouldSkipItemset)
-                                    {
-                                        continue;
-                                    }
-                                }
-
-                                if (frequentItems.ContainsKey(itemset.Item1) && frequentItems.ContainsKey(itemset.Item2))
-                                {
-                                    itemsetFrequencies.AddOrUpdate(itemset, 1, UpdateFrequency);
-                                }
-                            }
-                        }
-
-                        itemsets.Clear();
-                        itemsetsPool.Return(itemsets);
-
-                        processedTransactionCount++;
-                    });
-            }
-            finally
-            {
-                timer.Elapsed -= Timer_Elapsed;
-                timer.Dispose();
-            }
-
-            return itemsetFrequencies;
-
-            // ReSharper disable once InconsistentNaming
-            void Timer_Elapsed(object sender, ElapsedEventArgs e)
-            {
-                if (processedTransactionCount == previousProcessedTransactionsCount)
-                {
-                    return;
-                }
-
-                var progress = processedTransactionCount / (double)transactionCount * 100;
-
-                previousProcessedTransactionsCount = processedTransactionCount;
-
-                OnMiningProgressChanged(progress);
-            }
-        }
 
         private void OnMiningStageChanged(MiningStage stage) =>
             MiningStageChanged?.Invoke(this, new MiningStageChangedEventArgs(stage));
 
         private void OnMiningProgressChanged(double progress) =>
-            MiningProgressChanged?.Invoke(this, new MiningProgressChangedEventArgs(progress));
-
-        private ConcurrentBag<AssociationRule> GenerateAssociationRules(
-            ConcurrentDictionary<(Item, Item), int> frequentItemsets,
-            Dictionary<Item, int> frequentItems,
-            int transactionCount,
-            MiningParameters parameters,
-            CancellationToken token)
-        {
-            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
-            var associationRules = new ConcurrentBag<AssociationRule>();
-
-            frequentItemsets
-                .AsParallel()
-                .WithDegreeOfParallelism(parameters.DegreeOfParallelism)
-                .WithCancellation(token)
-                .ForAll(GenerateAssociationRulePair);
-
-            void GenerateAssociationRulePair(KeyValuePair<(Item, Item), int> keyValuePair)
-            {
-                var itemsetFrequency = keyValuePair.Value;
-
-                if (itemsetFrequency < frequencyThreshold)
-                {
-                    return;
-                }
-
-                var (item1, item2) = keyValuePair.Key;
-                var itemFrequency1 = frequentItems[item1];
-                var itemFrequency2 = frequentItems[item2];
-
-                if (itemsetFrequency / (double)itemFrequency1 >= parameters.MinConfidence)
-                {
-                    associationRules.Add(new AssociationRule(
-                        item1,
-                        item2,
-                        itemFrequency1,
-                        itemFrequency2,
-                        itemsetFrequency,
-                        transactionCount));
-                }
-
-                if (itemsetFrequency / (double)itemFrequency2 >= parameters.MinConfidence)
-                {
-                    associationRules.Add(
-                        new AssociationRule(
-                            item2,
-                            item1,
-                            itemFrequency2,
-                            itemFrequency1,
-                            itemsetFrequency,
-                            transactionCount));
-                }
-            }
-
-            return associationRules;
-        }
+            MiningProgressUpdated?.Invoke(this, new MiningProgressChangedEventArgs(progress));
         #endregion
     }
 }
