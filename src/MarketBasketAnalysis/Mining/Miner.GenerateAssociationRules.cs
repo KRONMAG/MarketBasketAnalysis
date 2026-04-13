@@ -53,7 +53,7 @@ namespace MarketBasketAnalysis.Mining
         private static ConcurrentBag<AssociationRule> GenerateAssociationRules(
             MiningParameters parameters,
             Dictionary<Item, int> frequentItems,
-            ConcurrentDictionary<(Item, Item), int> frequentItemsets,
+            IReadOnlyDictionary<(Item, Item), int> frequentItemsets,
             int transactionsCount,
             CancellationToken cancellationToken)
         {

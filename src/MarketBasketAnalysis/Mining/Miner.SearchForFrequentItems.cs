@@ -25,7 +25,7 @@ namespace MarketBasketAnalysis.Mining
 
         private sealed class SearchForFrequentItemsState
         {
-            private int _transactionsCount;
+            private int _processedTransactionsCount;
 
             public IItemExcluder ItemExcluder { get; }
 
@@ -35,7 +35,7 @@ namespace MarketBasketAnalysis.Mining
 
             public ConcurrentDictionary<Item, int> ItemFrequencies { get; }
 
-            public int TransactionsCount => _transactionsCount;
+            public int ProcessedTransactionsCount => _processedTransactionsCount;
 
             public SearchForFrequentItemsState(
                 MiningParameters parameters,
@@ -49,8 +49,8 @@ namespace MarketBasketAnalysis.Mining
                 ItemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
             }
 
-            public void IncrementTransactionsCount() =>
-                Interlocked.Increment(ref _transactionsCount);
+            public void IncrementProcessedTransactionsCount() =>
+                Interlocked.Increment(ref _processedTransactionsCount);
 
             public void Deconstruct(
                 out IItemExcluder itemExcluder,
@@ -109,7 +109,7 @@ namespace MarketBasketAnalysis.Mining
                     var state = _states.First().Value;
 
                     itemFrequencies = state.ItemFrequencies;
-                    transactionsCount = state.TransactionsCount;
+                    transactionsCount = state.ProcessedTransactionsCount;
 
                     return;
                 }
@@ -134,7 +134,7 @@ namespace MarketBasketAnalysis.Mining
                 }
 
                 itemFrequencies = itemFrequenciesImpl;
-                transactionsCount = _states.Values.Sum(i => i.TransactionsCount);
+                transactionsCount = _states.Values.Sum(i => i.ProcessedTransactionsCount);
             }
         }
         #endregion
@@ -222,7 +222,7 @@ namespace MarketBasketAnalysis.Mining
                     }
                 }
 
-                state.IncrementTransactionsCount();
+                state.IncrementProcessedTransactionsCount();
 
                 return state;
             }

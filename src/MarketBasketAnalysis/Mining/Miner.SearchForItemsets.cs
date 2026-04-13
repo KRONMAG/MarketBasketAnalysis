@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -40,13 +41,12 @@ namespace MarketBasketAnalysis.Mining
             public SearchForItemsetsState(
                 MiningParameters parameters,
                 IItemConverter itemConverter,
-                Dictionary<Item, int> itemFrequencies)
+                Dictionary<Item, int> itemFrequencies,
+                ObjectPool<HashSet<(Item, Item)>> itemsetsPool)
             {
                 ItemConverter = itemConverter;
                 ItemFrequencies = itemFrequencies;
-                ItemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
-                    new ItemsetsPoolPolicy(),
-                    parameters.DegreeOfParallelism);
+                ItemsetsPool = itemsetsPool;
                 ItemsetFrequencies = new ConcurrentDictionary<(Item, Item), int>(parameters.DegreeOfParallelism, 0);
             }
 
@@ -64,6 +64,78 @@ namespace MarketBasketAnalysis.Mining
                 itemFrequencies = ItemFrequencies;
                 itemsetFrequencies = ItemsetFrequencies;
             }
+        }
+
+        private sealed class SearchForItemsetsStateProvider
+        {
+            private readonly MiningParameters _parameters;
+            private readonly IItemConverter _itemConverter;
+            private readonly Dictionary<Item, int> _itemFrequencies;
+            private readonly ObjectPool<HashSet<(Item, Item)>> _itemsetsPool;
+            private readonly ConcurrentDictionary<int, SearchForItemsetsState> _states;
+            private int _counter;
+
+            public SearchForItemsetsStateProvider(
+                MiningParameters parameters,
+                IItemConverter itemConverter,
+                Dictionary<Item, int> itemFrequencies)
+            {
+                _parameters = parameters;
+                _itemConverter = itemConverter;
+                _itemFrequencies = itemFrequencies;
+                _itemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
+                    new ItemsetsPoolPolicy(),
+                    parameters.DegreeOfParallelism);
+                _states = new ConcurrentDictionary<int, SearchForItemsetsState>();
+            }
+
+            public SearchForItemsetsState GetOrCreateState()
+            {
+                var key = Interlocked.Increment(ref _counter) % _parameters.StatePartitionCount;
+
+                return _states.GetOrAdd(key, ValueFactory);
+
+#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
+                SearchForItemsetsState ValueFactory(int _) =>
+                    new SearchForItemsetsState(_parameters, _itemConverter, _itemFrequencies, _itemsetsPool);
+#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
+            }
+
+            public void AggregateStates(out IReadOnlyDictionary<(Item, Item), int> itemsetFrequencies)
+            {
+                if (_states.Count == 1)
+                {
+                    var state = _states.First().Value;
+
+                    itemsetFrequencies = state.ItemsetFrequencies;
+
+                    return;
+                }
+
+                var itemsetFrequenciesImpl = new Dictionary<(Item, Item), int>();
+
+                foreach (var state in _states.Values)
+                {
+                    foreach (var pair in state.ItemsetFrequencies)
+                    {
+                        var (itemset, itemsetFrequency) = (pair.Key, pair.Value);
+
+                        if (!itemsetFrequenciesImpl.ContainsKey(itemset))
+                        {
+                            itemsetFrequenciesImpl.Add(itemset, itemsetFrequency);
+                        }
+                        else
+                        {
+                            itemsetFrequenciesImpl[itemset] += itemsetFrequency;
+                        }
+                    }
+                }
+
+                itemsetFrequencies = itemsetFrequenciesImpl;
+            }
+
+            public int GetProcessedTransactionsCount() =>
+                _states.Values.Sum(s => s.ProcessedTransactionsCount);
         }
         #endregion
 
@@ -144,7 +216,7 @@ namespace MarketBasketAnalysis.Mining
             }
         }
 
-        private ConcurrentDictionary<(Item, Item), int> SearchForItemsets(
+        private IReadOnlyDictionary<(Item, Item), int> SearchForItemsets(
             IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             IItemConverter itemConverter,
@@ -158,7 +230,7 @@ namespace MarketBasketAnalysis.Mining
                 return new ConcurrentDictionary<(Item, Item), int>();
             }
 
-            var state = new SearchForItemsetsState(parameters, itemConverter, itemFrequencies);
+            var stateProvider = new SearchForItemsetsStateProvider(parameters, itemConverter, itemFrequencies);
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
@@ -173,7 +245,12 @@ namespace MarketBasketAnalysis.Mining
             try
             {
                 // ReSharper disable once PossibleMultipleEnumeration
-                Parallel.ForEach(transactions, parallelOptions, () => state, ProcessTransaction, _ => { });
+                Parallel.ForEach(
+                    transactions,
+                    parallelOptions,
+                    stateProvider.GetOrCreateState,
+                    ProcessTransaction,
+                    _ => { });
             }
             finally
             {
@@ -181,13 +258,15 @@ namespace MarketBasketAnalysis.Mining
                 timer.Dispose();
             }
 
-            return state.ItemsetFrequencies;
+            stateProvider.AggregateStates(out var itemsetFrequencies);
+
+            return itemsetFrequencies;
 
             // ToDo: calculate progress value more accurately
             // ReSharper disable once InconsistentNaming
             void Timer_Elapsed(object sender, ElapsedEventArgs e)
             {
-                var progress = state.ProcessedTransactionsCount / (double)transactionCount * 100;
+                var progress = stateProvider.GetProcessedTransactionsCount() / (double)transactionCount * 100;
 
                 OnMiningProgressChanged(progress);
             }
