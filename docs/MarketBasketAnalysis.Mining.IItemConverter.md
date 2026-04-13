@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Defines a method for determining whether an item should be replaced with its corresponding group.
 
 ```csharp
-[PublicAPI]
 public interface IItemConverter
 ```
 

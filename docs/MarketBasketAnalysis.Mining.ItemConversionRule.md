@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Represents a rule for converting one item into another.
 
 ```csharp
-[PublicAPI]
 public sealed class ItemConversionRule : IEquatable<ItemConversionRule>
 ```
 

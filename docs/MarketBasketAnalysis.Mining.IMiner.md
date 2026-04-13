@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Defines an interface for performing association rule mining based on transaction data.
 
 ```csharp
-[PublicAPI]
 public interface IMiner
 ```
 

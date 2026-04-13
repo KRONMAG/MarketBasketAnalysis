@@ -7,7 +7,6 @@ Represents a maximal clique in a graph, defined as a set of vertices where every
 and no additional vertex can be added without breaking this property.
 
 ```csharp
-[PublicAPI]
 public sealed class MaximalClique<TVertex> : IEnumerable<TVertex>, IEnumerable where TVertex : struct
 ```
 

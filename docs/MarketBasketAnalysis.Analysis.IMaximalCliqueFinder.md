@@ -8,7 +8,6 @@ A maximal clique is a subset of association rules where every rule is connected 
 and no additional rules can be added without breaking this property.
 
 ```csharp
-[PublicAPI]
 public interface IMaximalCliqueFinder
 ```
 
