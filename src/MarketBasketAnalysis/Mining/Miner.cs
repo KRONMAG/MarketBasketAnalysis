@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MarketBasketAnalysis.Mining
 {
@@ -89,6 +90,60 @@ namespace MarketBasketAnalysis.Mining
                 frequentItems,
                 transactionCount,
                 cancellationToken);
+
+            OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
+
+            return GenerateAssociationRules(
+                parameters,
+                frequentItems,
+                itemsets,
+                transactionCount,
+                cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public async Task<IReadOnlyCollection<AssociationRule>> MineAsync(
+            IAsyncEnumerable<IReadOnlyList<Item>> transactions,
+            MiningParameters parameters,
+            CancellationToken cancellationToken = default)
+        {
+            if (transactions == null)
+            {
+                throw new ArgumentNullException(nameof(transactions));
+            }
+
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var itemExcluder = parameters.ItemExclusionRules != null
+                ? _itemExcluderFactory(parameters.ItemExclusionRules)
+                : null;
+            var itemConverter = parameters.ItemConversionRules != null
+                ? _itemConverterFactory(parameters.ItemConversionRules)
+                : null;
+
+            OnMiningStageChanged(MiningStage.FrequentItemSearch);
+
+            var (frequentItems, transactionCount) = await SearchForFrequentItemsAsync(
+                transactions,
+                parameters,
+                itemExcluder,
+                itemConverter,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            OnMiningStageChanged(MiningStage.ItemsetSearch);
+
+            var itemsets = await SearchForItemsetsAsync(
+                transactions,
+                parameters,
+                itemConverter,
+                frequentItems,
+                transactionCount,
+                cancellationToken)
+                .ConfigureAwait(false);
 
             OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
 

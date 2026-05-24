@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MarketBasketAnalysis.Extensions;
 using Microsoft.Extensions.ObjectPool;
 
 namespace MarketBasketAnalysis.Mining
@@ -71,8 +72,8 @@ namespace MarketBasketAnalysis.Mining
             private readonly IItemExcluder _itemExcluder;
             private readonly IItemConverter _itemConverter;
             private readonly ObjectPool<HashSet<Item>> _itemsPool;
-            private readonly ConcurrentDictionary<int, SearchForFrequentItemsState> _states;
-            private int _counter;
+            private readonly ConcurrentDictionary<long, SearchForFrequentItemsState> _states;
+            private long _counter;
 
             public SearchForFrequentItemsStateProvider(
                 MiningParameters parameters,
@@ -85,7 +86,7 @@ namespace MarketBasketAnalysis.Mining
                 _itemsPool = new DefaultObjectPool<HashSet<Item>>(
                     new ItemsPoolPolicy(),
                     parameters.DegreeOfParallelism);
-                _states = new ConcurrentDictionary<int, SearchForFrequentItemsState>();
+                _states = new ConcurrentDictionary<long, SearchForFrequentItemsState>();
             }
 
             public SearchForFrequentItemsState GetOrCreateState()
@@ -95,7 +96,7 @@ namespace MarketBasketAnalysis.Mining
                 return _states.GetOrAdd(key, ValueFactory);
 
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-                SearchForFrequentItemsState ValueFactory(int _) =>
+                SearchForFrequentItemsState ValueFactory(long _) =>
                     new SearchForFrequentItemsState(_parameters, _itemExcluder, _itemConverter, _itemsPool);
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
             }
@@ -168,7 +169,7 @@ namespace MarketBasketAnalysis.Mining
                 transactions,
                 parallelOptions,
                 stateProvider.GetOrCreateState,
-                ProcessTransaction,
+                ProcessTransactionBody,
                 _ => { });
 
             stateProvider.AggregateStates(out var itemFrequencies, out transactionCount);
@@ -180,12 +181,53 @@ namespace MarketBasketAnalysis.Mining
                 .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
         }
 
-        private static SearchForFrequentItemsState ProcessTransaction(
+        private static async Task<(Dictionary<Item, int> FrequentItems, int TransactionCount)> SearchForFrequentItemsAsync(
+            IAsyncEnumerable<IReadOnlyList<Item>> transactions,
+            MiningParameters parameters,
+            IItemExcluder itemExcluder,
+            IItemConverter itemConverter,
+            CancellationToken cancellationToken)
+        {
+            var stateProvider = new SearchForFrequentItemsStateProvider(parameters, itemExcluder, itemConverter);
+            var parallelOptions = new ParallelOptions
+            {
+                CancellationToken = cancellationToken,
+                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+            };
+
+            // ReSharper disable once PossibleMultipleEnumeration
+            await ParallelExtensions
+                .ForEachAsync(transactions, stateProvider, parallelOptions, ProcessTransactionBody)
+                .ConfigureAwait(false);
+
+            stateProvider.AggregateStates(out var itemFrequencies, out var transactionCount);
+
+            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
+
+            var frequentItems = itemFrequencies
+                .Where(keyValuePair => keyValuePair.Value >= frequencyThreshold)
+                .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
+
+            return (frequentItems, transactionCount);
+        }
+
+        private static SearchForFrequentItemsState ProcessTransactionBody(
             IReadOnlyList<Item> transaction,
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
             ParallelLoopState _,
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-            SearchForFrequentItemsState state)
+            SearchForFrequentItemsState state) =>
+            ProcessTransaction(transaction, state);
+
+        private static void ProcessTransactionBody(
+            IReadOnlyList<Item> transaction,
+            SearchForFrequentItemsStateProvider stateProvider,
+#pragma warning disable S1172 // Unused method parameters should be removed
+            CancellationToken cancellationToken) =>
+            ProcessTransaction(transaction, stateProvider.GetOrCreateState());
+#pragma warning restore S1172 // Unused method parameters should be removed
+
+        private static SearchForFrequentItemsState ProcessTransaction(IReadOnlyList<Item> transaction, SearchForFrequentItemsState state)
         {
             ThrowIfTransactionIsNull(transaction);
 

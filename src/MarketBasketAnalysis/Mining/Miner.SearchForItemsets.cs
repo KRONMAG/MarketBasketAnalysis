@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using MarketBasketAnalysis.Extensions;
 using Microsoft.Extensions.ObjectPool;
 using Timer = System.Timers.Timer;
 
@@ -72,8 +73,8 @@ namespace MarketBasketAnalysis.Mining
             private readonly IItemConverter _itemConverter;
             private readonly Dictionary<Item, int> _itemFrequencies;
             private readonly ObjectPool<HashSet<(Item, Item)>> _itemsetsPool;
-            private readonly ConcurrentDictionary<int, SearchForItemsetsState> _states;
-            private int _counter;
+            private readonly ConcurrentDictionary<long, SearchForItemsetsState> _states;
+            private long _counter;
 
             public SearchForItemsetsStateProvider(
                 MiningParameters parameters,
@@ -86,7 +87,7 @@ namespace MarketBasketAnalysis.Mining
                 _itemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
                     new ItemsetsPoolPolicy(),
                     parameters.DegreeOfParallelism);
-                _states = new ConcurrentDictionary<int, SearchForItemsetsState>();
+                _states = new ConcurrentDictionary<long, SearchForItemsetsState>();
             }
 
             public SearchForItemsetsState GetOrCreateState()
@@ -96,7 +97,7 @@ namespace MarketBasketAnalysis.Mining
                 return _states.GetOrAdd(key, ValueFactory);
 
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-                SearchForItemsetsState ValueFactory(int _) =>
+                SearchForItemsetsState ValueFactory(long _) =>
                     new SearchForItemsetsState(_parameters, _itemConverter, _itemFrequencies, _itemsetsPool);
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
             }
@@ -140,12 +141,23 @@ namespace MarketBasketAnalysis.Mining
         #endregion
 
         #region Methods
-        private static SearchForItemsetsState ProcessTransaction(
+        private static SearchForItemsetsState ProcessTransactionBody(
             IReadOnlyList<Item> transaction,
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
+#pragma warning disable S1172 // Unused method parameters should be removed
             ParallelLoopState _,
+#pragma warning restore S1172 // Unused method parameters should be removed
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-            SearchForItemsetsState state)
+            SearchForItemsetsState state) =>
+            ProcessTransaction(transaction, state);
+
+        private static void ProcessTransactionBody(
+            IReadOnlyList<Item> transaction,
+            SearchForItemsetsStateProvider stateProvider,
+            CancellationToken cancellationToken) =>
+            ProcessTransaction(transaction, stateProvider.GetOrCreateState());
+
+        private static SearchForItemsetsState ProcessTransaction(IReadOnlyList<Item> transaction, SearchForItemsetsState state)
         {
             ThrowIfTransactionIsNull(transaction);
 
@@ -249,8 +261,55 @@ namespace MarketBasketAnalysis.Mining
                     transactions,
                     parallelOptions,
                     stateProvider.GetOrCreateState,
-                    ProcessTransaction,
+                    ProcessTransactionBody,
                     _ => { });
+            }
+            finally
+            {
+                timer.Elapsed -= Timer_Elapsed;
+                timer.Dispose();
+            }
+
+            stateProvider.AggregateStates(out var itemsetFrequencies);
+
+            return itemsetFrequencies;
+
+            // ToDo: calculate progress value more accurately
+            // ReSharper disable once InconsistentNaming
+            void Timer_Elapsed(object sender, ElapsedEventArgs e)
+            {
+                var progress = stateProvider.GetProcessedTransactionsCount() / (double)transactionCount * 100;
+
+                OnMiningProgressChanged(progress);
+            }
+        }
+
+        private async Task<IReadOnlyDictionary<(Item, Item), int>> SearchForItemsetsAsync(
+            IAsyncEnumerable<IReadOnlyList<Item>> transactions,
+            MiningParameters parameters,
+            IItemConverter itemConverter,
+            Dictionary<Item, int> itemFrequencies,
+            int transactionCount,
+            CancellationToken cancellationToken)
+        {
+            var stateProvider = new SearchForItemsetsStateProvider(parameters, itemConverter, itemFrequencies);
+            var parallelOptions = new ParallelOptions
+            {
+                CancellationToken = cancellationToken,
+                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+            };
+
+            var timer = new Timer(parameters.MiningProgressInterval);
+
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+
+            try
+            {
+                // ReSharper disable once PossibleMultipleEnumeration
+                await ParallelExtensions
+                    .ForEachAsync(transactions, stateProvider, parallelOptions, ProcessTransactionBody)
+                    .ConfigureAwait(false);
             }
             finally
             {

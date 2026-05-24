@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MarketBasketAnalysis.Mining
 {
@@ -39,6 +40,12 @@ namespace MarketBasketAnalysis.Mining
         /// </remarks>
         IReadOnlyCollection<AssociationRule> Mine(
             IEnumerable<IReadOnlyList<Item>> transactions,
+            MiningParameters parameters,
+            CancellationToken cancellationToken = default);
+
+#pragma warning disable
+        Task<IReadOnlyCollection<AssociationRule>> MineAsync(
+            IAsyncEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             CancellationToken cancellationToken = default);
     }
