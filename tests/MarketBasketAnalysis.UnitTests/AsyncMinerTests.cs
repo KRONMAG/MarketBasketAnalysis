@@ -2,6 +2,7 @@
 using Moq;
 #pragma warning disable S2699 // Tests should include assertions
 #pragma warning disable CA1062 // Validate arguments of public methods
+#pragma warning disable xUnit1030 // Do not call ConfigureAwait(false) in test method
 
 namespace MarketBasketAnalysis.UnitTests;
 
@@ -37,7 +38,7 @@ public class AsyncMinerTests : BaseMinerTests
             SynchronizationContext.SetSynchronizationContext(contextMock.Object);
 
             // Act
-            await MineAsync(Miner, Transactions, new(0, 0));
+            await MineAsync(Miner, Transactions, new(0, 0)).ConfigureAwait(false);
 
             // Assert
             Assert.False(isContextUsed);
