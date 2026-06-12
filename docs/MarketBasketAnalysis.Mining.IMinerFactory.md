@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Defines an interface for factory for creating <xref href="MarketBasketAnalysis.Mining.IMiner" data-throw-if-not-resolved="false"></xref> instances.
 
 ```csharp
-[PublicAPI]
 public interface IMinerFactory
 ```
 

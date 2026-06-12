@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using JetBrains.Annotations;
+using System.Threading.Tasks;
 
 namespace MarketBasketAnalysis.Mining
 {
     /// <summary>
     /// Defines an interface for performing association rule mining based on transaction data.
     /// </summary>
-    [PublicAPI]
     public interface IMiner
     {
         /// <summary>
-        /// Event triggered when the mining progress changes.
+        /// Event triggered when the mining progress updates.
         /// </summary>
-        event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
+        /// <remarks>
+        /// The event is triggered at intervals specified by the <see cref="MiningParameters.MiningProgressInterval"/>.
+        /// </remarks>
+        event EventHandler<MiningProgressChangedEventArgs> MiningProgressUpdated;
 
         /// <summary>
         /// Event triggered when the mining stage changes.
         /// </summary>
+        // ReSharper disable once UnusedMemberInSuper.Global
         event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
 
         /// <summary>
@@ -26,11 +29,11 @@ namespace MarketBasketAnalysis.Mining
         /// </summary>
         /// <param name="transactions">A collection of transactions, where each transaction is represented as an collection of items.</param>
         /// <param name="parameters">The mining parameters, including minimum support and confidence thresholds.</param>
-        /// <param name="token">A cancellation token to cancel the operation if needed.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
         /// <returns>A collection of association rules that meet the specified parameters.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="transactions"/> or <paramref name="parameters"/> is <c>null</c>.</exception>
         /// <exception cref="OperationCanceledException">
-        /// Thrown if the operation is canceled via the <paramref name="token"/>.
+        /// Thrown if the operation is canceled via the <paramref name="cancellationToken"/>.
         /// </exception>
         /// <remarks>
         /// The enumeration of the <paramref name="transactions"/> may be performed multiple times.
@@ -38,6 +41,12 @@ namespace MarketBasketAnalysis.Mining
         IReadOnlyCollection<AssociationRule> Mine(
             IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
-            CancellationToken token = default);
+            CancellationToken cancellationToken = default);
+
+#pragma warning disable
+        Task<IReadOnlyCollection<AssociationRule>> MineAsync(
+            IAsyncEnumerable<IReadOnlyList<Item>> transactions,
+            MiningParameters parameters,
+            CancellationToken cancellationToken = default);
     }
 }

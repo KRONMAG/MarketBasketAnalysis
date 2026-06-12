@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Represents the parameters used for mining association rules.
 
 ```csharp
-[PublicAPI]
 public sealed class MiningParameters
 ```
 
@@ -26,12 +25,12 @@ public sealed class MiningParameters
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Mining_MiningParameters__ctor_System_Double_System_Double_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemConversionRule__System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemExclusionRule__System_Int32_"></a> MiningParameters\(double, double, IReadOnlyCollection<ItemConversionRule\>, IReadOnlyCollection<ItemExclusionRule\>, int\)
+### <a id="MarketBasketAnalysis_Mining_MiningParameters__ctor_System_Double_System_Double_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemConversionRule__System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Mining_ItemExclusionRule__System_Int32_System_Int32_System_Int32_"></a> MiningParameters\(double, double, IReadOnlyCollection<ItemConversionRule\>, IReadOnlyCollection<ItemExclusionRule\>, int, int, int\)
 
 Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.MiningParameters" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public MiningParameters(double minSupport, double minConfidence, IReadOnlyCollection<ItemConversionRule> itemConversionRules = null, IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null, int degreeOfParallelism = 1)
+public MiningParameters(double minSupport, double minConfidence, IReadOnlyCollection<ItemConversionRule> itemConversionRules = null, IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null, int degreeOfParallelism = 1, int statePartitionCount = 1, int miningProgressInterval = 100)
 ```
 
 #### Parameters
@@ -56,6 +55,14 @@ An optional collection of <xref href="MarketBasketAnalysis.Mining.ItemExclusionR
 
 The degree of parallelism to use during the mining process.
 
+`statePartitionCount` [int](https://learn.microsoft.com/dotnet/api/system.int32)
+
+The number of state partitions used to store shared state across worker threads.
+
+`miningProgressInterval` [int](https://learn.microsoft.com/dotnet/api/system.int32)
+
+The interval in milliseconds at which the <xref href="MarketBasketAnalysis.Mining.IMiner.MiningProgressUpdated" data-throw-if-not-resolved="false"></xref> event is generated.
+
 #### Exceptions
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
@@ -63,7 +70,11 @@ The degree of parallelism to use during the mining process.
 <p><strong>Thrown if:</strong></p><ol><li>
             <code class="paramref">minSupport</code> or <code class="paramref">minConfidence</code> is not between 0 and 1;
         </li><li>
-            <code class="paramref">degreeOfParallelism</code> is not between 1 and 512.
+            <code class="paramref">degreeOfParallelism</code> is not positive;
+        </li><li>
+            <code class="paramref">statePartitionCount</code> is not positive or greater than <code class="paramref">degreeOfParallelism</code>;
+        </li><li>
+            <code class="paramref">miningProgressInterval</code> is not positive.
         </li></ol>
 
  [ArgumentException](https://learn.microsoft.com/dotnet/api/system.argumentexception)
@@ -87,10 +98,6 @@ public int DegreeOfParallelism { get; }
 #### Property Value
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
-
-#### Remarks
-
-The value must be between 1 and 512, where higher values allow for more parallel processing.
 
 ### <a id="MarketBasketAnalysis_Mining_MiningParameters_ItemConversionRules"></a> ItemConversionRules
 
@@ -128,10 +135,6 @@ public double MinConfidence { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-#### Remarks
-
-The value must be between 0 and 1, where 0 means no confidence is required, and 1 means the rule must always hold true.
-
 ### <a id="MarketBasketAnalysis_Mining_MiningParameters_MinSupport"></a> MinSupport
 
 Gets the minimum support threshold for identifying frequent itemsets.
@@ -144,7 +147,27 @@ public double MinSupport { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-#### Remarks
+### <a id="MarketBasketAnalysis_Mining_MiningParameters_MiningProgressInterval"></a> MiningProgressInterval
 
-The value must be between 0 and 1, where 0 means no support is required, and 1 means the itemset must appear in all transactions.
+Gets the interval in milliseconds at which the <xref href="MarketBasketAnalysis.Mining.IMiner.MiningProgressUpdated" data-throw-if-not-resolved="false"></xref> event is generated.
+
+```csharp
+public int MiningProgressInterval { get; }
+```
+
+#### Property Value
+
+ [int](https://learn.microsoft.com/dotnet/api/system.int32)
+
+### <a id="MarketBasketAnalysis_Mining_MiningParameters_StatePartitionCount"></a> StatePartitionCount
+
+Gets the number of state partitions used to store shared state across worker threads.
+
+```csharp
+public int StatePartitionCount { get; }
+```
+
+#### Property Value
+
+ [int](https://learn.microsoft.com/dotnet/api/system.int32)
 

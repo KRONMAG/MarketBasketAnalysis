@@ -1,7 +1,6 @@
 ﻿// Ignore Spelling: lhs rhs
 
 using System;
-using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis
 {
@@ -9,7 +8,6 @@ namespace MarketBasketAnalysis
     /// Represents an association rule - a relationship between two items in market basket analysis,
     /// where the presence of one item (left hand side) implies the presence of another (right hand side).
     /// </summary>
-    [PublicAPI]
     public sealed class AssociationRule : IEquatable<AssociationRule>
     {
         #region Fields and Properties

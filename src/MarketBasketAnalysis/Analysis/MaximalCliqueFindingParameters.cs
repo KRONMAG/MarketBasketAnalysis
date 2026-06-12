@@ -1,12 +1,10 @@
 ﻿using System;
-using JetBrains.Annotations;
 
 namespace MarketBasketAnalysis.Analysis
 {
     /// <summary>
     /// Represents the parameters used for finding maximal cliques in a graph of association rules.
     /// </summary>
-    [PublicAPI]
     public sealed class MaximalCliqueFindingParameters
     {
         /// <summary>

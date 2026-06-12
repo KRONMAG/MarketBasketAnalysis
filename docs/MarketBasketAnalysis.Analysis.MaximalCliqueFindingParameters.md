@@ -6,7 +6,6 @@ Assembly: MarketBasketAnalysis.dll
 Represents the parameters used for finding maximal cliques in a graph of association rules.
 
 ```csharp
-[PublicAPI]
 public sealed class MaximalCliqueFindingParameters
 ```
 

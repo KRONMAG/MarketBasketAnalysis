@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 using MarketBasketAnalysis.Analysis;
 using MarketBasketAnalysis.Mining;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +8,6 @@ namespace MarketBasketAnalysis
     /// <summary>
     /// Provides extension methods for registering Market Basket Analysis services in a dependency injection container.
     /// </summary>
-    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>

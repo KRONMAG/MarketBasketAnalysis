@@ -5,27 +5,35 @@ using Moq;
 
 namespace MarketBasketAnalysis.UnitTests;
 
-public class MinerTests
+public abstract class BaseMinerTests
 {
     private readonly Item _itemA;
     private readonly Item _itemB;
     private readonly Item _itemC;
     private readonly Item _group;
-    private readonly IEnumerable<Item[]> _transactions;
     private readonly Mock<IItemConverter> _itemConverterMock;
     private readonly Mock<IItemExcluder> _itemExcluderMock;
     private readonly List<ItemExclusionRule> _itemExclusionRules;
     private readonly List<ItemConversionRule> _itemConversionRules;
-    private readonly Miner _miner;
 
-    public MinerTests()
+    protected IMiner Miner { get; }
+
+    protected IEnumerable<IReadOnlyList<Item>> Transactions { get; }
+
+    protected abstract Task<IReadOnlyCollection<AssociationRule>> MineAsync(
+        IMiner miner,
+        IEnumerable<IReadOnlyList<Item>> transactions,
+        MiningParameters parameters,
+        CancellationToken cancellationToken = default);
+
+    protected BaseMinerTests()
     {
-        _itemA = new(1, "A", false);
-        _itemB = new(2, "B", false);
-        _itemC = new(3, "C", false);
+        _itemA = new(1, "A");
+        _itemB = new(2, "B");
+        _itemC = new(3, "C");
         _group = new(4, "Group", true);
 
-        _transactions =
+        Transactions =
         [
             [_itemA],
             [_itemA, _itemB, _itemA],
@@ -41,48 +49,48 @@ public class MinerTests
         _itemExclusionRules = [new("A", true, false, true, false)];
         _itemConversionRules = [new(_itemA, _group), new(_itemB, _group)];
 
-        _miner = new Miner(_ => _itemConverterMock.Object, _ => _itemExcluderMock.Object);
+        Miner = new Miner(_ => _itemConverterMock.Object, _ => _itemExcluderMock.Object);
     }
 
     [Fact]
-    public void Mine_InvalidArguments_ThrowsArgumentNullException()
+    public async Task InvalidArguments_ThrowsArgumentNullException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => _miner.Mine(null, new(0, 0)));
-        Assert.Throws<ArgumentNullException>(() => _miner.Mine([], null));
-        Assert.Throws<AggregateException>(() => _miner.Mine([null], new(0, 0)));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => MineAsync(Miner, null!, new(0, 0)));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => MineAsync(Miner, [], null!));
+        await Assert.ThrowsAnyAsync<Exception>(() => MineAsync(Miner, [null!], new(0, 0)));
     }
 
     [Fact]
-    public void Mine_WithEmptyTransactions_ReturnsNoAssociationRules()
+    public async Task WithEmptyTransactions_ReturnsNoAssociationRules()
     {
         // Act
-        var actual = _miner.Mine([], new(0, 0));
+        var actual = await MineAsync(Miner, [], new(0, 0));
 
         // Assert
         Assert.Empty(actual);
     }
 
     [Fact]
-    public void Mine_WithOneItemTransactions_ReturnsNoAssociationRules()
+    public async Task WithOneItemTransactions_ReturnsNoAssociationRules()
     {
         // Act
-        var actual = _miner.Mine([[_itemA]], new(0, 0));
+        var actual = await MineAsync(Miner, [[_itemA]], new(0, 0));
 
         // Assert
         Assert.Empty(actual);
     }
 
     [Fact]
-    public void Mine_StageChanged_RaisesEvents()
+    public async Task StageChanged_RaisesEvents()
     {
         // Arrange
         var stages = new List<MiningStage>();
 
-        _miner.MiningStageChanged += (_, e) => stages.Add(e.Stage);
+        Miner.MiningStageChanged += (_, e) => stages.Add(e.Stage);
 
         // Act
-        _miner.Mine(_transactions, new(0, 0));
+        await MineAsync(Miner, Transactions, new(0, 0));
 
         // Assert
         Assert.Equal(
@@ -91,23 +99,23 @@ public class MinerTests
     }
 
     [Fact]
-    public void Mine_ProgressChanged_RaisesEvents()
+    public async Task ProgressChanged_RaisesEvents()
     {
         // Arrange
         var progressValues = new List<double>();
 
-        _miner.MiningProgressChanged += (_, e) => progressValues.Add(e.Progress);
+        Miner.MiningProgressUpdated += (_, e) => progressValues.Add(e.Progress);
 
         // Act
-        _miner.Mine(GenerateTransactions(), new(0, 0));
+        await MineAsync(Miner, GenerateTransactions(), new(0, 0));
 
         // Assert
         Assert.NotEmpty(progressValues);
         Assert.All(progressValues, v => Assert.InRange(v, 0, 100));
 
-        IEnumerable<Item[]> GenerateTransactions()
+        IEnumerable<IReadOnlyList<Item>> GenerateTransactions()
         {
-            foreach (var transaction in _transactions)
+            foreach (var transaction in Transactions)
             {
 #pragma warning disable S2925 // "Thread.Sleep" should not be used in tests
                 Thread.Sleep(100);
@@ -119,7 +127,7 @@ public class MinerTests
     }
 
     [Fact]
-    public void Mine_WithItemExcluder_ExcludesItems()
+    public async Task WithItemExcluder_ExcludesItems()
     {
         // Arrange
         _itemExcluderMock
@@ -135,14 +143,14 @@ public class MinerTests
         };
 
         // Act
-        var actual = _miner.Mine(_transactions, new(0, 0, itemExclusionRules: _itemExclusionRules));
+        var actual = await MineAsync(Miner, Transactions, new(0, 0, itemExclusionRules: _itemExclusionRules));
 
         // Assert
-        AssertEqualAssociationRules(expected, actual);
+        Assert.Equivalent(expected, actual, true);
     }
 
     [Fact]
-    public void Mine_WithItemConverter_ReplacesItems()
+    public async Task WithItemConverter_ReplacesItems()
     {
         // Arrange
         var group = _group;
@@ -161,10 +169,10 @@ public class MinerTests
         };
 
         // Act
-        var actual = _miner.Mine(_transactions, new(0, 0, _itemConversionRules));
+        var actual = await MineAsync(Miner, Transactions, new(0, 0, _itemConversionRules));
 
         // Assert
-        AssertEqualAssociationRules(expected, actual);
+        Assert.Equivalent(expected, actual, true);
     }
 
     [Theory]
@@ -172,7 +180,7 @@ public class MinerTests
     [InlineData(0.5, 0)]
     [InlineData(0, 0.5)]
     [InlineData(0.5, 0.5)]
-    public void Mine_WithMinSupportAndMinConfidence_ReturnsRules(
+    public async Task WithMinSupportAndMinConfidence_ReturnsRules(
         double minSupport, double minConfidence)
     {
         // Arrange
@@ -181,42 +189,78 @@ public class MinerTests
             .ToList();
 
         // Act
-        var actual = _miner.Mine(_transactions, new(minSupport, minConfidence));
+        var actual = await MineAsync(Miner, Transactions, new(minSupport, minConfidence));
 
         // Assert
-        AssertEqualAssociationRules(expected, actual);
+        Assert.Equivalent(expected, actual, true);
     }
 
-    [Fact]
-    public void Mine_WithDegreeOfParallelism_ReturnsAllRules()
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(10)]
+    public async Task WithDegreeOfParallelism_ReturnsAllRules(int degreeOfParallelism)
     {
         // Arrange
         var expected = GetAllAssociationRules();
 
         // Act
-        var actual = _miner.Mine(_transactions, new(0, 0, degreeOfParallelism: expected.Count));
+        var actual = await MineAsync(Miner, Transactions, new(0, 0, degreeOfParallelism: degreeOfParallelism));
 
         // Assert
-        AssertEqualAssociationRules(expected, actual);
+        Assert.Equivalent(expected, actual, true);
+    }
+
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(2, 1)]
+    [InlineData(2, 2)]
+    [InlineData(10, 1)]
+    [InlineData(10, 5)]
+    [InlineData(10, 10)]
+    public async Task WithStatePartitionCount_ReturnsAllRules(
+        int degreeOfParallelism, int statePartitionCount)
+    {
+        // Arrange
+        var parameters = new MiningParameters(
+            0, 0, degreeOfParallelism: degreeOfParallelism, statePartitionCount: statePartitionCount);
+        var expected = GetAllAssociationRules();
+
+        // Act
+        var actual = await MineAsync(Miner, Transactions, parameters);
+
+        // Assert
+        Assert.Equivalent(expected, actual, true);
     }
 
     [Fact]
-    public void Mine_WithAlreadyCanceledToken_ThrowsOperationCancelledException()
+    public async Task WithMineAgain_MinerBehaviorIsRepeatable()
+    {
+        // Act
+        var associationRules1 = await MineAsync(Miner, Transactions, new(0, 0));
+        var associationRules2 = await MineAsync(Miner, Transactions, new(0, 0));
+
+        // Assert
+        Assert.Equivalent(associationRules1, associationRules2, true);
+    }
+
+    [Fact]
+    public async Task WithAlreadyCanceledToken_ThrowsOperationCancelledException()
     {
         // Arrange
         using var cancellationTokenSource = new CancellationTokenSource();
         var cancellationToken = cancellationTokenSource.Token;
 
-        cancellationTokenSource.Cancel();
+        await cancellationTokenSource.CancelAsync();
 
         // Act & Assert
-        Assert.ThrowsAny<OperationCanceledException>(
-            () => _miner.Mine(_transactions, new(0, 0), cancellationToken));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(
+            () => MineAsync(Miner, Transactions, new(0, 0), cancellationToken));
     }
 
     [Fact(Timeout = 100)]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-    public async Task Mine_CancelTokenDuringMining_ThrowsOperationCancelledException()
+    public async Task CancelTokenDuringMining_ThrowsOperationCancelledException()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         // Arrange
@@ -224,8 +268,8 @@ public class MinerTests
         var cancellationToken = cancellationTokenSource.Token;
 
         // Act & Assert
-        Assert.ThrowsAny<OperationCanceledException>(
-            () => _miner.Mine(GetTransactions(), new(0, 0), cancellationToken));
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(
+            () => MineAsync(Miner, GetTransactions(), new(0, 0), cancellationToken));
 
         IEnumerable<Item[]> GetTransactions()
         {
@@ -235,21 +279,6 @@ public class MinerTests
 
             yield return [_itemB, _itemC];
         }
-    }
-
-    private static void AssertEqualAssociationRules(IReadOnlyCollection<AssociationRule> expected, IReadOnlyCollection<AssociationRule> actual)
-    {
-        Assert.Equal(expected.Count, actual.Count);
-
-        var equalityComparer = EqualityComparer<AssociationRule>.Create((x, y) =>
-            x!.LeftHandSide.Item.Name == y!.LeftHandSide.Item.Name &&
-            x.RightHandSide.Item.Name == y.RightHandSide.Item.Name &&
-            x.LeftHandSide.Count == y.LeftHandSide.Count &&
-            x.RightHandSide.Count == y.RightHandSide.Count &&
-            x.PairCount == y.PairCount &&
-            x.TransactionCount == y.TransactionCount);
-
-        Assert.All(expected, e => Assert.Contains(e, actual, equalityComparer));
     }
 
     private List<AssociationRule> GetAllAssociationRules() =>

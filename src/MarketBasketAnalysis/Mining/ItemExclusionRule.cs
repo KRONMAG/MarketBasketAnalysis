@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 using static System.StringComparison;
 
 namespace MarketBasketAnalysis.Mining
@@ -7,7 +6,6 @@ namespace MarketBasketAnalysis.Mining
     /// <summary>
     /// Represents a rule for excluding items or groups from association rule mining.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemExclusionRule
     {
         #region Fields and Properties

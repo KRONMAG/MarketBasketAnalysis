@@ -47,7 +47,7 @@ namespace MarketBasketAnalysis.Mining
                 return true;
             }
 
-            group = default;
+            group = null;
 
             return false;
         }
