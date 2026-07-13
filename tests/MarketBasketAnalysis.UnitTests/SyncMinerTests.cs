@@ -1,4 +1,5 @@
-﻿using MarketBasketAnalysis.Mining;
+﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
+using MarketBasketAnalysis.Models;
 
 namespace MarketBasketAnalysis.UnitTests;
 

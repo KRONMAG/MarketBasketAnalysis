@@ -1,5 +1,6 @@
 ﻿using MarketBasketAnalysis;
-using MarketBasketAnalysis.Mining;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
+using MarketBasketAnalysis.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 // 1. Define items

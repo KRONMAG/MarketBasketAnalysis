@@ -1,6 +1,8 @@
 ﻿using System;
-using MarketBasketAnalysis.Analysis;
-using MarketBasketAnalysis.Mining;
+using MarketBasketAnalysis.AssociationRuleAnalysis;
+using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
+using MarketBasketAnalysis.AssociationRuleMining;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarketBasketAnalysis

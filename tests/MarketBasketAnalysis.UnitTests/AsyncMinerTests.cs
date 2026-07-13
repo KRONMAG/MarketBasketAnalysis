@@ -1,4 +1,5 @@
-﻿using MarketBasketAnalysis.Mining;
+﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
+using MarketBasketAnalysis.Models;
 using Moq;
 #pragma warning disable S2699 // Tests should include assertions
 #pragma warning disable CA1062 // Validate arguments of public methods

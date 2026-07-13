@@ -1,6 +1,8 @@
 ﻿// Ignore Spelling: Excluder
 
-using MarketBasketAnalysis.Mining;
+using MarketBasketAnalysis.AssociationRuleMining;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
+using MarketBasketAnalysis.Models;
 using Moq;
 
 namespace MarketBasketAnalysis.UnitTests;
@@ -49,7 +51,10 @@ public abstract class BaseMinerTests
         _itemExclusionRules = [new("A", true, false, true, false)];
         _itemConversionRules = [new(_itemA, _group), new(_itemB, _group)];
 
-        Miner = new Miner(_ => _itemConverterMock.Object, _ => _itemExcluderMock.Object);
+        Miner = new Miner(
+            new SearchForFrequentItemsStep(_ => _itemExcluderMock.Object, _ => _itemConverterMock.Object),
+            new SearchForItemsetsStep(_ => _itemConverterMock.Object),
+            new GenerateAssociationRulesStep());
     }
 
     [Fact]
