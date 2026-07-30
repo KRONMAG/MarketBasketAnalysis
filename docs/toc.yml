@@ -3,56 +3,52 @@
   href: MarketBasketAnalysis.md
   items:
   - name: Classes
-  - name: AssociationRule
-    href: MarketBasketAnalysis.AssociationRule.md
-  - name: AssociationRulePart
-    href: MarketBasketAnalysis.AssociationRulePart.md
-  - name: Item
-    href: MarketBasketAnalysis.Item.md
   - name: ServiceCollectionExtensions
     href: MarketBasketAnalysis.ServiceCollectionExtensions.md
-- name: MarketBasketAnalysis.Analysis
-  href: MarketBasketAnalysis.Analysis.md
+- name: MarketBasketAnalysis.AssociationRuleAnalysis
+  href: MarketBasketAnalysis.AssociationRuleAnalysis.md
   items:
   - name: Classes
-  - name: MaximalClique<TVertex>
-    href: MarketBasketAnalysis.Analysis.MaximalClique-1.md
+  - name: AssociationRuleSetOperations
+    href: MarketBasketAnalysis.AssociationRuleAnalysis.AssociationRuleSetOperations.md
+- name: MarketBasketAnalysis.AssociationRuleAnalysis.Contracts
+  href: MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.md
+  items:
+  - name: Classes
   - name: MaximalCliqueFindingParameters
-    href: MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md
+    href: MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.MaximalCliqueFindingParameters.md
   - name: Interfaces
-  - name: IMaximalCliqueAlgorithm
-    href: MarketBasketAnalysis.Analysis.IMaximalCliqueAlgorithm.md
   - name: IMaximalCliqueFinder
-    href: MarketBasketAnalysis.Analysis.IMaximalCliqueFinder.md
-- name: MarketBasketAnalysis.Extensions
-  href: MarketBasketAnalysis.Extensions.md
-  items:
-  - name: Classes
-  - name: AssociationRuleExtensions
-    href: MarketBasketAnalysis.Extensions.AssociationRuleExtensions.md
-- name: MarketBasketAnalysis.Mining
-  href: MarketBasketAnalysis.Mining.md
+    href: MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.IMaximalCliqueFinder.md
+- name: MarketBasketAnalysis.AssociationRuleMining.Contracts
+  href: MarketBasketAnalysis.AssociationRuleMining.Contracts.md
   items:
   - name: Classes
   - name: ItemConversionRule
-    href: MarketBasketAnalysis.Mining.ItemConversionRule.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.ItemConversionRule.md
   - name: ItemExclusionRule
-    href: MarketBasketAnalysis.Mining.ItemExclusionRule.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.ItemExclusionRule.md
   - name: MiningParameters
-    href: MarketBasketAnalysis.Mining.MiningParameters.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningParameters.md
   - name: MiningProgressChangedEventArgs
-    href: MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md
-  - name: MiningStageChangedEventArgs
-    href: MarketBasketAnalysis.Mining.MiningStageChangedEventArgs.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningProgressChangedEventArgs.md
+  - name: MiningStepStartedEventArgs
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningStepStartedEventArgs.md
   - name: Interfaces
-  - name: IItemConverter
-    href: MarketBasketAnalysis.Mining.IItemConverter.md
-  - name: IItemExcluder
-    href: MarketBasketAnalysis.Mining.IItemExcluder.md
   - name: IMiner
-    href: MarketBasketAnalysis.Mining.IMiner.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.IMiner.md
   - name: IMinerFactory
-    href: MarketBasketAnalysis.Mining.IMinerFactory.md
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.IMinerFactory.md
   - name: Enums
-  - name: MiningStage
-    href: MarketBasketAnalysis.Mining.MiningStage.md
+  - name: MiningStep
+    href: MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningStep.md
+- name: MarketBasketAnalysis.Models
+  href: MarketBasketAnalysis.Models.md
+  items:
+  - name: Classes
+  - name: AssociationRule
+    href: MarketBasketAnalysis.Models.AssociationRule.md
+  - name: AssociationRulePart
+    href: MarketBasketAnalysis.Models.AssociationRulePart.md
+  - name: Item
+    href: MarketBasketAnalysis.Models.Item.md

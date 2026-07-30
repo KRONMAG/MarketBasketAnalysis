@@ -1,6 +1,7 @@
-﻿using MarketBasketAnalysis;
+﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using MarketBasketAnalysis.Examples;
-using MarketBasketAnalysis.Mining;
+using MarketBasketAnalysis.Models;
+
 // ReSharper disable PossibleMultipleEnumeration
 
 // 1. Define items

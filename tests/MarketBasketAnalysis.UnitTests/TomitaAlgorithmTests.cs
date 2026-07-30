@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Tomita
 
-using MarketBasketAnalysis.Analysis;
+using MarketBasketAnalysis.AssociationRuleAnalysis;
+
 #pragma warning disable S3878 // Arrays should not be created for params parameters
 
 namespace MarketBasketAnalysis.UnitTests;

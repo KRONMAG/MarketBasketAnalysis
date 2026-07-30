@@ -1,4 +1,6 @@
-﻿using MarketBasketAnalysis.Analysis;
+﻿using MarketBasketAnalysis.AssociationRuleAnalysis;
+using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
+using MarketBasketAnalysis.Models;
 using Moq;
 
 namespace MarketBasketAnalysis.UnitTests;

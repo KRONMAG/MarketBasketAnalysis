@@ -1,4 +1,6 @@
-﻿namespace MarketBasketAnalysis.UnitTests;
+﻿using MarketBasketAnalysis.Models;
+
+namespace MarketBasketAnalysis.UnitTests;
 
 public class ItemTests
 {

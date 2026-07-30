@@ -1,6 +1,6 @@
-﻿using MarketBasketAnalysis;
+﻿using MarketBasketAnalysis.AssociationRuleAnalysis;
 using MarketBasketAnalysis.Examples;
-using MarketBasketAnalysis.Extensions;
+using MarketBasketAnalysis.Models;
 
 // 1. Define items
 var milk = new Item(1, "Milk");

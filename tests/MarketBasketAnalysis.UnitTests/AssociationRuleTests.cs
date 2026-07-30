@@ -1,16 +1,17 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using MarketBasketAnalysis.Models;
 
 namespace MarketBasketAnalysis.UnitTests;
 
 [SuppressMessage("ReSharper", "ObjectCreationAsStatement", Justification = "Object is created to check ctor precondition validation.")]
 public class AssociationRuleTests
 {
-    private readonly Item _lhsItem = new Item(1, "Left", false);
-    private readonly Item _rhsItem = new Item(2, "Right", false);
+    private readonly Item _lhsItem = new(1, "Left");
+    private readonly Item _rhsItem = new(2, "Right");
     private readonly int _lhsCount = 5;
     private readonly int _rhsCount = 5;
     private readonly int _pairCount = 3;
-    private readonly int _transactionCount = 10;
+    private readonly int _transactionsCount = 10;
     private readonly double _support = 0.3;
     private readonly double _confidence = 0.6;
     private readonly double _lift = 1.2;
@@ -25,10 +26,10 @@ public class AssociationRuleTests
     {
         // Act
         void LeftHandSideItemIsNull() =>
-            new AssociationRule(null, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(null, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         void RightHandSideIsNull() =>
-            new AssociationRule(_lhsItem, null, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, null, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         // Assert
         Assert.Throws<ArgumentNullException>(LeftHandSideItemIsNull);
@@ -40,27 +41,27 @@ public class AssociationRuleTests
     {
         // Act
         void LhsCountIsZero() =>
-            new AssociationRule(_lhsItem, _rhsItem, 0, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, 0, _rhsCount, _pairCount, _transactionsCount);
 
         void LhsCountIsNegative() =>
-            new AssociationRule(_lhsItem, _rhsItem, -1, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, -1, _rhsCount, _pairCount, _transactionsCount);
 
         void RhsCountIsZero() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, 0, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, 0, _pairCount, _transactionsCount);
 
         void RhsCountIsNegative() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, -1, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, -1, _pairCount, _transactionsCount);
 
         void PairCountIsZero() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, 0, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, 0, _transactionsCount);
 
         void PairCountIsNegative() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, -1, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, -1, _transactionsCount);
 
-        void TransactionCountIsZero() =>
+        void TransactionsCountIsZero() =>
             new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, 0);
 
-        void TransactionCountIsNegative() =>
+        void TransactionsCountIsNegative() =>
             new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, -1);
 
         // Act & Assert
@@ -70,29 +71,29 @@ public class AssociationRuleTests
         Assert.Throws<ArgumentOutOfRangeException>(RhsCountIsNegative);
         Assert.Throws<ArgumentOutOfRangeException>(PairCountIsZero);
         Assert.Throws<ArgumentOutOfRangeException>(PairCountIsNegative);
-        Assert.Throws<ArgumentOutOfRangeException>(TransactionCountIsZero);
-        Assert.Throws<ArgumentOutOfRangeException>(TransactionCountIsNegative);
+        Assert.Throws<ArgumentOutOfRangeException>(TransactionsCountIsZero);
+        Assert.Throws<ArgumentOutOfRangeException>(TransactionsCountIsNegative);
     }
 
     [Fact]
     public void Ctor_FrequenciesRelationsIsInvalid_ThrowsArgumentOutOfRangeException()
     {
         // Act
-        void LhsCountIsGreaterThanTransactionCount() =>
-            new AssociationRule(_lhsItem, _rhsItem, _transactionCount + 1, _rhsCount, _pairCount, _transactionCount);
+        void LhsCountIsGreaterThanTransactionsCount() =>
+            new AssociationRule(_lhsItem, _rhsItem, _transactionsCount + 1, _rhsCount, _pairCount, _transactionsCount);
 
-        void RhsCountIsGreaterThanTransactionCount() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _transactionCount + 1, _pairCount, _transactionCount);
+        void RhsCountIsGreaterThanTransactionsCount() =>
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _transactionsCount + 1, _pairCount, _transactionsCount);
 
         void PairCountIsGreaterThanLhsCount() =>
-            new AssociationRule(_lhsItem, _rhsItem, _pairCount - 1, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _pairCount - 1, _rhsCount, _pairCount, _transactionsCount);
 
         void PairCountIsGreaterThanRhsCount() =>
-            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _pairCount - 1, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _pairCount - 1, _pairCount, _transactionsCount);
 
         // Assert
-        Assert.Throws<ArgumentOutOfRangeException>(LhsCountIsGreaterThanTransactionCount);
-        Assert.Throws<ArgumentOutOfRangeException>(RhsCountIsGreaterThanTransactionCount);
+        Assert.Throws<ArgumentOutOfRangeException>(LhsCountIsGreaterThanTransactionsCount);
+        Assert.Throws<ArgumentOutOfRangeException>(RhsCountIsGreaterThanTransactionsCount);
         Assert.Throws<ArgumentOutOfRangeException>(PairCountIsGreaterThanLhsCount);
         Assert.Throws<ArgumentOutOfRangeException>(PairCountIsGreaterThanRhsCount);
     }
@@ -102,7 +103,7 @@ public class AssociationRuleTests
     {
         // Act
         void Act() =>
-            new AssociationRule(_lhsItem, _lhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+            new AssociationRule(_lhsItem, _lhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         // Assert
         Assert.Throws<ArgumentException>(Act);
@@ -112,7 +113,7 @@ public class AssociationRuleTests
     public void Ctor_ValidArguments_CreatesAssociationRule()
     {
         // Act
-        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         // Assert
         Assert.Equal(_lhsItem, rule.LeftHandSide.Item);
@@ -133,7 +134,7 @@ public class AssociationRuleTests
     public void Equals_Null_ReturnsFalse()
     {
         // Arrange
-        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         // Act
 #pragma warning disable CA1508 // Avoid dead conditional code
@@ -148,7 +149,7 @@ public class AssociationRuleTests
     public void Equals_SameRule_ReturnsTrue()
     {
         // Arrange
-        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
+        var rule = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
 
         // Act
         // ReSharper disable once EqualExpressionComparison
@@ -162,8 +163,8 @@ public class AssociationRuleTests
     public void Equals_RulesWithSameHandSides_ReturnsTrue()
     {
         // Arrange
-        var rule1 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
-        var rule2 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount + 1, _rhsCount + 1, _pairCount + 1, _transactionCount + 1);
+        var rule1 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
+        var rule2 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount + 1, _rhsCount + 1, _pairCount + 1, _transactionsCount + 1);
 
         // Act
         var result = rule1.Equals(rule2);
@@ -176,8 +177,8 @@ public class AssociationRuleTests
     public void Equals_RulesWithOppositeDirections_ReturnsFalse()
     {
         // Arrange
-        var rule1 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionCount);
-        var rule2 = new AssociationRule(_rhsItem, _lhsItem, _rhsCount, _lhsCount, _pairCount, _transactionCount);
+        var rule1 = new AssociationRule(_lhsItem, _rhsItem, _lhsCount, _rhsCount, _pairCount, _transactionsCount);
+        var rule2 = new AssociationRule(_rhsItem, _lhsItem, _rhsCount, _lhsCount, _pairCount, _transactionsCount);
 
         // Act
         var result = rule1.Equals(rule2);
