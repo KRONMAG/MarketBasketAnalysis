@@ -4,10 +4,8 @@ using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 
 namespace MarketBasketAnalysis.AssociationRuleMining
 {
-    /// <inheritdoc />
     internal sealed class MinerFactory : IMinerFactory
     {
-        /// <inheritdoc />
         public IMiner Create()
         {
             return new Miner(

@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using MarketBasketAnalysis.Models;
 
-namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
+namespace MarketBasketAnalysis.AssociationRuleMining
 {
-    internal interface ISearchForItemsetsStep
+    internal interface ISearchForFrequentPairsStep
     {
-        SearchForItemsetsResult Run(
+        SearchForFrequentPairsResult Run(
             IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             SearchForFrequentItemsResult searchForFrequentItemsResult,
             IMiningProgressChangedEventPublisher miningProgressChangedEventPublisher,
             CancellationToken cancellationToken);
 
-        Task<SearchForItemsetsResult> RunAsync(
+        Task<SearchForFrequentPairsResult> RunAsync(
             IAsyncEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             SearchForFrequentItemsResult searchForFrequentItemsResult,

@@ -1,10 +1,9 @@
 ﻿using MarketBasketAnalysis.AssociationRuleAnalysis;
-using MarketBasketAnalysis.Extensions;
 using MarketBasketAnalysis.Models;
 
 namespace MarketBasketAnalysis.UnitTests;
 
-public class AssociationRuleExtensionsTests
+public class AssociationRuleSetOperationsTests
 {
     private readonly AssociationRule _abAssociationRule;
     private readonly AssociationRule _baAssociationRule;
@@ -18,12 +17,12 @@ public class AssociationRuleExtensionsTests
     private readonly List<AssociationRule> _firstAssociationRuleSet;
     private readonly List<AssociationRule> _secondAssociationRuleSet;
 
-    public AssociationRuleExtensionsTests()
+    public AssociationRuleSetOperationsTests()
     {
-        var itemA = new Item(1, "A", false);
-        var itemB = new Item(2, "B", false);
-        var itemC = new Item(3, "C", false);
-        var itemD = new Item(4, "D", false);
+        var itemA = new Item(1, "A");
+        var itemB = new Item(2, "B");
+        var itemC = new Item(3, "C");
+        var itemD = new Item(4, "D");
 
         _abAssociationRule = CreateAssociationRule(itemA, itemB);
         _baAssociationRule = CreateAssociationRule(itemB, itemA);
@@ -55,20 +54,20 @@ public class AssociationRuleExtensionsTests
     public void Except_PassInvalidArguments_ThrowsArgumentException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Difference(null, []));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Difference([null], []));
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Difference([], null));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Difference([], [null]));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleSetOperations.Difference(null, []));
+        Assert.Throws<ArgumentException>(() => AssociationRuleSetOperations.Difference([null], []));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleSetOperations.Difference([], null));
+        Assert.Throws<ArgumentException>(() => AssociationRuleSetOperations.Difference([], [null]));
     }
 
     [Fact]
     public void Intersect_PassInvalidArguments_ThrowsArgumentException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Common(null, []));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Common([null], []));
-        Assert.Throws<ArgumentNullException>(() => AssociationRuleExtensions.Common([], null));
-        Assert.Throws<ArgumentException>(() => AssociationRuleExtensions.Common([], [null]));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleSetOperations.Common(null, []));
+        Assert.Throws<ArgumentException>(() => AssociationRuleSetOperations.Common([null], []));
+        Assert.Throws<ArgumentNullException>(() => AssociationRuleSetOperations.Common([], null));
+        Assert.Throws<ArgumentException>(() => AssociationRuleSetOperations.Common([], [null]));
     }
 
     [Fact]

@@ -1,12 +1,13 @@
 using System.Threading;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 
-namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
+namespace MarketBasketAnalysis.AssociationRuleMining
 {
     internal interface IGenerateAssociationRulesStep
     {
         GenerateAssociationRulesResult Run(
             SearchForFrequentItemsResult searchForFrequentItemsResult,
-            SearchForItemsetsResult searchForItemsetsResult,
+            SearchForFrequentPairsResult searchForFrequentPairsResult,
             MiningParameters parameters,
             CancellationToken cancellationToken);
     }

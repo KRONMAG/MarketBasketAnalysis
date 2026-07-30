@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using MarketBasketAnalysis.Models;
 
-namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
+namespace MarketBasketAnalysis.AssociationRuleMining
 {
     internal interface ISearchForFrequentItemsStep
     {

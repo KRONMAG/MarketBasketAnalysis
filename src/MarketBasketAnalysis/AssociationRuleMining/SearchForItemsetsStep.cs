@@ -14,9 +14,9 @@ using Timer = System.Timers.Timer;
 
 namespace MarketBasketAnalysis.AssociationRuleMining
 {
-    internal sealed class SearchForItemsetsStep : ISearchForItemsetsStep
+    internal sealed class SearchForItemsetsStep : ISearchForFrequentPairsStep
     {
-        #region Nested types
+        #region Nested Types
         private sealed class ItemsetsPoolPolicy : IPooledObjectPolicy<HashSet<(Item, Item)>>
         {
             public HashSet<(Item, Item)> Create() => new HashSet<(Item, Item)>();
@@ -52,7 +52,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 ItemConverter = itemConverter;
                 FrequentItems = frequentItems;
                 ItemsetsPool = itemsetsPool;
-                ItemsetFrequencies = new ConcurrentDictionary<(Item, Item), int>(parameters.DegreeOfParallelism, 0);
+                ItemsetFrequencies = new ConcurrentDictionary<(Item, Item), int>(parameters.MaxDegreeOfParallelism, 0);
             }
 
             public void IncrementProcessedTransactionsCount() =>
@@ -90,13 +90,13 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 _frequentItems = itemFrequencies;
                 _itemsetsPool = new DefaultObjectPool<HashSet<(Item, Item)>>(
                     new ItemsetsPoolPolicy(),
-                    parameters.DegreeOfParallelism);
+                    parameters.MaxDegreeOfParallelism);
                 _states = new ConcurrentDictionary<long, SearchForItemsetsState>();
             }
 
             public SearchForItemsetsState GetOrCreateState()
             {
-                var key = Interlocked.Increment(ref _counter) % _parameters.StatePartitionCount;
+                var key = Interlocked.Increment(ref _counter) % _parameters.StatePartitionsCount;
 
                 return _states.GetOrAdd(key, ValueFactory);
 
@@ -156,7 +156,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         #endregion
 
         #region Methods
-        public SearchForItemsetsResult Run(
+        public SearchForFrequentPairsResult Run(
             IEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             SearchForFrequentItemsResult searchForFrequentItemsResult,
@@ -166,7 +166,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             // ReSharper disable once PossibleMultipleEnumeration
             if (transactions.IsEmptyCollection())
             {
-                return SearchForItemsetsResult.Empty;
+                return SearchForFrequentPairsResult.Empty;
             }
 
             var itemConverter = parameters.ItemConversionRules?.Count > 0
@@ -180,10 +180,10 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
-                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+                MaxDegreeOfParallelism = parameters.MaxDegreeOfParallelism,
             };
 
-            var timer = new Timer(parameters.MiningProgressInterval);
+            var timer = new Timer(parameters.MiningProgressChangedEventInterval);
 
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
@@ -206,7 +206,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
             stateProvider.AggregateStates(out var itemsetFrequencies);
 
-            return new SearchForItemsetsResult(itemsetFrequencies);
+            return new SearchForFrequentPairsResult(itemsetFrequencies);
 
             // ToDo: calculate progress value more accurately
             // ReSharper disable once InconsistentNaming
@@ -218,7 +218,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             }
         }
 
-        public async Task<SearchForItemsetsResult> RunAsync(
+        public async Task<SearchForFrequentPairsResult> RunAsync(
             IAsyncEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,
             SearchForFrequentItemsResult searchForFrequentItemsResult,
@@ -233,10 +233,10 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
-                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+                MaxDegreeOfParallelism = parameters.MaxDegreeOfParallelism,
             };
 
-            var timer = new Timer(parameters.MiningProgressInterval);
+            var timer = new Timer(parameters.MiningProgressChangedEventInterval);
 
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
@@ -256,7 +256,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
             stateProvider.AggregateStates(out var itemsetFrequencies);
 
-            return new SearchForItemsetsResult(itemsetFrequencies);
+            return new SearchForFrequentPairsResult(itemsetFrequencies);
 
             // ToDo: calculate progress value more accurately
             // ReSharper disable once InconsistentNaming

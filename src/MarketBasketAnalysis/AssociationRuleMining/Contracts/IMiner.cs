@@ -12,18 +12,17 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
     public interface IMiner
     {
         /// <summary>
-        /// Event triggered when the mining progress updates.
+        /// Event triggered when the mining progress changes.
         /// </summary>
         /// <remarks>
-        /// The event is triggered at intervals specified by the <see cref="MiningParameters.MiningProgressInterval"/>.
+        /// The event is triggered at intervals specified by the <see cref="MiningParameters.MiningProgressChangedEventInterval"/>.
         /// </remarks>
-        event EventHandler<MiningProgressChangedEventArgs> MiningProgressUpdated;
+        event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
 
         /// <summary>
-        /// Event triggered when the mining stage changes.
+        /// Event triggered when the one of mining steps starts.
         /// </summary>
-        // ReSharper disable once UnusedMemberInSuper.Global
-        event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
+        event EventHandler<MiningStepStartedEventArgs> MiningStepStarted;
 
         /// <summary>
         /// Performs association rule mining.
@@ -44,7 +43,23 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
             MiningParameters parameters,
             CancellationToken cancellationToken = default);
 
-#pragma warning disable
+        /// <summary>
+        /// Performs association rule mining asynchronously.
+        /// </summary>
+        /// <param name="transactions">A collection of transactions, where each transaction is represented as a collection of items.</param>
+        /// <param name="parameters">The mining parameters, including minimum support and confidence thresholds.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation if needed.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation.
+        /// The task result contains a collection of association rules that meet the specified parameters.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="transactions"/> or <paramref name="parameters"/> is <c>null</c>.</exception>
+        /// <exception cref="OperationCanceledException">
+        /// Thrown if the operation is canceled via the <paramref name="cancellationToken"/>.
+        /// </exception>
+        /// <remarks>
+        /// The enumeration of the <paramref name="transactions"/> may be performed multiple times.
+        /// </remarks>
         Task<IReadOnlyCollection<AssociationRule>> MineAsync(
             IAsyncEnumerable<IReadOnlyList<Item>> transactions,
             MiningParameters parameters,

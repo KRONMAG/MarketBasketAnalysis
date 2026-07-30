@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
 
 namespace MarketBasketAnalysis.AssociationRuleAnalysis
 {
-    /// <inheritdoc />
     internal sealed class TomitaAlgorithm : IMaximalCliqueAlgorithm
     {
-        #region Nested types
+        #region Nested Types
         private sealed class LocalState<TVertex>
             where TVertex : struct
         {
@@ -94,7 +92,6 @@ namespace MarketBasketAnalysis.AssociationRuleAnalysis
         #endregion
 
         #region Methods
-        /// <inheritdoc />
         public IEnumerable<MaximalClique<TVertex>> Find<TVertex>(
             IReadOnlyDictionary<TVertex, HashSet<TVertex>> adjacencyList,
             int minCliqueSize,

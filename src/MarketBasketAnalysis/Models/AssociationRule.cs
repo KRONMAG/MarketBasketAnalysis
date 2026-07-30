@@ -12,7 +12,7 @@ namespace MarketBasketAnalysis.Models
     {
         #region Fields and Properties
         private readonly int _pairCount;
-        private readonly int _transactionCount;
+        private readonly int _transactionsCount;
 
         /// <summary>
         /// Gets the left-hand side (LHS) of the association rule.
@@ -32,12 +32,12 @@ namespace MarketBasketAnalysis.Models
         /// <summary>
         /// Gets the number of transactions.
         /// </summary>
-        public int TransactionCount => _transactionCount;
+        public int TransactionsCount => _transactionsCount;
 
         /// <summary>
         /// Gets the support of the rule, which is the proportion of transactions that contain both the LHS and RHS.
         /// </summary>
-        public double Support => (double)_pairCount / _transactionCount;
+        public double Support => (double)_pairCount / _transactionsCount;
 
         /// <summary>
         /// Gets the confidence of the rule, which is the proportion of transactions containing the LHS that also contain the RHS.
@@ -103,13 +103,13 @@ namespace MarketBasketAnalysis.Models
         /// <param name="lhsCount">The number of transactions containing the LHS item.</param>
         /// <param name="rhsCount">The number of transactions containing the RHS item.</param>
         /// <param name="pairCount">The number of transactions containing both the LHS and RHS items.</param>
-        /// <param name="transactionCount">The total number of transactions.</param>
+        /// <param name="transactionsCount">The total number of transactions.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="lhsItem"/> or <paramref name="rhsItem"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException">Thrown if the LHS and RHS items are the same.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown if any of the counts are invalid (e.g., negative or greater than the total transaction count).
+        /// Thrown if any of the counts are invalid (e.g., negative or greater than the total transactions count).
         /// </exception>
-        public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
+        public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionsCount)
         {
             ValidateParameters(
                 lhsItem,
@@ -117,13 +117,13 @@ namespace MarketBasketAnalysis.Models
                 lhsCount,
                 rhsCount,
                 pairCount,
-                transactionCount);
+                transactionsCount);
 
-            LeftHandSide = new AssociationRulePart(lhsItem, lhsCount, transactionCount);
-            RightHandSide = new AssociationRulePart(rhsItem, rhsCount, transactionCount);
+            LeftHandSide = new AssociationRulePart(lhsItem, lhsCount, transactionsCount);
+            RightHandSide = new AssociationRulePart(rhsItem, rhsCount, transactionsCount);
 
             _pairCount = pairCount;
-            _transactionCount = transactionCount;
+            _transactionsCount = transactionsCount;
         }
         #endregion
 
@@ -157,7 +157,7 @@ namespace MarketBasketAnalysis.Models
         public override string ToString() =>
             $"{LeftHandSide} -> {RightHandSide}";
 
-        private static void ValidateParameters(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
+        private static void ValidateParameters(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionsCount)
         {
             if (lhsItem == null)
             {
@@ -174,12 +174,12 @@ namespace MarketBasketAnalysis.Models
                 throw new ArgumentException("Items of left and right hand sides cannot be the same.");
             }
 
-            if (transactionCount <= 0)
+            if (transactionsCount <= 0)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(transactionCount),
-                    transactionCount,
-                    "Transaction count must be greater than zero.");
+                    nameof(transactionsCount),
+                    transactionsCount,
+                    "Transactions count must be greater than zero.");
             }
 
             if (pairCount <= 0)
@@ -190,20 +190,20 @@ namespace MarketBasketAnalysis.Models
                     "Pair count must be greater than zero.");
             }
 
-            if (lhsCount > transactionCount)
+            if (lhsCount > transactionsCount)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(lhsCount),
                     lhsCount,
-                    "LHS count cannot be greater than transaction count.");
+                    "LHS count cannot be greater than transactions count.");
             }
 
-            if (rhsCount > transactionCount)
+            if (rhsCount > transactionsCount)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(rhsCount),
                     rhsCount,
-                    "RHS count cannot be greater than transaction count.");
+                    "RHS count cannot be greater than transactions count.");
             }
 
             if (pairCount > Math.Min(lhsCount, rhsCount))
@@ -220,7 +220,7 @@ namespace MarketBasketAnalysis.Models
             var a = _pairCount;
             var b = LeftHandSide.Count - _pairCount;
             var c = RightHandSide.Count - _pairCount;
-            var d = _transactionCount - a - b - c;
+            var d = _transactionsCount - a - b - c;
 
             return (a, b, c, d);
         }

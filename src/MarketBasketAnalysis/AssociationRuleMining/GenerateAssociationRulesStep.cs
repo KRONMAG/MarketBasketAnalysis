@@ -10,8 +10,8 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 {
     internal sealed class GenerateAssociationRulesStep : IGenerateAssociationRulesStep
     {
-        #region Nested types
-        private sealed class GenerateAssociationRulesState
+        #region Nested Types
+        private sealed class LocalState
         {
             public MiningParameters Parameters { get; }
 
@@ -23,7 +23,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
             public ConcurrentBag<AssociationRule> AssociationRules { get; }
 
-            public GenerateAssociationRulesState(
+            public LocalState(
                 MiningParameters parameters,
                 IReadOnlyDictionary<Item, int> frequentItems,
                 int transactionsCount)
@@ -36,15 +36,15 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             }
 
             public void Deconstruct(
+                out MiningParameters parameters,
                 out IReadOnlyDictionary<Item, int> frequentItems,
                 out int transactionsCount,
-                out MiningParameters parameters,
                 out int frequencyThreshold,
                 out ConcurrentBag<AssociationRule> associationRules)
             {
+                parameters = Parameters;
                 frequentItems = FrequentItems;
                 transactionsCount = TransactionsCount;
-                parameters = Parameters;
                 frequencyThreshold = FrequencyThreshold;
                 associationRules = AssociationRules;
             }
@@ -54,33 +54,33 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         #region Methods
         public GenerateAssociationRulesResult Run(
             SearchForFrequentItemsResult searchForFrequentItemsResult,
-            SearchForItemsetsResult searchForItemsetsResult,
+            SearchForFrequentPairsResult searchForFrequentPairsResult,
             MiningParameters parameters,
             CancellationToken cancellationToken)
         {
             var (frequentItems, transactionsCount) = searchForFrequentItemsResult;
-            var itemsets = searchForItemsetsResult.Itemsets;
+            var frequentPairs = searchForFrequentPairsResult.FrequentPairs;
 
-            var state = new GenerateAssociationRulesState(parameters, frequentItems, transactionsCount);
+            var localState = new LocalState(parameters, frequentItems, transactionsCount);
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
-                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+                MaxDegreeOfParallelism = parameters.MaxDegreeOfParallelism,
             };
 
-            Parallel.ForEach(itemsets, parallelOptions, () => state, GenerateAssociationRulePair, _ => { });
+            Parallel.ForEach(frequentPairs, parallelOptions, () => localState, GenerateAssociationRulePair, _ => { });
 
-            return new GenerateAssociationRulesResult(state.AssociationRules);
+            return new GenerateAssociationRulesResult(localState.AssociationRules);
         }
 
-        private static GenerateAssociationRulesState GenerateAssociationRulePair(
+        private static LocalState GenerateAssociationRulePair(
             KeyValuePair<(Item, Item), int> keyValuePair,
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
             ParallelLoopState _,
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-            GenerateAssociationRulesState state)
+            LocalState state)
         {
-            var (frequentItems, transactionsCount, parameters, frequencyThreshold, associationRules) = state;
+            var (parameters, frequentItems, transactionsCount, frequencyThreshold, associationRules) = state;
             var itemsetFrequency = keyValuePair.Value;
 
             if (itemsetFrequency < frequencyThreshold)
@@ -89,28 +89,28 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             }
 
             var (item1, item2) = keyValuePair.Key;
-            var itemFrequency1 = frequentItems[item1];
-            var itemFrequency2 = frequentItems[item2];
+            var item1Frequency = frequentItems[item1];
+            var item2Frequency = frequentItems[item2];
 
-            if (itemsetFrequency / (double)itemFrequency1 >= parameters.MinConfidence)
+            if (itemsetFrequency / (double)item1Frequency >= parameters.MinConfidence)
             {
                 associationRules.Add(new AssociationRule(
                     item1,
                     item2,
-                    itemFrequency1,
-                    itemFrequency2,
+                    item1Frequency,
+                    item2Frequency,
                     itemsetFrequency,
                     transactionsCount));
             }
 
-            if (itemsetFrequency / (double)itemFrequency2 >= parameters.MinConfidence)
+            if (itemsetFrequency / (double)item2Frequency >= parameters.MinConfidence)
             {
                 associationRules.Add(
                     new AssociationRule(
                         item2,
                         item1,
-                        itemFrequency2,
-                        itemFrequency1,
+                        item2Frequency,
+                        item1Frequency,
                         itemsetFrequency,
                         transactionsCount));
             }

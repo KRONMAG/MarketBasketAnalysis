@@ -7,27 +7,16 @@ using MarketBasketAnalysis.Models;
 
 namespace MarketBasketAnalysis.AssociationRuleAnalysis
 {
-    /// <inheritdoc />
     internal sealed class MaximalCliqueFinder : IMaximalCliqueFinder
     {
         private readonly IMaximalCliqueAlgorithm _maximalCliqueAlgorithm;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaximalCliqueFinder"/> class.
-        /// </summary>
-        /// <param name="maximalCliqueAlgorithm">
-        /// The algorithm implementation used to find maximal cliques in the graph.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="maximalCliqueAlgorithm"/> is <c>null</c>.
-        /// </exception>
         public MaximalCliqueFinder(IMaximalCliqueAlgorithm maximalCliqueAlgorithm)
         {
             _maximalCliqueAlgorithm =
                 maximalCliqueAlgorithm ?? throw new ArgumentNullException(nameof(maximalCliqueAlgorithm));
         }
 
-        /// <inheritdoc />
         public IEnumerable<IReadOnlyCollection<AssociationRule>> Find(
             IReadOnlyCollection<AssociationRule> associationRules,
             MaximalCliqueFindingParameters parameters,

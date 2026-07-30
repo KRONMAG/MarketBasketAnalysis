@@ -36,13 +36,13 @@ namespace MarketBasketAnalysis.Models
         /// </summary>
         /// <param name="item">The item associated with this part of the rule.</param>
         /// <param name="itemCount">The number of transactions that contain the item.</param>
-        /// <param name="transactionCount">The total number of transactions.</param>
+        /// <param name="transactionsCount">The total number of transactions.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="item"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// Thrown if <paramref name="itemCount"/> is less than 1 or
-        /// if <paramref name="transactionCount"/> is less than <paramref name="itemCount"/>.
+        /// if <paramref name="transactionsCount"/> is less than <paramref name="itemCount"/>.
         /// </exception>
-        public AssociationRulePart(Item item, int itemCount, int transactionCount)
+        internal AssociationRulePart(Item item, int itemCount, int transactionsCount)
         {
             Item = item ?? throw new ArgumentNullException(nameof(item));
 
@@ -51,16 +51,16 @@ namespace MarketBasketAnalysis.Models
                 throw new ArgumentOutOfRangeException(nameof(itemCount), itemCount, "Item count must be positive.");
             }
 
-            if (itemCount > transactionCount)
+            if (itemCount > transactionsCount)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(transactionCount),
-                    transactionCount,
-                    "Item count must be less than or equal to transaction count.");
+                    nameof(itemCount),
+                    itemCount,
+                    "Item count must be less than or equal to transactions count.");
             }
 
             Count = itemCount;
-            Support = (double)itemCount / transactionCount;
+            Support = (double)itemCount / transactionsCount;
         }
         #endregion
 

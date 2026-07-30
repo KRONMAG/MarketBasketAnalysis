@@ -7,22 +7,22 @@ using MarketBasketAnalysis.Models;
 namespace MarketBasketAnalysis.AssociationRuleAnalysis
 {
     /// <summary>
-    /// Defines set operations on sequences of association rules.
+    /// Defines set operations between two sets of association rules.
     /// </summary>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs.")]
-    public static class AssociationRuleExtensions
+    public static class AssociationRuleSetOperations
     {
         /// <summary>
-        /// Computes the difference between two sequences of association rules.
+        /// Computes the difference between two sets of association rules.
         /// </summary>
-        /// <param name="first">The first sequence of association rules.</param>
-        /// <param name="second">The second sequence of association rules.</param>
+        /// <param name="first">The first set of association rules.</param>
+        /// <param name="second">The second set of association rules.</param>
         /// <param name="ignoreLinkDirection">
         /// A value indicating whether the direction of links between association rules should be ignored.
         /// If <c>true</c>, the difference will consider rules as equal regardless of their direction.
         /// </param>
         /// <returns>
-        /// A sequence of association rules that are present in <paramref name="first"/> but not in <paramref name="second"/>.
+        /// A set of association rules that are present in <paramref name="first"/> but not in <paramref name="second"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="first"/> or <paramref name="second"/> is <c>null</c>.
@@ -40,16 +40,16 @@ namespace MarketBasketAnalysis.AssociationRuleAnalysis
             PerformOperation(first, second, ignoreLinkDirection, false, nameof(first), nameof(second));
 
         /// <summary>
-        /// Computes the intersection of two sequences of association rules.
+        /// Computes the intersection of two sets of association rules.
         /// </summary>
-        /// <param name="first">The first sequence of association rules.</param>
-        /// <param name="second">The second sequence of association rules.</param>
+        /// <param name="first">The first set of association rules.</param>
+        /// <param name="second">The second set of association rules.</param>
         /// <param name="ignoreLinkDirection">
         /// A value indicating whether the direction of links between association rules should be ignored.
         /// If <c>true</c>, the intersection will consider rules as equal regardless of their direction.
         /// </param>
         /// <returns>
-        /// A sequence of association rules that are present in both <paramref name="first"/> and <paramref name="second"/>.
+        /// A set of association rules that are present in both <paramref name="first"/> and <paramref name="second"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="first"/> or <paramref name="second"/> is <c>null</c>.

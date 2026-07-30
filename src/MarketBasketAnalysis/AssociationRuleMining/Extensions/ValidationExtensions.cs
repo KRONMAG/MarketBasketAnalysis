@@ -4,8 +4,6 @@ using System.Linq;
 using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using MarketBasketAnalysis.Models;
 
-#pragma warning disable SA1600 // Elements should be documented
-
 namespace MarketBasketAnalysis.AssociationRuleMining.Extensions
 {
     internal static class ValidationExtensions

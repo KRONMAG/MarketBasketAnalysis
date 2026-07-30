@@ -27,7 +27,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             }
         }
 
-        private sealed class SearchForFrequentItemsState
+        private sealed class LocalState
         {
             private int _processedTransactionsCount;
 
@@ -41,7 +41,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
             public int ProcessedTransactionsCount => _processedTransactionsCount;
 
-            public SearchForFrequentItemsState(
+            public LocalState(
                 MiningParameters parameters,
                 IItemExcluder itemExcluder,
                 IItemConverter itemConverter,
@@ -50,7 +50,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 ItemExcluder = itemExcluder;
                 ItemConverter = itemConverter;
                 ItemsPool = itemsPool;
-                ItemFrequencies = new ConcurrentDictionary<Item, int>(parameters.DegreeOfParallelism, 0);
+                ItemFrequencies = new ConcurrentDictionary<Item, int>(parameters.MaxDegreeOfParallelism, 0);
             }
 
             public void IncrementProcessedTransactionsCount() =>
@@ -75,7 +75,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             private readonly IItemExcluder _itemExcluder;
             private readonly IItemConverter _itemConverter;
             private readonly ObjectPool<HashSet<Item>> _itemsPool;
-            private readonly ConcurrentDictionary<long, SearchForFrequentItemsState> _states;
+            private readonly ConcurrentDictionary<long, LocalState> _states;
             private long _counter;
 
             public SearchForFrequentItemsStateProvider(
@@ -88,19 +88,19 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 _itemConverter = itemConverter;
                 _itemsPool = new DefaultObjectPool<HashSet<Item>>(
                     new ItemsPoolPolicy(),
-                    parameters.DegreeOfParallelism);
-                _states = new ConcurrentDictionary<long, SearchForFrequentItemsState>();
+                    parameters.MaxDegreeOfParallelism);
+                _states = new ConcurrentDictionary<long, LocalState>();
             }
 
-            public SearchForFrequentItemsState GetOrCreateState()
+            public LocalState GetOrCreateState()
             {
-                var key = Interlocked.Increment(ref _counter) % _parameters.StatePartitionCount;
+                var key = Interlocked.Increment(ref _counter) % _parameters.StatePartitionsCount;
 
                 return _states.GetOrAdd(key, ValueFactory);
 
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-                SearchForFrequentItemsState ValueFactory(long _) =>
-                    new SearchForFrequentItemsState(_parameters, _itemExcluder, _itemConverter, _itemsPool);
+                LocalState ValueFactory(long _) =>
+                    new LocalState(_parameters, _itemExcluder, _itemConverter, _itemsPool);
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
             }
 
@@ -181,7 +181,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
-                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+                MaxDegreeOfParallelism = parameters.MaxDegreeOfParallelism,
             };
 
             // ReSharper disable once PossibleMultipleEnumeration
@@ -192,14 +192,14 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 ProcessTransactionBody,
                 _ => { });
 
-            stateProvider.AggregateStates(out var itemFrequencies, out var transactionCount);
+            stateProvider.AggregateStates(out var itemFrequencies, out var transactionsCount);
 
-            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
+            var frequencyThreshold = (int)Math.Ceiling(transactionsCount * parameters.MinSupport);
             var frequentItems = itemFrequencies
                 .Where(keyValuePair => keyValuePair.Value >= frequencyThreshold)
                 .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
 
-            return new SearchForFrequentItemsResult(frequentItems, transactionCount);
+            return new SearchForFrequentItemsResult(frequentItems, transactionsCount);
         }
 
         public async Task<SearchForFrequentItemsResult> RunAsync(
@@ -217,7 +217,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken,
-                MaxDegreeOfParallelism = parameters.DegreeOfParallelism,
+                MaxDegreeOfParallelism = parameters.MaxDegreeOfParallelism,
             };
 
             // ReSharper disable once PossibleMultipleEnumeration
@@ -225,23 +225,23 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 .ForEachAsync(transactions, stateProvider, parallelOptions, ProcessTransactionBody)
                 .ConfigureAwait(false);
 
-            stateProvider.AggregateStates(out var itemFrequencies, out var transactionCount);
+            stateProvider.AggregateStates(out var itemFrequencies, out var transactionsCount);
 
-            var frequencyThreshold = (int)Math.Ceiling(transactionCount * parameters.MinSupport);
+            var frequencyThreshold = (int)Math.Ceiling(transactionsCount * parameters.MinSupport);
 
             var frequentItems = itemFrequencies
                 .Where(keyValuePair => keyValuePair.Value >= frequencyThreshold)
                 .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value);
 
-            return new SearchForFrequentItemsResult(frequentItems, transactionCount);
+            return new SearchForFrequentItemsResult(frequentItems, transactionsCount);
         }
 
-        private static SearchForFrequentItemsState ProcessTransactionBody(
+        private static LocalState ProcessTransactionBody(
         IReadOnlyList<Item> transaction,
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
         ParallelLoopState _,
 #pragma warning restore SA1313 // Parameter names should begin with lower-case letter
-        SearchForFrequentItemsState state) =>
+        LocalState state) =>
         ProcessTransaction(transaction, state);
 
         private static void ProcessTransactionBody(
@@ -252,9 +252,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             ProcessTransaction(transaction, stateProvider.GetOrCreateState());
 #pragma warning restore S1172 // Unused method parameters should be removed
 
-        private static SearchForFrequentItemsState ProcessTransaction(
+        private static LocalState ProcessTransaction(
             IReadOnlyList<Item> transaction,
-            SearchForFrequentItemsState state)
+            LocalState state)
         {
             transaction.ThrowIfNull();
 

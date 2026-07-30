@@ -87,29 +87,29 @@ public abstract class BaseMinerTests
     }
 
     [Fact]
-    public async Task StageChanged_RaisesEvents()
+    public async Task MiningStepStarted_RaisesEvents()
     {
         // Arrange
-        var stages = new List<MiningStage>();
+        var steps = new List<MiningStep>();
 
-        Miner.MiningStageChanged += (_, e) => stages.Add(e.Stage);
+        Miner.MiningStepStarted += (_, e) => steps.Add(e.Step);
 
         // Act
         await MineAsync(Miner, Transactions, new(0, 0));
 
         // Assert
         Assert.Equal(
-            [MiningStage.FrequentItemSearch, MiningStage.ItemsetSearch, MiningStage.AssociationRuleGeneration],
-            stages);
+            [MiningStep.SearchForFrequentItems, MiningStep.SearchForFrequentPairs, MiningStep.GenerateAssociationRules],
+            steps);
     }
 
     [Fact]
-    public async Task ProgressChanged_RaisesEvents()
+    public async Task MiningProgressChanged_RaisesEvents()
     {
         // Arrange
         var progressValues = new List<double>();
 
-        Miner.MiningProgressUpdated += (_, e) => progressValues.Add(e.Progress);
+        Miner.MiningProgressChanged += (_, e) => progressValues.Add(e.Progress);
 
         // Act
         await MineAsync(Miner, GenerateTransactions(), new(0, 0));
@@ -210,7 +210,7 @@ public abstract class BaseMinerTests
         var expected = GetAllAssociationRules();
 
         // Act
-        var actual = await MineAsync(Miner, Transactions, new(0, 0, degreeOfParallelism: degreeOfParallelism));
+        var actual = await MineAsync(Miner, Transactions, new(0, 0, maxDegreeOfParallelism: degreeOfParallelism));
 
         // Assert
         Assert.Equivalent(expected, actual, true);
@@ -228,7 +228,7 @@ public abstract class BaseMinerTests
     {
         // Arrange
         var parameters = new MiningParameters(
-            0, 0, degreeOfParallelism: degreeOfParallelism, statePartitionCount: statePartitionCount);
+            0, 0, maxDegreeOfParallelism: degreeOfParallelism, statePartitionsCount: statePartitionCount);
         var expected = GetAllAssociationRules();
 
         // Act

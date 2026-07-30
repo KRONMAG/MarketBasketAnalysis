@@ -10,25 +10,22 @@ using MarketBasketAnalysis.Models;
 
 namespace MarketBasketAnalysis.AssociationRuleMining
 {
-    /// <inheritdoc cref="IMiner" />
     internal sealed class Miner : IMiner, IMiningProgressChangedEventPublisher
     {
         #region Fields and Properties
         private readonly ISearchForFrequentItemsStep _searchForFrequentItemsStep;
-        private readonly ISearchForItemsetsStep _searchForItemsetsStep;
+        private readonly ISearchForFrequentPairsStep _searchForItemsetsStep;
         private readonly IGenerateAssociationRulesStep _generateAssociationRulesStep;
 
-        /// <inheritdoc />
-        public event EventHandler<MiningProgressChangedEventArgs> MiningProgressUpdated;
+        public event EventHandler<MiningProgressChangedEventArgs> MiningProgressChanged;
 
-        /// <inheritdoc />
-        public event EventHandler<MiningStageChangedEventArgs> MiningStageChanged;
+        public event EventHandler<MiningStepStartedEventArgs> MiningStepStarted;
         #endregion
 
         #region Constructors
         internal Miner(
             ISearchForFrequentItemsStep searchForFrequentItemsStep,
-            ISearchForItemsetsStep searchForItemsetsStep,
+            ISearchForFrequentPairsStep searchForItemsetsStep,
             IGenerateAssociationRulesStep generateAssociationRulesStep)
         {
             _searchForFrequentItemsStep = searchForFrequentItemsStep ?? throw new ArgumentNullException(nameof(searchForFrequentItemsStep));
@@ -38,7 +35,6 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         #endregion
 
         #region Methods
-        /// <inheritdoc />
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs for IMiner.")]
         public IReadOnlyCollection<AssociationRule> Mine(
             IEnumerable<IReadOnlyList<Item>> transactions,
@@ -55,17 +51,17 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            OnMiningStageChanged(MiningStage.FrequentItemSearch);
+            OnMiningStepStarted(MiningStep.SearchForFrequentItems);
 
             var searchForFrequentItemsResult = _searchForFrequentItemsStep.Run(
                 transactions, parameters, cancellationToken);
 
-            OnMiningStageChanged(MiningStage.ItemsetSearch);
+            OnMiningStepStarted(MiningStep.SearchForFrequentPairs);
 
             var searchForItemsetsResult = _searchForItemsetsStep.Run(
                 transactions, parameters, searchForFrequentItemsResult, this, cancellationToken);
 
-            OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
+            OnMiningStepStarted(MiningStep.GenerateAssociationRules);
 
             var generateAssociationRulesResult = _generateAssociationRulesStep.Run(
                 searchForFrequentItemsResult, searchForItemsetsResult, parameters, cancellationToken);
@@ -73,7 +69,6 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             return generateAssociationRulesResult.AssociationRules;
         }
 
-        /// <inheritdoc />
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration", Justification = "Possibility of multiple enumeration is specified in docs for IMiner.")]
         public async Task<IReadOnlyCollection<AssociationRule>> MineAsync(
             IAsyncEnumerable<IReadOnlyList<Item>> transactions,
@@ -90,19 +85,19 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            OnMiningStageChanged(MiningStage.FrequentItemSearch);
+            OnMiningStepStarted(MiningStep.SearchForFrequentItems);
 
             var searchForFrequentItemsResult = await _searchForFrequentItemsStep
                 .RunAsync(transactions, parameters, cancellationToken)
                 .ConfigureAwait(false);
 
-            OnMiningStageChanged(MiningStage.ItemsetSearch);
+            OnMiningStepStarted(MiningStep.SearchForFrequentPairs);
 
             var searchForItemsetsResult = await _searchForItemsetsStep
                 .RunAsync(transactions, parameters, searchForFrequentItemsResult, this, cancellationToken)
                 .ConfigureAwait(false);
 
-            OnMiningStageChanged(MiningStage.AssociationRuleGeneration);
+            OnMiningStepStarted(MiningStep.GenerateAssociationRules);
 
             var generateAssociationRulesResult = _generateAssociationRulesStep.Run(
                 searchForFrequentItemsResult, searchForItemsetsResult, parameters, cancellationToken);
@@ -112,11 +107,11 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
         void IMiningProgressChangedEventPublisher.Publish(double progress) => OnMiningProgressChanged(progress);
 
-        private void OnMiningStageChanged(MiningStage stage) =>
-            MiningStageChanged?.Invoke(this, new MiningStageChangedEventArgs(stage));
+        private void OnMiningStepStarted(MiningStep step) =>
+            MiningStepStarted?.Invoke(this, new MiningStepStartedEventArgs(step));
 
         private void OnMiningProgressChanged(double progress) =>
-            MiningProgressUpdated?.Invoke(this, new MiningProgressChangedEventArgs(progress));
+            MiningProgressChanged?.Invoke(this, new MiningProgressChangedEventArgs(progress));
         #endregion
     }
 }

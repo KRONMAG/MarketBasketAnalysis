@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MarketBasketAnalysis.Models;
 
-namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
+namespace MarketBasketAnalysis.AssociationRuleMining
 {
     internal sealed class SearchForFrequentItemsResult
     {

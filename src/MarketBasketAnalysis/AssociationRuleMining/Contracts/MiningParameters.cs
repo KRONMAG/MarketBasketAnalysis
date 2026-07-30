@@ -11,7 +11,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
     {
         #region Fields and Properties
         /// <summary>
-        /// Gets the minimum support threshold for identifying frequent itemsets.
+        /// Gets the minimum support threshold for identifying frequent items and frequent item pairs.
         /// </summary>
         public double MinSupport { get; }
 
@@ -31,19 +31,19 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
         public IReadOnlyCollection<ItemExclusionRule> ItemExclusionRules { get; }
 
         /// <summary>
-        /// Gets the degree of parallelism to use during the mining process.
+        /// Gets the maximum degree of parallelism to use during the mining process.
         /// </summary>
-        public int DegreeOfParallelism { get; }
+        public int MaxDegreeOfParallelism { get; }
 
         /// <summary>
         /// Gets the number of state partitions used to store shared state across worker threads.
         /// </summary>
-        public int StatePartitionCount { get; }
+        public int StatePartitionsCount { get; }
 
         /// <summary>
-        /// Gets the interval in milliseconds at which the <see cref="IMiner.MiningProgressUpdated"/> event is generated.
+        /// Gets the interval in milliseconds at which the <see cref="IMiner.MiningProgressChanged"/> event is generated.
         /// </summary>
-        public int MiningProgressInterval { get; }
+        public int MiningProgressChangedEventInterval { get; }
         #endregion
 
         #region Constructors
@@ -54,9 +54,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
         /// <param name="minConfidence">The minimum confidence threshold for generating association rules.</param>
         /// <param name="itemConversionRules">An optional collection of <see cref="ItemConversionRule"/> objects that define the rules for converting items.</param>
         /// <param name="itemExclusionRules">An optional collection of <see cref="ItemExclusionRule"/> objects that define the rules for excluding items.</param>
-        /// <param name="degreeOfParallelism">The degree of parallelism to use during the mining process.</param>
-        /// <param name="statePartitionCount">The number of state partitions used to store shared state across worker threads.</param>
-        /// <param name="miningProgressInterval">The interval in milliseconds at which the <see cref="IMiner.MiningProgressUpdated"/> event is generated.</param>
+        /// <param name="maxDegreeOfParallelism">The maximum degree of parallelism to use during the mining process.</param>
+        /// <param name="statePartitionsCount">The number of state partitions used to store shared state across worker threads.</param>
+        /// <param name="miningProgressChangedEventInterval">The interval in milliseconds at which the <see cref="IMiner.MiningProgressChanged"/> event is generated.</param>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <list type="number">
         ///     <listheader>
@@ -69,17 +69,17 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
         ///     </item>
         ///     <item>
         ///         <description>
-        ///             <paramref name="degreeOfParallelism"/> is not positive;
+        ///             <paramref name="maxDegreeOfParallelism"/> is not positive;
         ///         </description>
         ///     </item>
         ///     <item>
         ///         <description>
-        ///             <paramref name="statePartitionCount"/> is not positive or greater than <paramref name="degreeOfParallelism"/>;
+        ///             <paramref name="statePartitionsCount"/> is not positive or greater than <paramref name="maxDegreeOfParallelism"/>;
         ///         </description>
         ///     </item>
         ///     <item>
         ///         <description>
-        ///             <paramref name="miningProgressInterval"/> is not positive.
+        ///             <paramref name="miningProgressChangedEventInterval"/> is not positive.
         ///         </description>
         ///     </item>
         /// </list>
@@ -106,26 +106,26 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
             double minConfidence,
             IReadOnlyCollection<ItemConversionRule> itemConversionRules = null,
             IReadOnlyCollection<ItemExclusionRule> itemExclusionRules = null,
-            int degreeOfParallelism = 1,
-            int statePartitionCount = 1,
-            int miningProgressInterval = 100)
+            int maxDegreeOfParallelism = 1,
+            int statePartitionsCount = 1,
+            int miningProgressChangedEventInterval = 100)
         {
             ValidateParameters(
                 minSupport,
                 minConfidence,
                 itemConversionRules,
                 itemExclusionRules,
-                degreeOfParallelism,
-                statePartitionCount,
-                miningProgressInterval);
+                maxDegreeOfParallelism,
+                statePartitionsCount,
+                miningProgressChangedEventInterval);
 
             MinSupport = minSupport;
             MinConfidence = minConfidence;
             ItemConversionRules = itemConversionRules;
             ItemExclusionRules = itemExclusionRules;
-            DegreeOfParallelism = degreeOfParallelism;
-            StatePartitionCount = statePartitionCount;
-            MiningProgressInterval = miningProgressInterval;
+            MaxDegreeOfParallelism = maxDegreeOfParallelism;
+            StatePartitionsCount = statePartitionsCount;
+            MiningProgressChangedEventInterval = miningProgressChangedEventInterval;
         }
 
         private static void ValidateParameters(
@@ -133,9 +133,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
             double minConfidence,
             IReadOnlyCollection<ItemConversionRule> itemConversionRules,
             IReadOnlyCollection<ItemExclusionRule> itemExclusionRules,
-            int degreeOfParallelism,
-            int statePartitionCount,
-            int miningProgressInterval)
+            int maxDegreeOfParallelism,
+            int statePartitionsCount,
+            int miningProgressChangedEventInterval)
         {
             if (minSupport < 0 || minSupport > 1)
             {
@@ -153,28 +153,28 @@ namespace MarketBasketAnalysis.AssociationRuleMining.Contracts
                     "Minimum confidence threshold must be between 0 and 1.");
             }
 
-            if (degreeOfParallelism < 1)
+            if (maxDegreeOfParallelism < 1)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(degreeOfParallelism),
-                    degreeOfParallelism,
-                    "Degree of parallelism must be positive.");
+                    nameof(maxDegreeOfParallelism),
+                    maxDegreeOfParallelism,
+                    "Maximum degree of parallelism must be positive.");
             }
 
-            if (statePartitionCount < 1 || statePartitionCount > degreeOfParallelism)
+            if (statePartitionsCount < 1 || statePartitionsCount > maxDegreeOfParallelism)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(statePartitionCount),
-                    statePartitionCount,
-                    "State partition count must be positive and less than or equal to degree of parallelism.");
+                    nameof(statePartitionsCount),
+                    statePartitionsCount,
+                    "State partitions count must be positive and less than or equal to maximum degree of parallelism.");
             }
 
-            if (miningProgressInterval < 1)
+            if (miningProgressChangedEventInterval < 1)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(miningProgressInterval),
-                    miningProgressInterval,
-                    "Mining progress interval must be positive.");
+                    nameof(miningProgressChangedEventInterval),
+                    miningProgressChangedEventInterval,
+                    "Mining progress changed event interval must be positive.");
             }
 
             itemConversionRules?.Validate(nameof(itemConversionRules));

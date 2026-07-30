@@ -1,5 +1,4 @@
-﻿using MarketBasketAnalysis;
-using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
+﻿using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
 using MarketBasketAnalysis.Examples;
 using MarketBasketAnalysis.Models;
 
