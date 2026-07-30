@@ -7,7 +7,7 @@
         }
       ],
       "dest": "docs",
-      "outputFormat":  "markdown"
+      "outputFormat": "markdown"
     }
   ]
 }

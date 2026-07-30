@@ -1,5 +1,5 @@
 ﻿<div style="display: flex; align-items: center">
-  <img src="docs/icons/logo.png" style="float: left; margin-right: 15px"/>
+  <img src="logo.png" style="float: left; margin-right: 15px"/>
   <h1>Market Basket Analysis</h1>
 </div>
 
@@ -23,13 +23,13 @@ Library for discovering and analyzing association rules from transactional data
 Package Manager
 
 ```powershell
-Install-Package MarketBasketAnalysis -Version 1.0.0-alpha.3
+Install-Package MarketBasketAnalysis -Version 1.0.0
 ```
 
 .NET CLI
 
 ```powershell
-dotnet add package MarketBasketAnalysis --version 1.0.0-alpha.3
+dotnet add package MarketBasketAnalysis --version 1.0.0
 ```
 
 ## Quick Start
@@ -92,11 +92,7 @@ foreach (var associationRule in associationRules)
 
 ## Documentation
 
-| Namespace | URL |
-| ----------- | ----------- |
-| MarketBasketAnalysis | https://github.com/KRONMAG/MarketBasketAnalysis/blob/main/docs/MarketBasketAnalysis.md |
-| MarketBasketAnalysis.Mining | https://github.com/KRONMAG/MarketBasketAnalysis/blob/main/docs/MarketBasketAnalysis.Mining.md |
-| MarketBasketAnalysis.Analysis | https://github.com/KRONMAG/MarketBasketAnalysis/blob/main/docs/MarketBasketAnalysis.Analysis.md |
+Detailed class documentation are available in the [API Reference](https://github.com/KRONMAG/MarketBasketAnalysis/blob/main/docs/README.md)
 
 ## License
 
