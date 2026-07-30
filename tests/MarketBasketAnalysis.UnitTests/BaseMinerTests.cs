@@ -123,7 +123,7 @@ public abstract class BaseMinerTests
             foreach (var transaction in Transactions)
             {
 #pragma warning disable S2925 // "Thread.Sleep" should not be used in tests
-                Thread.Sleep(100);
+                Thread.Sleep(500);
 #pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
 
                 yield return transaction;

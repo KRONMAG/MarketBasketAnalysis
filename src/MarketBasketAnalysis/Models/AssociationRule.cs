@@ -30,11 +30,6 @@ namespace MarketBasketAnalysis.Models
         public int PairCount => _pairCount;
 
         /// <summary>
-        /// Gets the number of transactions.
-        /// </summary>
-        public int TransactionsCount => _transactionsCount;
-
-        /// <summary>
         /// Gets the support of the rule, which is the proportion of transactions that contain both the LHS and RHS.
         /// </summary>
         public double Support => (double)_pairCount / _transactionsCount;

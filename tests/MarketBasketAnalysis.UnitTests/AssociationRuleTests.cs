@@ -6,8 +6,8 @@ namespace MarketBasketAnalysis.UnitTests;
 [SuppressMessage("ReSharper", "ObjectCreationAsStatement", Justification = "Object is created to check ctor precondition validation.")]
 public class AssociationRuleTests
 {
-    private readonly Item _lhsItem = new Item(1, "Left");
-    private readonly Item _rhsItem = new Item(2, "Right");
+    private readonly Item _lhsItem = new(1, "Left");
+    private readonly Item _rhsItem = new(2, "Right");
     private readonly int _lhsCount = 5;
     private readonly int _rhsCount = 5;
     private readonly int _pairCount = 3;
