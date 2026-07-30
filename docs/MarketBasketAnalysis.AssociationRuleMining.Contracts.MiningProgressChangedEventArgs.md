@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_Mining_MiningProgressChangedEventArgs"></a> Class MiningProgressChangedEventArgs
+# <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_MiningProgressChangedEventArgs"></a> Class MiningProgressChangedEventArgs
 
-Namespace: [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleMining.Contracts](MarketBasketAnalysis.AssociationRuleMining.Contracts.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Provides data for the event that occurs when mining progress changes.
@@ -13,7 +13,7 @@ public sealed class MiningProgressChangedEventArgs : EventArgs
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
 [EventArgs](https://learn.microsoft.com/dotnet/api/system.eventargs) ← 
-[MiningProgressChangedEventArgs](MarketBasketAnalysis.Mining.MiningProgressChangedEventArgs.md)
+[MiningProgressChangedEventArgs](MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningProgressChangedEventArgs.md)
 
 #### Inherited Members
 
@@ -27,7 +27,7 @@ public sealed class MiningProgressChangedEventArgs : EventArgs
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_Mining_MiningProgressChangedEventArgs_Progress"></a> Progress
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_MiningProgressChangedEventArgs_Progress"></a> Progress
 
 Gets the current progress of the mining operation as a value between 0 and 100.
 

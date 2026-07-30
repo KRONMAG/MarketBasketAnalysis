@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_AssociationRule"></a> Class AssociationRule
+# <a id="MarketBasketAnalysis_Models_AssociationRule"></a> Class AssociationRule
 
-Namespace: [MarketBasketAnalysis](MarketBasketAnalysis.md)  
+Namespace: [MarketBasketAnalysis.Models](MarketBasketAnalysis.Models.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Represents an association rule - a relationship between two items in market basket analysis,
@@ -13,7 +13,7 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[AssociationRule](MarketBasketAnalysis.AssociationRule.md)
+[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)
 
 #### Implements
 
@@ -30,21 +30,21 @@ public sealed class AssociationRule : IEquatable<AssociationRule>
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_AssociationRule__ctor_MarketBasketAnalysis_Item_MarketBasketAnalysis_Item_System_Int32_System_Int32_System_Int32_System_Int32_"></a> AssociationRule\(Item, Item, int, int, int, int\)
+### <a id="MarketBasketAnalysis_Models_AssociationRule__ctor_MarketBasketAnalysis_Models_Item_MarketBasketAnalysis_Models_Item_System_Int32_System_Int32_System_Int32_System_Int32_"></a> AssociationRule\(Item, Item, int, int, int, int\)
 
-Initializes a new instance of the <xref href="MarketBasketAnalysis.AssociationRule" data-throw-if-not-resolved="false"></xref> class.
+Initializes a new instance of the <xref href="MarketBasketAnalysis.Models.AssociationRule" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
-public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionCount)
+public AssociationRule(Item lhsItem, Item rhsItem, int lhsCount, int rhsCount, int pairCount, int transactionsCount)
 ```
 
 #### Parameters
 
-`lhsItem` [Item](MarketBasketAnalysis.Item.md)
+`lhsItem` [Item](MarketBasketAnalysis.Models.Item.md)
 
 The item on the left-hand side of the rule.
 
-`rhsItem` [Item](MarketBasketAnalysis.Item.md)
+`rhsItem` [Item](MarketBasketAnalysis.Models.Item.md)
 
 The item on the right-hand side of the rule.
 
@@ -60,7 +60,7 @@ The number of transactions containing the RHS item.
 
 The number of transactions containing both the LHS and RHS items.
 
-`transactionCount` [int](https://learn.microsoft.com/dotnet/api/system.int32)
+`transactionsCount` [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
 The total number of transactions.
 
@@ -76,11 +76,11 @@ Thrown if the LHS and RHS items are the same.
 
  [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
 
-Thrown if any of the counts are invalid (e.g., negative or greater than the total transaction count).
+Thrown if any of the counts are invalid (e.g., negative or greater than the total transactions count).
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_AssociationRule_ChiSquaredTestStatistic"></a> ChiSquaredTestStatistic
+### <a id="MarketBasketAnalysis_Models_AssociationRule_ChiSquaredTestStatistic"></a> ChiSquaredTestStatistic
 
 Gets the Chi-squared test statistic, which measures the independence of the LHS and RHS.
 
@@ -92,7 +92,7 @@ public double ChiSquaredTestStatistic { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_Confidence"></a> Confidence
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Confidence"></a> Confidence
 
 Gets the confidence of the rule, which is the proportion of transactions containing the LHS that also contain the RHS.
 
@@ -104,7 +104,7 @@ public double Confidence { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_Conviction"></a> Conviction
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Conviction"></a> Conviction
 
 Gets the conviction of the rule, which measures the strength of the implication in the rule.
 
@@ -116,7 +116,7 @@ public double Conviction { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_LeftHandSide"></a> LeftHandSide
+### <a id="MarketBasketAnalysis_Models_AssociationRule_LeftHandSide"></a> LeftHandSide
 
 Gets the left-hand side (LHS) of the association rule.
 
@@ -126,9 +126,9 @@ public AssociationRulePart LeftHandSide { get; }
 
 #### Property Value
 
- [AssociationRulePart](MarketBasketAnalysis.AssociationRulePart.md)
+ [AssociationRulePart](MarketBasketAnalysis.Models.AssociationRulePart.md)
 
-### <a id="MarketBasketAnalysis_AssociationRule_Lift"></a> Lift
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Lift"></a> Lift
 
 Gets the lift of the rule, which measures how much more likely the RHS is to occur given the LHS, compared to its baseline probability.
 
@@ -140,7 +140,7 @@ public double Lift { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_PairCount"></a> PairCount
+### <a id="MarketBasketAnalysis_Models_AssociationRule_PairCount"></a> PairCount
 
 Gets the number of transactions that contain both the LHS and RHS of the rule.
 
@@ -152,7 +152,7 @@ public int PairCount { get; }
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_AssociationRule_PhiCorrelationCoefficient"></a> PhiCorrelationCoefficient
+### <a id="MarketBasketAnalysis_Models_AssociationRule_PhiCorrelationCoefficient"></a> PhiCorrelationCoefficient
 
 Gets the Phi correlation coefficient, which measures the strength of the relationship between the LHS and RHS.
 
@@ -164,7 +164,7 @@ public double PhiCorrelationCoefficient { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_RightHandSide"></a> RightHandSide
+### <a id="MarketBasketAnalysis_Models_AssociationRule_RightHandSide"></a> RightHandSide
 
 Gets the right-hand side (RHS) of the association rule.
 
@@ -174,9 +174,9 @@ public AssociationRulePart RightHandSide { get; }
 
 #### Property Value
 
- [AssociationRulePart](MarketBasketAnalysis.AssociationRulePart.md)
+ [AssociationRulePart](MarketBasketAnalysis.Models.AssociationRulePart.md)
 
-### <a id="MarketBasketAnalysis_AssociationRule_Support"></a> Support
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Support"></a> Support
 
 Gets the support of the rule, which is the proportion of transactions that contain both the LHS and RHS.
 
@@ -188,19 +188,7 @@ public double Support { get; }
 
  [double](https://learn.microsoft.com/dotnet/api/system.double)
 
-### <a id="MarketBasketAnalysis_AssociationRule_TransactionCount"></a> TransactionCount
-
-Gets the number of transactions.
-
-```csharp
-public int TransactionCount { get; }
-```
-
-#### Property Value
-
- [int](https://learn.microsoft.com/dotnet/api/system.int32)
-
-### <a id="MarketBasketAnalysis_AssociationRule_YuleQCoefficient"></a> YuleQCoefficient
+### <a id="MarketBasketAnalysis_Models_AssociationRule_YuleQCoefficient"></a> YuleQCoefficient
 
 Gets the Yule's Q coefficient, which measures the association between the LHS and RHS.
 
@@ -214,7 +202,7 @@ public double YuleQCoefficient { get; }
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_AssociationRule_Equals_MarketBasketAnalysis_AssociationRule_"></a> Equals\(AssociationRule\)
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Equals_MarketBasketAnalysis_Models_AssociationRule_"></a> Equals\(AssociationRule\)
 
 ```csharp
 public bool Equals(AssociationRule other)
@@ -222,13 +210,13 @@ public bool Equals(AssociationRule other)
 
 #### Parameters
 
-`other` [AssociationRule](MarketBasketAnalysis.AssociationRule.md)
+`other` [AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)
 
 #### Returns
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_AssociationRule_Equals_System_Object_"></a> Equals\(object\)
+### <a id="MarketBasketAnalysis_Models_AssociationRule_Equals_System_Object_"></a> Equals\(object\)
 
 ```csharp
 public override bool Equals(object obj)
@@ -242,7 +230,7 @@ public override bool Equals(object obj)
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_AssociationRule_GetHashCode"></a> GetHashCode\(\)
+### <a id="MarketBasketAnalysis_Models_AssociationRule_GetHashCode"></a> GetHashCode\(\)
 
 ```csharp
 public override int GetHashCode()
@@ -252,7 +240,7 @@ public override int GetHashCode()
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_AssociationRule_ToString"></a> ToString\(\)
+### <a id="MarketBasketAnalysis_Models_AssociationRule_ToString"></a> ToString\(\)
 
 ```csharp
 public override string ToString()

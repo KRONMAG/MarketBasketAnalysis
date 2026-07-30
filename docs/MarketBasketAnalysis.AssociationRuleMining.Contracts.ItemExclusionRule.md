@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_Mining_ItemExclusionRule"></a> Class ItemExclusionRule
+# <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule"></a> Class ItemExclusionRule
 
-Namespace: [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleMining.Contracts](MarketBasketAnalysis.AssociationRuleMining.Contracts.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Represents a rule for excluding items or groups from association rule mining.
@@ -12,7 +12,7 @@ public sealed class ItemExclusionRule
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[ItemExclusionRule](MarketBasketAnalysis.Mining.ItemExclusionRule.md)
+[ItemExclusionRule](MarketBasketAnalysis.AssociationRuleMining.Contracts.ItemExclusionRule.md)
 
 #### Inherited Members
 
@@ -25,9 +25,9 @@ public sealed class ItemExclusionRule
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule__ctor_System_String_System_Boolean_System_Boolean_System_Boolean_System_Boolean_"></a> ItemExclusionRule\(string, bool, bool, bool, bool\)
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule__ctor_System_String_System_Boolean_System_Boolean_System_Boolean_System_Boolean_"></a> ItemExclusionRule\(string, bool, bool, bool, bool\)
 
-Initializes a new instance of the <xref href="MarketBasketAnalysis.Mining.ItemExclusionRule" data-throw-if-not-resolved="false"></xref> class with the specified parameters.
+Initializes a new instance of the <xref href="MarketBasketAnalysis.AssociationRuleMining.Contracts.ItemExclusionRule" data-throw-if-not-resolved="false"></xref> class with the specified parameters.
 
 ```csharp
 public ItemExclusionRule(string pattern, bool exactMatch, bool ignoreCase, bool applyToItems, bool applyToGroups)
@@ -67,7 +67,7 @@ Thrown if both <code class="paramref">applyToItems</code> and <code class="param
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_ApplyToGroups"></a> ApplyToGroups
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_ApplyToGroups"></a> ApplyToGroups
 
 Gets a value indicating whether the rule applies to groups of items.
 
@@ -79,7 +79,7 @@ public bool ApplyToGroups { get; }
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_ApplyToItems"></a> ApplyToItems
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_ApplyToItems"></a> ApplyToItems
 
 Gets a value indicating whether the rule applies to individual items.
 
@@ -91,7 +91,7 @@ public bool ApplyToItems { get; }
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_ExactMatch"></a> ExactMatch
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_ExactMatch"></a> ExactMatch
 
 Gets a value indicating whether the exclusion rule requires an exact match of the item name.
 
@@ -103,7 +103,7 @@ public bool ExactMatch { get; }
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_IgnoreCase"></a> IgnoreCase
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_IgnoreCase"></a> IgnoreCase
 
 Gets a value indicating whether the comparison should ignore case when matching item names.
 
@@ -115,7 +115,7 @@ public bool IgnoreCase { get; }
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_Pattern"></a> Pattern
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_Pattern"></a> Pattern
 
 Gets the pattern used to match item names for exclusion.
 
@@ -129,7 +129,7 @@ public string Pattern { get; }
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Mining_ItemExclusionRule_ShouldExclude_MarketBasketAnalysis_Item_"></a> ShouldExclude\(Item\)
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_ItemExclusionRule_ShouldExclude_MarketBasketAnalysis_Models_Item_"></a> ShouldExclude\(Item\)
 
 Determines whether the specified item should be excluded based on the rule.
 
@@ -139,9 +139,9 @@ public bool ShouldExclude(Item item)
 
 #### Parameters
 
-`item` [Item](MarketBasketAnalysis.Item.md)
+`item` [Item](MarketBasketAnalysis.Models.Item.md)
 
-The <xref href="MarketBasketAnalysis.Item" data-throw-if-not-resolved="false"></xref> to evaluate.
+The <xref href="MarketBasketAnalysis.Models.Item" data-throw-if-not-resolved="false"></xref> to evaluate.
 
 #### Returns
 

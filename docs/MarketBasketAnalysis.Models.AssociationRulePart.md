@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_AssociationRulePart"></a> Class AssociationRulePart
+# <a id="MarketBasketAnalysis_Models_AssociationRulePart"></a> Class AssociationRulePart
 
-Namespace: [MarketBasketAnalysis](MarketBasketAnalysis.md)  
+Namespace: [MarketBasketAnalysis.Models](MarketBasketAnalysis.Models.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Represents a part of an association rule, either the left-hand side or the right-hand side.
@@ -12,7 +12,7 @@ public sealed class AssociationRulePart : IEquatable<AssociationRulePart>
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[AssociationRulePart](MarketBasketAnalysis.AssociationRulePart.md)
+[AssociationRulePart](MarketBasketAnalysis.Models.AssociationRulePart.md)
 
 #### Implements
 
@@ -27,44 +27,9 @@ public sealed class AssociationRulePart : IEquatable<AssociationRulePart>
 [object.ReferenceEquals\(object, object\)](https://learn.microsoft.com/dotnet/api/system.object.referenceequals), 
 [object.ToString\(\)](https://learn.microsoft.com/dotnet/api/system.object.tostring)
 
-## Constructors
-
-### <a id="MarketBasketAnalysis_AssociationRulePart__ctor_MarketBasketAnalysis_Item_System_Int32_System_Int32_"></a> AssociationRulePart\(Item, int, int\)
-
-Initializes a new instance of the <xref href="MarketBasketAnalysis.AssociationRulePart" data-throw-if-not-resolved="false"></xref> class.
-
-```csharp
-public AssociationRulePart(Item item, int itemCount, int transactionCount)
-```
-
-#### Parameters
-
-`item` [Item](MarketBasketAnalysis.Item.md)
-
-The item associated with this part of the rule.
-
-`itemCount` [int](https://learn.microsoft.com/dotnet/api/system.int32)
-
-The number of transactions that contain the item.
-
-`transactionCount` [int](https://learn.microsoft.com/dotnet/api/system.int32)
-
-The total number of transactions.
-
-#### Exceptions
-
- [ArgumentNullException](https://learn.microsoft.com/dotnet/api/system.argumentnullexception)
-
-Thrown if <code class="paramref">item</code> is <code>null</code>.
-
- [ArgumentOutOfRangeException](https://learn.microsoft.com/dotnet/api/system.argumentoutofrangeexception)
-
-Thrown if <code class="paramref">itemCount</code> is less than 1 or
-if <code class="paramref">transactionCount</code> is less than <code class="paramref">itemCount</code>.
-
 ## Properties
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Count"></a> Count
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Count"></a> Count
 
 Gets the number of transactions that contain the item in this part of the rule.
 
@@ -76,7 +41,7 @@ public int Count { get; }
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Id"></a> Id
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Id"></a> Id
 
 Gets the unique identifier of the item associated with this part of the rule.
 
@@ -88,7 +53,7 @@ public int Id { get; }
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Item"></a> Item
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Item"></a> Item
 
 Gets the item associated with this part of the rule.
 
@@ -98,9 +63,9 @@ public Item Item { get; }
 
 #### Property Value
 
- [Item](MarketBasketAnalysis.Item.md)
+ [Item](MarketBasketAnalysis.Models.Item.md)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Support"></a> Support
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Support"></a> Support
 
 Gets the support of the item in this part of the rule,
 which is the proportion of transactions that contain the item.
@@ -115,7 +80,7 @@ public double Support { get; }
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Equals_MarketBasketAnalysis_AssociationRulePart_"></a> Equals\(AssociationRulePart\)
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Equals_MarketBasketAnalysis_Models_AssociationRulePart_"></a> Equals\(AssociationRulePart\)
 
 ```csharp
 public bool Equals(AssociationRulePart other)
@@ -123,13 +88,13 @@ public bool Equals(AssociationRulePart other)
 
 #### Parameters
 
-`other` [AssociationRulePart](MarketBasketAnalysis.AssociationRulePart.md)
+`other` [AssociationRulePart](MarketBasketAnalysis.Models.AssociationRulePart.md)
 
 #### Returns
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_Equals_System_Object_"></a> Equals\(object\)
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_Equals_System_Object_"></a> Equals\(object\)
 
 ```csharp
 public override bool Equals(object obj)
@@ -143,7 +108,7 @@ public override bool Equals(object obj)
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_GetHashCode"></a> GetHashCode\(\)
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_GetHashCode"></a> GetHashCode\(\)
 
 ```csharp
 public override int GetHashCode()
@@ -153,7 +118,7 @@ public override int GetHashCode()
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_AssociationRulePart_ToString"></a> ToString\(\)
+### <a id="MarketBasketAnalysis_Models_AssociationRulePart_ToString"></a> ToString\(\)
 
 ```csharp
 public override string ToString()

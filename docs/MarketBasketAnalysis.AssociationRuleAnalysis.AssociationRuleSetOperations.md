@@ -1,18 +1,18 @@
-# <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions"></a> Class AssociationRuleExtensions
+# <a id="MarketBasketAnalysis_AssociationRuleAnalysis_AssociationRuleSetOperations"></a> Class AssociationRuleSetOperations
 
-Namespace: [MarketBasketAnalysis.Extensions](MarketBasketAnalysis.Extensions.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleAnalysis](MarketBasketAnalysis.AssociationRuleAnalysis.md)  
 Assembly: MarketBasketAnalysis.dll  
 
-Defines set operations on sequences of association rules.
+Defines set operations between two sets of association rules.
 
 ```csharp
-public static class AssociationRuleExtensions
+public static class AssociationRuleSetOperations
 ```
 
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[AssociationRuleExtensions](MarketBasketAnalysis.Extensions.AssociationRuleExtensions.md)
+[AssociationRuleSetOperations](MarketBasketAnalysis.AssociationRuleAnalysis.AssociationRuleSetOperations.md)
 
 #### Inherited Members
 
@@ -26,9 +26,9 @@ public static class AssociationRuleExtensions
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Common_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Common\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_AssociationRuleSetOperations_Common_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Models_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Models_AssociationRule__System_Boolean_"></a> Common\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
 
-Computes the intersection of two sequences of association rules.
+Computes the intersection of two sets of association rules.
 
 ```csharp
 public static IEnumerable<AssociationRule> Common(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
@@ -36,13 +36,13 @@ public static IEnumerable<AssociationRule> Common(this IEnumerable<AssociationRu
 
 #### Parameters
 
-`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-The first sequence of association rules.
+The first set of association rules.
 
-`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-The second sequence of association rules.
+The second set of association rules.
 
 `ignoreLinkDirection` [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
@@ -51,9 +51,9 @@ If <code>true</code>, the intersection will consider rules as equal regardless o
 
 #### Returns
 
- [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+ [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-A sequence of association rules that are present in both <code class="paramref">first</code> and <code class="paramref">second</code>.
+A set of association rules that are present in both <code class="paramref">first</code> and <code class="paramref">second</code>.
 
 #### Remarks
 
@@ -69,9 +69,9 @@ Thrown if <code class="paramref">first</code> or <code class="paramref">second</
 
 Thrown if <code class="paramref">first</code> or <code class="paramref">second</code> contains <code>null</code> items.
 
-### <a id="MarketBasketAnalysis_Extensions_AssociationRuleExtensions_Difference_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_AssociationRule__System_Boolean_"></a> Difference\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_AssociationRuleSetOperations_Difference_System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Models_AssociationRule__System_Collections_Generic_IEnumerable_MarketBasketAnalysis_Models_AssociationRule__System_Boolean_"></a> Difference\(IEnumerable<AssociationRule\>, IEnumerable<AssociationRule\>, bool\)
 
-Computes the difference between two sequences of association rules.
+Computes the difference between two sets of association rules.
 
 ```csharp
 public static IEnumerable<AssociationRule> Difference(this IEnumerable<AssociationRule> first, IEnumerable<AssociationRule> second, bool ignoreLinkDirection = false)
@@ -79,13 +79,13 @@ public static IEnumerable<AssociationRule> Difference(this IEnumerable<Associati
 
 #### Parameters
 
-`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`first` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-The first sequence of association rules.
+The first set of association rules.
 
-`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`second` [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-The second sequence of association rules.
+The second set of association rules.
 
 `ignoreLinkDirection` [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
@@ -94,9 +94,9 @@ If <code>true</code>, the difference will consider rules as equal regardless of 
 
 #### Returns
 
- [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+ [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
-A sequence of association rules that are present in <code class="paramref">first</code> but not in <code class="paramref">second</code>.
+A set of association rules that are present in <code class="paramref">first</code> but not in <code class="paramref">second</code>.
 
 #### Remarks
 

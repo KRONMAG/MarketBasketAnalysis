@@ -1,19 +1,19 @@
-# <a id="MarketBasketAnalysis_Mining_MiningStageChangedEventArgs"></a> Class MiningStageChangedEventArgs
+# <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_MiningStepStartedEventArgs"></a> Class MiningStepStartedEventArgs
 
-Namespace: [MarketBasketAnalysis.Mining](MarketBasketAnalysis.Mining.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleMining.Contracts](MarketBasketAnalysis.AssociationRuleMining.Contracts.md)  
 Assembly: MarketBasketAnalysis.dll  
 
-Provides data for the event that occurs when the mining stage changes.
+Provides data for the event triggered when one of mining steps starts.
 
 ```csharp
-public sealed class MiningStageChangedEventArgs : EventArgs
+public sealed class MiningStepStartedEventArgs : EventArgs
 ```
 
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
 [EventArgs](https://learn.microsoft.com/dotnet/api/system.eventargs) ← 
-[MiningStageChangedEventArgs](MarketBasketAnalysis.Mining.MiningStageChangedEventArgs.md)
+[MiningStepStartedEventArgs](MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningStepStartedEventArgs.md)
 
 #### Inherited Members
 
@@ -27,15 +27,15 @@ public sealed class MiningStageChangedEventArgs : EventArgs
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_Mining_MiningStageChangedEventArgs_Stage"></a> Stage
+### <a id="MarketBasketAnalysis_AssociationRuleMining_Contracts_MiningStepStartedEventArgs_Step"></a> Step
 
-Gets the current stage of the mining process.
+Gets the mining step that has started.
 
 ```csharp
-public MiningStage Stage { get; }
+public MiningStep Step { get; }
 ```
 
 #### Property Value
 
- [MiningStage](MarketBasketAnalysis.Mining.MiningStage.md)
+ [MiningStep](MarketBasketAnalysis.AssociationRuleMining.Contracts.MiningStep.md)
 

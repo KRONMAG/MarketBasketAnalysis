@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_Item"></a> Class Item
+# <a id="MarketBasketAnalysis_Models_Item"></a> Class Item
 
-Namespace: [MarketBasketAnalysis](MarketBasketAnalysis.md)  
+Namespace: [MarketBasketAnalysis.Models](MarketBasketAnalysis.Models.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Represents an item in a transaction.
@@ -12,7 +12,7 @@ public sealed class Item : IEquatable<Item>
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[Item](MarketBasketAnalysis.Item.md)
+[Item](MarketBasketAnalysis.Models.Item.md)
 
 #### Implements
 
@@ -29,9 +29,9 @@ public sealed class Item : IEquatable<Item>
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Item__ctor_System_Int32_System_String_System_Boolean_"></a> Item\(int, string, bool\)
+### <a id="MarketBasketAnalysis_Models_Item__ctor_System_Int32_System_String_System_Boolean_"></a> Item\(int, string, bool\)
 
-Initializes a new instance of the <xref href="MarketBasketAnalysis.Item" data-throw-if-not-resolved="false"></xref> class.
+Initializes a new instance of the <xref href="MarketBasketAnalysis.Models.Item" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
 public Item(int id, string name, bool isGroup = false)
@@ -59,7 +59,7 @@ Thrown if <code class="paramref">name</code> is <code>null</code>.
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_Item_Id"></a> Id
+### <a id="MarketBasketAnalysis_Models_Item_Id"></a> Id
 
 Gets the unique identifier of the item.
 
@@ -71,7 +71,7 @@ public int Id { get; }
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_Item_IsGroup"></a> IsGroup
+### <a id="MarketBasketAnalysis_Models_Item_IsGroup"></a> IsGroup
 
 Gets a value indicating whether the item is a group of other items.
 
@@ -83,7 +83,7 @@ public bool IsGroup { get; }
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Item_Name"></a> Name
+### <a id="MarketBasketAnalysis_Models_Item_Name"></a> Name
 
 Gets the name of the item.
 
@@ -97,7 +97,7 @@ public string Name { get; }
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Item_Equals_MarketBasketAnalysis_Item_"></a> Equals\(Item\)
+### <a id="MarketBasketAnalysis_Models_Item_Equals_MarketBasketAnalysis_Models_Item_"></a> Equals\(Item\)
 
 ```csharp
 public bool Equals(Item other)
@@ -105,13 +105,13 @@ public bool Equals(Item other)
 
 #### Parameters
 
-`other` [Item](MarketBasketAnalysis.Item.md)
+`other` [Item](MarketBasketAnalysis.Models.Item.md)
 
 #### Returns
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Item_Equals_System_Object_"></a> Equals\(object\)
+### <a id="MarketBasketAnalysis_Models_Item_Equals_System_Object_"></a> Equals\(object\)
 
 ```csharp
 public override bool Equals(object obj)
@@ -125,7 +125,7 @@ public override bool Equals(object obj)
 
  [bool](https://learn.microsoft.com/dotnet/api/system.boolean)
 
-### <a id="MarketBasketAnalysis_Item_GetHashCode"></a> GetHashCode\(\)
+### <a id="MarketBasketAnalysis_Models_Item_GetHashCode"></a> GetHashCode\(\)
 
 ```csharp
 public override int GetHashCode()
@@ -135,7 +135,7 @@ public override int GetHashCode()
 
  [int](https://learn.microsoft.com/dotnet/api/system.int32)
 
-### <a id="MarketBasketAnalysis_Item_ToString"></a> ToString\(\)
+### <a id="MarketBasketAnalysis_Models_Item_ToString"></a> ToString\(\)
 
 ```csharp
 public override string ToString()

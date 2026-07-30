@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters"></a> Class MaximalCliqueFindingParameters
+# <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters"></a> Class MaximalCliqueFindingParameters
 
-Namespace: [MarketBasketAnalysis.Analysis](MarketBasketAnalysis.Analysis.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleAnalysis.Contracts](MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Represents the parameters used for finding maximal cliques in a graph of association rules.
@@ -12,7 +12,7 @@ public sealed class MaximalCliqueFindingParameters
 #### Inheritance
 
 [object](https://learn.microsoft.com/dotnet/api/system.object) ← 
-[MaximalCliqueFindingParameters](MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md)
+[MaximalCliqueFindingParameters](MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.MaximalCliqueFindingParameters.md)
 
 #### Inherited Members
 
@@ -25,9 +25,9 @@ public sealed class MaximalCliqueFindingParameters
 
 ## Constructors
 
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters__ctor_System_Int32_System_Int32_System_Boolean_"></a> MaximalCliqueFindingParameters\(int, int, bool\)
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters__ctor_System_Int32_System_Int32_System_Boolean_"></a> MaximalCliqueFindingParameters\(int, int, bool\)
 
-Initializes a new instance of the <xref href="MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters" data-throw-if-not-resolved="false"></xref> class.
+Initializes a new instance of the <xref href="MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.MaximalCliqueFindingParameters" data-throw-if-not-resolved="false"></xref> class.
 
 ```csharp
 public MaximalCliqueFindingParameters(int minCliqueSize, int maxCliqueSize, bool ignoreOneWayLinks = false)
@@ -56,7 +56,7 @@ or if <code class="paramref">maxCliqueSize</code> is less than <code class="para
 
 ## Properties
 
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_IgnoreOneWayLinks"></a> IgnoreOneWayLinks
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters_IgnoreOneWayLinks"></a> IgnoreOneWayLinks
 
 Gets a value indicating whether one-way links between association rules should be ignored.
 
@@ -72,7 +72,7 @@ public bool IgnoreOneWayLinks { get; }
 
 If set to <code>true</code>, only bidirectional links will be considered when finding cliques.
 
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_MaxCliqueSize"></a> MaxCliqueSize
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters_MaxCliqueSize"></a> MaxCliqueSize
 
 Gets the maximum size of a clique to be considered during the search.
 
@@ -86,9 +86,9 @@ public int MaxCliqueSize { get; }
 
 #### Remarks
 
-The value must be greater than or equal to <xref href="MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.MinCliqueSize" data-throw-if-not-resolved="false"></xref>.
+The value must be greater than or equal to <xref href="MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.MaximalCliqueFindingParameters.MinCliqueSize" data-throw-if-not-resolved="false"></xref>.
 
-### <a id="MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_MinCliqueSize"></a> MinCliqueSize
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters_MinCliqueSize"></a> MinCliqueSize
 
 Gets the minimum size of a clique to be considered during the search.
 

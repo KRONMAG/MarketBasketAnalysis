@@ -1,6 +1,6 @@
-# <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder"></a> Interface IMaximalCliqueFinder
+# <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_IMaximalCliqueFinder"></a> Interface IMaximalCliqueFinder
 
-Namespace: [MarketBasketAnalysis.Analysis](MarketBasketAnalysis.Analysis.md)  
+Namespace: [MarketBasketAnalysis.AssociationRuleAnalysis.Contracts](MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.md)  
 Assembly: MarketBasketAnalysis.dll  
 
 Defines an interface for finding maximal cliques in a graph of association rules.
@@ -13,7 +13,7 @@ public interface IMaximalCliqueFinder
 
 ## Methods
 
-### <a id="MarketBasketAnalysis_Analysis_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_AssociationRule__MarketBasketAnalysis_Analysis_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> Find\(IReadOnlyCollection<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
+### <a id="MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_IMaximalCliqueFinder_Find_System_Collections_Generic_IReadOnlyCollection_MarketBasketAnalysis_Models_AssociationRule__MarketBasketAnalysis_AssociationRuleAnalysis_Contracts_MaximalCliqueFindingParameters_System_Threading_CancellationToken_"></a> Find\(IReadOnlyCollection<AssociationRule\>, MaximalCliqueFindingParameters, CancellationToken\)
 
 Finds maximal cliques in the given collection of association rules.
 
@@ -23,11 +23,11 @@ IEnumerable<IReadOnlyCollection<AssociationRule>> Find(IReadOnlyCollection<Assoc
 
 #### Parameters
 
-`associationRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>
+`associationRules` [IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>
 
 The collection of association rules to analyze.
 
-`parameters` [MaximalCliqueFindingParameters](MarketBasketAnalysis.Analysis.MaximalCliqueFindingParameters.md)
+`parameters` [MaximalCliqueFindingParameters](MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.MaximalCliqueFindingParameters.md)
 
 The parameters for finding maximal cliques.
 
@@ -37,7 +37,7 @@ A cancellation token to cancel the operation if needed.
 
 #### Returns
 
- [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.AssociationRule.md)\>\>
+ [IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable\-1)<[IReadOnlyCollection](https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection\-1)<[AssociationRule](MarketBasketAnalysis.Models.AssociationRule.md)\>\>
 
 A collection of maximal cliques, where each clique is represented as a collection of association rules.
 
