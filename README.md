@@ -36,7 +36,8 @@ dotnet add package MarketBasketAnalysis --version 1.0.0
 
 ```csharp
 using MarketBasketAnalysis;
-using MarketBasketAnalysis.Mining;
+using MarketBasketAnalysis.AssociationRuleMining.Contracts;
+using MarketBasketAnalysis.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 // 1. Define items
