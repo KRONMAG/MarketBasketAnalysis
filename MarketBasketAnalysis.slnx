@@ -5,7 +5,9 @@
     <Project Path="examples/MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules/MarketBasketAnalysis.Examples.IntersectAndExceptAssociationRules.csproj" />
     <Project Path="examples/MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules/MarketBasketAnalysis.Examples.MineGeneralizedAssociationRules.csproj" />
     <Project Path="examples/MarketBasketAnalysis.Examples.QuickStart/MarketBasketAnalysis.Examples.QuickStart.csproj" />
-    <Project Path="examples/MarketBasketAnalysis.Examples.Shared/MarketBasketAnalysis.Examples.csproj" />
+    <Project Path="examples/MarketBasketAnalysis.Examples.Shared/MarketBasketAnalysis.Examples.Shared.csproj">
+      <Build Solution="Debug|*" Project="false" />
+    </Project>
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
