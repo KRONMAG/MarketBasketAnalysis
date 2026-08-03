@@ -1,5 +1,5 @@
 ﻿using MarketBasketAnalysis.AssociationRuleAnalysis;
-using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Examples.Shared;
 using MarketBasketAnalysis.Models;
 
 // 1. Define items
@@ -65,7 +65,7 @@ Console.WriteLine("Only summer association rules:");
 
 ExampleHelper.Print(uniqueAssociationRules);
 
-// Example output:
+// Output (order may vary):
 
 // Summer association rules common to autumn:
 // Cheese -> Bread: support 0.25, confidence 1.00

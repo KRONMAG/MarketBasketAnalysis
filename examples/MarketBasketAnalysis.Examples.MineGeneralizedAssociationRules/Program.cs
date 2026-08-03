@@ -1,5 +1,5 @@
 ﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
-using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Examples.Shared;
 using MarketBasketAnalysis.Models;
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -54,7 +54,8 @@ Console.WriteLine();
 Console.WriteLine("Basic and generalized association rules:");
 ExampleHelper.Print(basicAndGeneralizedAssociationRules);
 
-// Example output:
+// Output (order may vary):
+
 // Standard association rules:
 // Clothes -> Milk: support 0.43. confidence 1.00
 // Milk -> Clothes: support 0.43. confidence 0.75

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MarketBasketAnalysis.Examples.Shared\MarketBasketAnalysis.Examples.csproj" />
+    <ProjectReference Include="..\MarketBasketAnalysis.Examples.Shared\MarketBasketAnalysis.Examples.Shared.csproj" />
   </ItemGroup>
 
 </Project>

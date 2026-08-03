@@ -1,5 +1,5 @@
 ﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
-using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Examples.Shared;
 using MarketBasketAnalysis.Models;
 
 // 1. Define items
@@ -41,7 +41,7 @@ var associationRules = miner.Mine(
 // 6. Output discovered association rules
 ExampleHelper.Print(associationRules);
 
-// Example output:
+// Output (order may vary):
 
 // Boots -> Cheese: support 0.29, confidence 1.00
 // Cheese -> Boots: support 0.29, confidence 0.50

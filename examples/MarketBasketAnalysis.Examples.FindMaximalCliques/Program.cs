@@ -1,5 +1,5 @@
 ﻿using MarketBasketAnalysis.AssociationRuleAnalysis.Contracts;
-using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Examples.Shared;
 using MarketBasketAnalysis.Models;
 
 // 1. Define items
@@ -43,7 +43,7 @@ var maximalCliques = maximalCliqueFinder.Find(associationRules, maximalCliqueFin
 // 8. Output found maximal cliques
 ExampleHelper.Print(maximalCliques);
 
-// Example output:
+// Output (order may vary):
 
 // Maximal clique 1:
 // Chicken  ->  Milk

@@ -44,7 +44,7 @@ foreach (var associationRule in associationRules)
     Console.WriteLine($"{associationRule}: support {associationRule.Support:f2}, confidence {associationRule.Confidence:f2}");
 }
 
-// Example output:
+// Output (order may vary):
 
 // Clothes -> Chicken: support 0.43, confidence 1.00
 // Chicken -> Clothes: support 0.43, confidence 0.60
