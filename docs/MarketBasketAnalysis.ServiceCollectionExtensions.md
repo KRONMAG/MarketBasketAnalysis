@@ -28,7 +28,7 @@ public static class ServiceCollectionExtensions
 
 ### <a id="MarketBasketAnalysis_ServiceCollectionExtensions_AddMarketBasketAnalysis_Microsoft_Extensions_DependencyInjection_IServiceCollection_"></a> AddMarketBasketAnalysis\(IServiceCollection\)
 
-Registers all core Market Basket Analysis services in the provided <xref href="Microsoft.Extensions.DependencyInjection.IServiceCollection" data-throw-if-not-resolved="false"></xref>.
+Registers Market Basket Analysis services.
 
 ```csharp
 public static IServiceCollection AddMarketBasketAnalysis(this IServiceCollection services)
@@ -48,8 +48,8 @@ The same <xref href="Microsoft.Extensions.DependencyInjection.IServiceCollection
 
 #### Remarks
 
-This method registers the following services as singletons:
-<ul><li><xref href="MarketBasketAnalysis.AssociationRuleAnalysis.IMaximalCliqueAlgorithm" data-throw-if-not-resolved="false"></xref> (implemented by <xref href="MarketBasketAnalysis.AssociationRuleAnalysis.TomitaAlgorithm" data-throw-if-not-resolved="false"></xref>)</li><li><xref href="MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.IMaximalCliqueFinder" data-throw-if-not-resolved="false"></xref> (implemented by <xref href="MarketBasketAnalysis.AssociationRuleAnalysis.MaximalCliqueFinder" data-throw-if-not-resolved="false"></xref>)</li><li><xref href="MarketBasketAnalysis.AssociationRuleMining.Contracts.IMinerFactory" data-throw-if-not-resolved="false"></xref> (implemented by <xref href="MarketBasketAnalysis.AssociationRuleMining.MinerFactory" data-throw-if-not-resolved="false"></xref>)</li></ul>
+This method registers implementations of <xref href="MarketBasketAnalysis.AssociationRuleMining.Contracts.IMinerFactory?text=IMinerFactory" data-throw-if-not-resolved="false"></xref>
+and <xref href="MarketBasketAnalysis.AssociationRuleAnalysis.Contracts.IMaximalCliqueFinder?text=IMaximalCliqueFinder" data-throw-if-not-resolved="false"></xref> as singletons.
 
 #### Exceptions
 
