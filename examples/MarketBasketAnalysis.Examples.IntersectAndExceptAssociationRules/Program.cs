@@ -1,5 +1,5 @@
 ﻿using MarketBasketAnalysis.AssociationRuleAnalysis;
-using MarketBasketAnalysis.Examples;
+using MarketBasketAnalysis.Examples.Shared;
 using MarketBasketAnalysis.Models;
 
 // 1. Define items

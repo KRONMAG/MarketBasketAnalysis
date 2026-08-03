@@ -3,7 +3,7 @@ using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using MarketBasketAnalysis.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MarketBasketAnalysis.Examples;
+namespace MarketBasketAnalysis.Examples.Shared;
 
 public static class ExampleHelper
 {
