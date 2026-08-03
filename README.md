@@ -5,6 +5,10 @@
 
 Library for discovering and analyzing association rules from transactional data
 
+## Project Background
+
+This library is a non-commercial reimplementation of the business logic from the original [Market Basket Analysis system](https://github.com/KRONMAG/MarketBasketAnalysis-legacy) developed for the Komandor retail chain in 2019–2020 that is confirmed by [an official letter from the company's Project & Analytics Office](https://github.com/KRONMAG/MarketBasketAnalysis-legacy/blob/master/Official%20Confirmation%20Letter.pdf). The original system was designed for discovering and analyzing association rules from retail transaction data and included features such as rule quality metrics, generalized rule mining, graph analysis, and rule set comparison.
+
 ## Features
 
 - Association Rule Mining: discover rules based on user-defined support and confidence thresholds
@@ -81,8 +85,7 @@ foreach (var associationRule in associationRules)
     Console.WriteLine($"{associationRule}: support {associationRule.Support:f2}, confidence {associationRule.Confidence:f2}");
 }
 
-// Example output:
-
+// Output (order may vary):
 // Clothes -> Chicken: support 0.43, confidence 1.00
 // Chicken -> Clothes: support 0.43, confidence 0.60
 // Clothes -> Milk: support 0.43, confidence 1.00
@@ -90,6 +93,10 @@ foreach (var associationRule in associationRules)
 // Milk -> Chicken: support 0.57, confidence 1.00
 // Chicken -> Milk: support 0.57, confidence 0.80
 ```
+
+## Examples
+
+Additional usage examples demonstrating different library features are available in the [examples directory](https://github.com/KRONMAG/MarketBasketAnalysis/tree/main/examples).
 
 ## Documentation
 
