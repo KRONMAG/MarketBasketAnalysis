@@ -10,7 +10,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         {
             return new Miner(
                 new SearchForFrequentItemsStep(CreateItemExcluder, CreateItemConverter),
-                new SearchForItemsetsStep(CreateItemConverter),
+                new SearchForFrequentPairsStep(CreateItemConverter),
                 new GenerateAssociationRulesStep());
         }
 

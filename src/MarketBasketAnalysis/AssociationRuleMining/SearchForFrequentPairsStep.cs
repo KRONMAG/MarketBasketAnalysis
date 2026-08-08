@@ -14,7 +14,7 @@ using Timer = System.Timers.Timer;
 
 namespace MarketBasketAnalysis.AssociationRuleMining
 {
-    internal sealed class SearchForItemsetsStep : ISearchForFrequentPairsStep
+    internal sealed class SearchForFrequentPairsStep : ISearchForFrequentPairsStep
     {
         #region Nested Types
         private sealed class ItemsetsPoolPolicy : IPooledObjectPolicy<HashSet<(Item, Item)>>
@@ -149,7 +149,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         #endregion
 
         #region Constructors
-        internal SearchForItemsetsStep(ItemConverterFactory itemConverterFactory)
+        internal SearchForFrequentPairsStep(ItemConverterFactory itemConverterFactory)
         {
             _itemConverterFactory = itemConverterFactory ?? throw new ArgumentNullException(nameof(itemConverterFactory));
         }
