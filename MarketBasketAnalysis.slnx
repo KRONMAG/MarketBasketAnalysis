@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/MarketBasketAnalysis.Benchmarks/MarketBasketAnalysis.Benchmarks.csproj" Id="c3e55d5c-21ae-49ae-89be-a80bae41cd36" />
+  </Folder>
   <Folder Name="/examples/">
     <Project Path="examples/MarketBasketAnalysis.Examples.ExcludeItemFromMining/MarketBasketAnalysis.Examples.ExcludeItemFromMining.csproj" />
     <Project Path="examples/MarketBasketAnalysis.Examples.FindMaximalCliques/MarketBasketAnalysis.Examples.FindMaximalCliques.csproj" />
