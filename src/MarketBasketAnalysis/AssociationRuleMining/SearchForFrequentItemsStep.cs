@@ -207,10 +207,10 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             MiningParameters parameters,
             CancellationToken cancellationToken)
         {
-            var itemExcluder = parameters.ItemExclusionRules?.Count != 0
+            var itemExcluder = parameters.ItemExclusionRules?.Count > 0
                 ? _itemExcluderFactory(parameters.ItemExclusionRules)
                 : null;
-            var itemConverter = parameters.ItemConversionRules?.Count != 0
+            var itemConverter = parameters.ItemConversionRules?.Count > 0
                 ? _itemConverterFactory(parameters.ItemConversionRules)
                 : null;
             var stateProvider = new SearchForFrequentItemsStateProvider(parameters, itemExcluder, itemConverter);

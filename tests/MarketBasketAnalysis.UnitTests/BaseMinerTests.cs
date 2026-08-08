@@ -53,7 +53,7 @@ public abstract class BaseMinerTests
 
         Miner = new Miner(
             new SearchForFrequentItemsStep(_ => _itemExcluderMock.Object, _ => _itemConverterMock.Object),
-            new SearchForItemsetsStep(_ => _itemConverterMock.Object),
+            new SearchForFrequentPairsStep(_ => _itemConverterMock.Object),
             new GenerateAssociationRulesStep());
     }
 
