@@ -2,12 +2,10 @@
 using System.IO.Compression;
 using System.Text;
 using MarketBasketAnalysis.Models;
-using Microsoft.Extensions.ObjectPool;
-#pragma warning disable CA2007
 
-namespace MarketBasketAnalysis.Benchmarks;
+namespace MarketBasketAnalysis.Benchmarks.Helpers;
 
-internal static class InstacartDatasetContext
+public static class InstacartDatasetContext
 {
     private const string InstacartDatasetAddress = "https://www.kaggle.com/api/v1/datasets/download/psparks/instacart-market-basket-analysis/";
     private const int FirstDigitChar = 0x0030;
@@ -19,7 +17,7 @@ internal static class InstacartDatasetContext
     private const int BufferSize = 65536;
     private const char Separator = ',';
 
-    private static IReadOnlyDictionary<int, Item>? Items;
+    private static IReadOnlyDictionary<int, Item>? items;
 
     public static bool IsInitialized { get; private set; }
 
@@ -39,14 +37,30 @@ internal static class InstacartDatasetContext
         await DownloadAndUnpackArchiveIfNeedAsync(OrderProductsPriorFileName);
         await DownloadAndUnpackArchiveIfNeedAsync(OrderProductsTrainFileName);
 
-        Items = ReadItems();
+        items = ReadItems();
 
         IsInitialized = true;
     }
 
+    public static IEnumerable<IReadOnlyList<Item>> ReadTransactions()
+    {
+        if (!IsInitialized)
+        {
+            throw new InvalidOperationException("Not initialized");
+        }
+
+        var transactions = ReadTransactionFile(OrderProductsPriorFileName)
+            .Concat(ReadTransactionFile(OrderProductsTrainFileName));
+
+        foreach (var transaction in transactions)
+        {
+            yield return transaction;
+        }
+    }
+
     private static IReadOnlyDictionary<int, Item> ReadItems()
     {
-        var items = new Dictionary<int, Item>();
+        var itemsMap = new Dictionary<int, Item>();
 
         foreach (var line in ReadAllLines(ProductsFileName))
         {
@@ -64,38 +78,17 @@ internal static class InstacartDatasetContext
 
             var item = new Item(itemId, itemName);
 
-            items.Add(item.Id, item);
+            itemsMap.Add(item.Id, item);
         }
 
-        return items;
+        return itemsMap;
     }
 
-    public static IEnumerable<IReadOnlyList<Item>> ReadTransactions(
-        ObjectPool<IReadOnlyList<Item>> transactionPool
-    )
-    {
-        if (!IsInitialized)
-        {
-            throw new InvalidOperationException("Not initialized");
-        }
-
-        var transactions = ReadTransactionFile(OrderProductsPriorFileName, transactionPool)
-            .Concat(ReadTransactionFile(OrderProductsTrainFileName, transactionPool));
-
-        foreach (var transaction in transactions)
-        {
-            yield return transaction;
-        }
-    }
-
-    private static IEnumerable<IReadOnlyList<Item>> ReadTransactionFile(
-        string path,
-        ObjectPool<IReadOnlyList<Item>> transactionPool
-    )
+    private static IEnumerable<IReadOnlyList<Item>> ReadTransactionFile(string path)
     {
         using var streamReader = new StreamReader(path, Encoding.UTF8, false, BufferSize);
         var prevTransactionId = -1;
-        var transaction = (List<Item>)transactionPool.Get();
+        var transaction = new List<Item>();
 
         while (SkipToNewLine(streamReader))
         {
@@ -106,13 +99,12 @@ internal static class InstacartDatasetContext
 
             if (transactionId == prevTransactionId || prevTransactionId == -1)
             {
-                transaction.Add(Items[itemId]);
+                transaction.Add(items![itemId]);
             }
             else
             {
                 yield return transaction;
-                transaction = (List<Item>)transactionPool.Get();
-                transaction.Add(Items[itemId]);
+                transaction = [items![itemId]];
             }
 
             prevTransactionId = transactionId;
@@ -125,7 +117,7 @@ internal static class InstacartDatasetContext
     {
         using var streamReader = new StreamReader(filename, Encoding.UTF8, false, BufferSize);
 
-        string line;
+        string? line;
 
         streamReader.ReadLine();
 
@@ -164,7 +156,7 @@ internal static class InstacartDatasetContext
 
     private static bool SkipToNewLine(StreamReader streamReader)
     {
-        var character = streamReader.Read();
+        int character;
 
         while ((character = streamReader.Read()) != '\n')
         {

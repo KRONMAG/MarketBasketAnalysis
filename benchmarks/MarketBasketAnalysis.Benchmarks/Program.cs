@@ -1,4 +1,12 @@
 ﻿using BenchmarkDotNet.Running;
-using MarketBasketAnalysis.Benchmarks;
+using MarketBasketAnalysis.Benchmarks.Benchmarks;
 
-BenchmarkRunner.Run<Benchmarks>();
+var benchmarks = new[]
+{
+    typeof(BenchmarkMinSupport),
+    typeof(BenchmarkMinConfidence),
+    typeof(BenchmarkMaxDegreeOfParallelism),
+    typeof(BenchmarkStatePartitions),
+};
+
+BenchmarkRunner.Run(benchmarks);

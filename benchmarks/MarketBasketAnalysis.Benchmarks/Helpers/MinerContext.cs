@@ -1,9 +1,7 @@
 ﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
-#pragma warning disable
-
-namespace MarketBasketAnalysis.Benchmarks;
+namespace MarketBasketAnalysis.Benchmarks.Helpers;
 
 public static class MinerContext
 {
@@ -12,7 +10,9 @@ public static class MinerContext
     static MinerContext()
     {
         var services = new ServiceCollection();
+
         services.AddMarketBasketAnalysis();
+
         var serviceProvider = services.BuildServiceProvider();
         var minerFactory = serviceProvider.GetRequiredService<IMinerFactory>();
 
