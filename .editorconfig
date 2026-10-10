@@ -8,6 +8,7 @@ trim_trailing_whitespace = true
 dotnet_diagnostic.CA1859.severity = suggestion
 
 # StyleCop Rules
+dotnet_diagnostic.SA0001.severity = none
 dotnet_diagnostic.SA1000.severity = none
 dotnet_diagnostic.SA1010.severity = none
 dotnet_diagnostic.SA1101.severity = none

@@ -1,7 +1,4 @@
-﻿<div style="display: flex; align-items: center">
-  <img src="logo.png" style="float: left; margin-right: 15px"/>
-  <h1>Market Basket Analysis</h1>
-</div>
+﻿# Market Basket Analysis
 
 Library for discovering and analyzing association rules from transactional data
 
