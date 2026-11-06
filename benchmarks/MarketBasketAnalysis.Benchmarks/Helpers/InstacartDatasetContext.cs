@@ -7,7 +7,7 @@ namespace MarketBasketAnalysis.Benchmarks.Helpers;
 
 public static class InstacartDatasetContext
 {
-    private const string InstacartDatasetAddress = "https://www.kaggle.com/api/v1/datasets/download/psparks/instacart-market-basket-analysis/";
+    private const string DatasetUrl = "https://kaggle.com/api/v1/datasets/download/psparks/instacart-market-basket-analysis/";
     private const int FirstDigitChar = 0x0030;
     private const int LastDigitChar = 0x0039;
 
@@ -17,13 +17,13 @@ public static class InstacartDatasetContext
     private const int BufferSize = 65536;
     private const char Separator = ',';
 
-    private static IReadOnlyDictionary<int, Item>? items;
+    private static IReadOnlyDictionary<int, Item>? _items;
 
     public static bool IsInitialized { get; private set; }
 
     private static readonly HttpClient HttpClient = new()
     {
-        BaseAddress = new(InstacartDatasetAddress),
+        BaseAddress = new(DatasetUrl),
     };
 
     public static async Task InitializeAsync()
@@ -37,7 +37,7 @@ public static class InstacartDatasetContext
         await DownloadAndUnpackArchiveIfNeedAsync(OrderProductsPriorFileName);
         await DownloadAndUnpackArchiveIfNeedAsync(OrderProductsTrainFileName);
 
-        items = ReadItems();
+        _items = ReadItems();
 
         IsInitialized = true;
     }
@@ -99,12 +99,12 @@ public static class InstacartDatasetContext
 
             if (transactionId == prevTransactionId || prevTransactionId == -1)
             {
-                transaction.Add(items![itemId]);
+                transaction.Add(_items![itemId]);
             }
             else
             {
                 yield return transaction;
-                transaction = [items![itemId]];
+                transaction = [_items![itemId]];
             }
 
             prevTransactionId = transactionId;
@@ -117,11 +117,9 @@ public static class InstacartDatasetContext
     {
         using var streamReader = new StreamReader(filename, Encoding.UTF8, false, BufferSize);
 
-        string? line;
-
         streamReader.ReadLine();
 
-        while ((line = streamReader.ReadLine()) != null)
+        while (streamReader.ReadLine() is { } line)
         {
             yield return line;
         }
@@ -158,12 +156,17 @@ public static class InstacartDatasetContext
     {
         int character;
 
-        while ((character = streamReader.Read()) != '\n')
+        while ((character = streamReader.Read()) is not('\r' or '\n'))
         {
             if (character == -1)
             {
                 return false;
             }
+        }
+
+        if (character == '\r' && streamReader.Peek() == '\n')
+        {
+            streamReader.Read();
         }
 
         return true;
@@ -176,7 +179,7 @@ public static class InstacartDatasetContext
             return;
         }
 
-        var fileNameUri = new Uri(filename);
+        var fileNameUri = new Uri(filename, UriKind.Relative);
         await using var responseStream = await HttpClient.GetStreamAsync(fileNameUri);
 
         var archivePath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
