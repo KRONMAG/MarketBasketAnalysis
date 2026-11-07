@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/benchmarks/">
-    <Project Path="benchmarks/MarketBasketAnalysis.Benchmarks/MarketBasketAnalysis.Benchmarks.csproj" Id="c3e55d5c-21ae-49ae-89be-a80bae41cd36" />
+    <Project Path="benchmarks/MarketBasketAnalysis.Benchmarks/MarketBasketAnalysis.Benchmarks.csproj" />
   </Folder>
   <Folder Name="/examples/">
     <Project Path="examples/MarketBasketAnalysis.Examples.ExcludeItemFromMining/MarketBasketAnalysis.Examples.ExcludeItemFromMining.csproj" />

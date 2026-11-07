@@ -1,9 +1,8 @@
 using BenchmarkDotNet.Attributes;
 using MarketBasketAnalysis.AssociationRuleMining.Contracts;
-using MarketBasketAnalysis.Benchmarks.Helpers;
 #pragma warning disable CA1724 // Type names should not match namespaces
 
-namespace MarketBasketAnalysis.Benchmarks.Benchmarks;
+namespace MarketBasketAnalysis.Benchmarks;
 
 [MemoryDiagnoser]
 [Config(typeof(BenchmarkConfig))]
@@ -41,6 +40,8 @@ public class Benchmarks
     }
 
     [GlobalCleanup]
-    public void Cleanup() =>
+    public void Cleanup()
+    {
         Console.WriteLine($"{AssociationRulesColumn.MarkerPrefix} {_associationRulesCount}");
+    }
 }
