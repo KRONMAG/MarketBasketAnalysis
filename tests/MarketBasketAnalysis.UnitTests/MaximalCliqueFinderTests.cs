@@ -287,21 +287,21 @@ public class MaximalCliqueFinderTests
 
         if (expectedAdjacencyList != null)
         {
-            var actualAdjacencyList = (IReadOnlyDictionary<TVertex, HashSet<TVertex>>)invocation.Arguments[0];
+            var actualAdjacencyList = (IReadOnlyDictionary<TVertex, HashSet<TVertex>>)invocation.Arguments[0] !;
 
             Assert.Equivalent(expectedAdjacencyList, actualAdjacencyList, true);
         }
 
         if (expectedMinCliqueSize != null)
         {
-            var actualMinCliqueSize = (int)invocation.Arguments[1];
+            var actualMinCliqueSize = (int)invocation.Arguments[1] !;
 
             Assert.Equal(expectedMinCliqueSize, actualMinCliqueSize);
         }
 
         if (expectedMaxCliqueSize != null)
         {
-            var actualMaxCliqueSize = (int)invocation.Arguments[2];
+            var actualMaxCliqueSize = (int)invocation.Arguments[2] !;
 
             Assert.Equal(expectedMaxCliqueSize, actualMaxCliqueSize);
         }
