@@ -145,6 +145,8 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         #endregion
 
         #region Fields and Properties
+        private static readonly Func<Item, int, int> UpdateItemFrequency = (_, frequency) => frequency + 1;
+
         private readonly ItemExcluderFactory _itemExcluderFactory;
         private readonly ItemConverterFactory _itemConverterFactory;
         #endregion
@@ -283,11 +285,11 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 
                         items.Add(group);
 
-                        itemFrequencies.AddOrUpdate(group, 1, UpdateFrequency);
+                        itemFrequencies.AddOrUpdate(group, 1, UpdateItemFrequency);
                     }
                     else
                     {
-                        itemFrequencies.AddOrUpdate(item, 1, UpdateFrequency);
+                        itemFrequencies.AddOrUpdate(item, 1, UpdateItemFrequency);
                     }
                 }
 
@@ -300,10 +302,6 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 itemsPool.Return(items);
             }
         }
-
-#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
-        private static int UpdateFrequency(Item _, int frequency) => frequency + 1;
-#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
         #endregion
     }
 }
