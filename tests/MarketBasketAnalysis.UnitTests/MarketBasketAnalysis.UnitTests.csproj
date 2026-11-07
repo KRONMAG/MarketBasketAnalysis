@@ -5,18 +5,17 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
 		<PackageReference Include="Moq" Version="4.21.0" />
 		<PackageReference Include="System.Linq.Async" Version="7.0.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="4.0.1" />
 		<PackageReference Include="xunit.v3" Version="4.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\MarketBasketAnalysis\MarketBasketAnalysis.csproj" />
+		<ProjectReference Include="..\..\src\MarketBasketAnalysis\MarketBasketAnalysis.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
