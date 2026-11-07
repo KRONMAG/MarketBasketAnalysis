@@ -264,23 +264,20 @@ public abstract class BaseMinerTests
     }
 
     [Fact(Timeout = 100)]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task CancelTokenDuringMining_ThrowsOperationCancelledException()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         // Arrange
-        using var cancellationTokenSource = new CancellationTokenSource();
-        var cancellationToken = cancellationTokenSource.Token;
+        var currentContext = TestContext.Current;
 
         // Act & Assert
         await Assert.ThrowsAnyAsync<OperationCanceledException>(
-            () => MineAsync(Miner, GetTransactions(), new(0, 0), cancellationToken));
+            () => MineAsync(Miner, GetTransactions(), new(0, 0), currentContext.CancellationToken));
 
         IEnumerable<Item[]> GetTransactions()
         {
             yield return [_itemA, _itemB];
 
-            cancellationTokenSource.Cancel();
+            currentContext.CancelCurrentTest();
 
             yield return [_itemB, _itemC];
         }

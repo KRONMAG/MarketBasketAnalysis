@@ -1,7 +1,7 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 
-namespace MarketBasketAnalysis.Benchmarks.Benchmarks;
+namespace MarketBasketAnalysis.Benchmarks;
 
 public class BenchmarkConfig : ManualConfig
 {

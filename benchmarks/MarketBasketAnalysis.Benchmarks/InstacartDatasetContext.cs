@@ -3,7 +3,7 @@ using System.IO.Compression;
 using System.Text;
 using MarketBasketAnalysis.Models;
 
-namespace MarketBasketAnalysis.Benchmarks.Helpers;
+namespace MarketBasketAnalysis.Benchmarks;
 
 public static class InstacartDatasetContext
 {

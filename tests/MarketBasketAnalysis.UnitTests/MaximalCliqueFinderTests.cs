@@ -89,15 +89,13 @@ public class MaximalCliqueFinderTests
     }
 
     [Fact(Timeout = 100)]
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     public async Task Find_CanceledDuringExecution_ThrowsOperationCanceledException()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         // Arrange
         var finder = GetMaximalCliqueFinder(out var algorithmMock);
         var rules = GetAssociationRules();
         var parameters = new MaximalCliqueFindingParameters(2, 5);
-        using var cancellationTokenSource = new CancellationTokenSource();
+        var testContext = TestContext.Current;
 
         algorithmMock.Setup(
             a => a.Find(
@@ -106,12 +104,12 @@ public class MaximalCliqueFinderTests
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
             // ReSharper disable once AccessToDisposedClosure
-            .Callback(() => cancellationTokenSource.Cancel())
+            .Callback(() => testContext.CancelCurrentTest())
             .Returns([new MaximalClique<byte>([0, 1])]);
 
         // Act & Assert
         Assert.Throws<OperationCanceledException>(() =>
-            finder.Find(rules, parameters, cancellationTokenSource.Token).ToList());
+            finder.Find(rules, parameters, testContext.CancellationToken).ToList());
     }
 
     [Fact]

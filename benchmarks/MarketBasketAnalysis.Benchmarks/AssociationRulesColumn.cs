@@ -3,7 +3,7 @@ using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 #pragma warning disable CA1062 // Validate arguments of public methods
 
-namespace MarketBasketAnalysis.Benchmarks.Benchmarks;
+namespace MarketBasketAnalysis.Benchmarks;
 
 public class AssociationRulesColumn : IColumn
 {

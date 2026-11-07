@@ -5,4 +5,4 @@ dotnet_diagnostic.CA1812.severity = none
 dotnet_diagnostic.CA2007.severity = none
 
 # Sonar Analyzer
-dotnet_diagnostic.S1075.severity = suggestion
+dotnet_diagnostic.S1075.severity = none

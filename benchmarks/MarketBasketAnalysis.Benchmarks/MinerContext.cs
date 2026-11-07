@@ -1,7 +1,7 @@
 ﻿using MarketBasketAnalysis.AssociationRuleMining.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MarketBasketAnalysis.Benchmarks.Helpers;
+namespace MarketBasketAnalysis.Benchmarks;
 
 public static class MinerContext
 {

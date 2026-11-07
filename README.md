@@ -1,6 +1,6 @@
 ﻿# Market Basket Analysis
 
-High-performance ibrary for discovering and analyzing association rules from transactional data
+High-performance library for discovering and analyzing association rules from transactional data
 
 ## Project Background
 
