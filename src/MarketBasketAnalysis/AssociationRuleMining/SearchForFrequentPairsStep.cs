@@ -166,7 +166,8 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             CancellationToken cancellationToken)
         {
             // ReSharper disable once PossibleMultipleEnumeration
-            if (transactions.IsEmptyCollection())
+            if (searchForFrequentItemsResult.FrequentItems.Count == 0
+                || transactions.IsEmptyCollection())
             {
                 return SearchForFrequentPairsResult.Empty;
             }
@@ -214,7 +215,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             // ReSharper disable once InconsistentNaming
             void Timer_Elapsed(object sender, ElapsedEventArgs e)
             {
-                var progress = 100.0 * stateProvider.GetProcessedTransactionsCount() / transactionsCount;
+                var progress = Math.Max(
+                    100.0 * stateProvider.GetProcessedTransactionsCount() / transactionsCount,
+                    100);
 
                 miningProgressChangedEventPublisher.Publish(progress);
             }
@@ -227,6 +230,11 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             IMiningProgressChangedEventPublisher miningProgressChangedEventPublisher,
             CancellationToken cancellationToken)
         {
+            if (searchForFrequentItemsResult.FrequentItems.Count == 0)
+            {
+                return SearchForFrequentPairsResult.Empty;
+            }
+
             var itemConverter = parameters.ItemConversionRules?.Count > 0
                 ? _itemConverterFactory(parameters.ItemConversionRules)
                 : null;
@@ -303,9 +311,7 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                     {
                         transaction[j].ThrowIfNull();
 
-                        var itemset = transaction[i].Id < transaction[j].Id
-                            ? (transaction[i], transaction[j])
-                            : (transaction[j], transaction[i]);
+                        var itemset = OrderItems(transaction[i], transaction[j]);
 
                         if (itemsets.Contains(itemset) || itemset.Item1.Equals(itemset.Item2))
                         {
@@ -328,6 +334,8 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                             {
                                 itemset.Item2 = item2Group;
                             }
+
+                            itemset = OrderItems(itemset.Item1, itemset.Item2);
 
                             var shouldSkipItemset = (isItem1Converted || isItem2Converted) &&
                                                     (itemsets.Contains(itemset) ||
@@ -358,6 +366,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining
                 itemsetsPool.Return(itemsets);
             }
         }
+
+        private static (Item, Item) OrderItems(Item item1, Item item2) =>
+            item1.Id < item2.Id ? (item1, item2) : (item2, item1);
         #endregion
     }
 }
