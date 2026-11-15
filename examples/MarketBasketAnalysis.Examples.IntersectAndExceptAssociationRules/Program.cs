@@ -24,7 +24,7 @@ IEnumerable<Item[]> summerTransactions =
     [salad, chicken, milk],
     [iceCream, milk, bread],
     [lemonade, salad, iceCream, chicken],
-    [milk, cheese, bread, iceCream, lemonade]
+    [milk, cheese, bread, iceCream, lemonade],
 ];
 
 // 3. Define transactions for products bought in autumn
@@ -37,7 +37,7 @@ IEnumerable<Item[]> autumnTransactions =
     [jacket, umbrella, soup, bread],
     [cheese, soup, chicken, milk],
     [bread, milk, cheese, soup, chicken],
-    [umbrella, jacket, milk, bread]
+    [umbrella, jacket, milk, bread],
 ];
 
 // 4. Create miner instance

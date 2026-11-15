@@ -156,7 +156,7 @@ public static class InstacartDatasetContext
     {
         int character;
 
-        while ((character = streamReader.Read()) is not('\r' or '\n'))
+        while ((character = streamReader.Read()) is not ('\r' or '\n'))
         {
             if (character == -1)
             {
