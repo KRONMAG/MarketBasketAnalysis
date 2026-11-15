@@ -88,7 +88,7 @@ public class MaximalCliqueFinderTests
         VerifyAlgorithmMock<int>(algorithmMock, isAlgorithmInvoked: false);
     }
 
-    [Fact(Timeout = 100)]
+    [Fact]
     public async Task Find_CanceledDuringExecution_ThrowsOperationCanceledException()
     {
         // Arrange

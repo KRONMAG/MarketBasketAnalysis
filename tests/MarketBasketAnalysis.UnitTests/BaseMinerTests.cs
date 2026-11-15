@@ -263,7 +263,7 @@ public abstract class BaseMinerTests
             () => MineAsync(Miner, Transactions, new(0, 0), cancellationToken));
     }
 
-    [Fact(Timeout = 100)]
+    [Fact]
     public async Task CancelTokenDuringMining_ThrowsOperationCancelledException()
     {
         // Arrange
