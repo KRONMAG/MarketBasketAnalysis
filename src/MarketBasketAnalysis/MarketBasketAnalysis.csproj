@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<PackageId>MarketBasketAnalysis</PackageId>
-		<Version>1.0.2</Version>
+		<Version>1.0.3</Version>
 		<Authors>KRONMAG</Authors>
 		<Description>Library for discovering and analyzing association rules from transactional data, supporting advanced operations such as generalized rule mining, exclusion of specific items, comparison between rule sets, and identification of maximal cliques in the rule graph.</Description>
 		<RepositoryUrl>https://github.com/KRONMAG/MarketBasketAnalysis</RepositoryUrl>
@@ -16,6 +16,7 @@
 		<Title>Market Basket Analysis</Title>
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReleaseNotes>Fixed bug in generalized association rule mining</PackageReleaseNotes>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<Copyright>Copyright (c) KRONMAG 2025</Copyright>
 	</PropertyGroup>
