@@ -6,6 +6,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining
 {
     internal sealed class GenerateAssociationRulesResult
     {
+        public static readonly GenerateAssociationRulesResult Empty =
+            new GenerateAssociationRulesResult(Array.Empty<AssociationRule>());
+
         public IReadOnlyCollection<AssociationRule> AssociationRules { get; }
 
         public GenerateAssociationRulesResult(IReadOnlyCollection<AssociationRule> associationRules)

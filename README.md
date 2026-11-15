@@ -24,13 +24,13 @@ This library is a non-commercial reimplementation of the business logic from the
 Package Manager
 
 ```powershell
-Install-Package MarketBasketAnalysis -Version 1.0.0
+Install-Package MarketBasketAnalysis -Version 1.0.3
 ```
 
 .NET CLI
 
 ```powershell
-dotnet add package MarketBasketAnalysis --version 1.0.0
+dotnet add package MarketBasketAnalysis --version 1.0.3
 ```
 
 ## Quick Start
@@ -99,9 +99,9 @@ Additional usage examples demonstrating different library features are available
 
 Association rule mining performance was measured on the [Instacart Market Basket Analysis dataset](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis) containing over 3 million transactions and ~50,000 distinct items.
 
-Environment: Windows 11, Intel Core i5-12500H (12 physical / 16 logical cores), .NET 10, `MinConfidence = 0.01`, 1 warmup + 3 measured iterations.
+Environment: Windows 11, Intel Core i5-12500H (12 physical / 16 logical cores), .NET 10, MinConfidence = 0.01, 1 warmup + 3 measured iterations.
 
-The table shows mining time and allocated memory for different combinations of `MinSupport` and maximum degree of parallelism (`MaxDegreeOfParallelism`):
+The table shows mining time and allocated memory for different combinations of MinSupport and MaxDegreeOfParallelism:
 
 | MinSupport | AssociationRules | DOP = 1           | DOP = 4           | DOP = 8          | DOP = 16         |
 |------------|------------------|-------------------|-------------------|------------------|------------------|
@@ -113,7 +113,7 @@ The table shows mining time and allocated memory for different combinations of `
 Key takeaways:
 
 - Mining scales well with parallelism: up to ~4.8x faster at DOP = 16 compared to DOP = 1
-- Allocated memory depends mainly on `MinSupport`: as it decreases from 0.01 to 0.00001, the number of discovered association rules grows from 28 to ~805K and allocated memory increases from ~2.3 GB to ~7 GB
+- Allocated memory depends mainly on MinSupport: as it decreases from 0.01 to 0.00001, the number of discovered association rules grows from 28 to ~805K and allocated memory increases from ~2.3 GB to ~7 GB
 
 Benchmark sources are available in the [benchmarks directory](https://github.com/KRONMAG/MarketBasketAnalysis/tree/main/benchmarks).
 

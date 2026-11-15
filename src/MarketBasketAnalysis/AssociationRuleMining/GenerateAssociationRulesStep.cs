@@ -58,6 +58,11 @@ namespace MarketBasketAnalysis.AssociationRuleMining
             MiningParameters parameters,
             CancellationToken cancellationToken)
         {
+            if (searchForFrequentPairsResult.FrequentPairs.Count == 0)
+            {
+                return GenerateAssociationRulesResult.Empty;
+            }
+
             var (frequentItems, transactionsCount) = searchForFrequentItemsResult;
             var frequentPairs = searchForFrequentPairsResult.FrequentPairs;
 

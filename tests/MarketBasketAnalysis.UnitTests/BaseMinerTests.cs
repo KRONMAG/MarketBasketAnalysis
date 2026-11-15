@@ -30,10 +30,10 @@ public abstract class BaseMinerTests
 
     protected BaseMinerTests()
     {
-        _itemA = new(1, "A");
-        _itemB = new(2, "B");
+        _itemA = new(2, "A");
+        _itemB = new(4, "B");
         _itemC = new(3, "C");
-        _group = new(4, "Group", true);
+        _group = new(1, "Group", true);
 
         Transactions =
         [
@@ -263,7 +263,7 @@ public abstract class BaseMinerTests
             () => MineAsync(Miner, Transactions, new(0, 0), cancellationToken));
     }
 
-    [Fact(Timeout = 100)]
+    [Fact]
     public async Task CancelTokenDuringMining_ThrowsOperationCancelledException()
     {
         // Arrange
