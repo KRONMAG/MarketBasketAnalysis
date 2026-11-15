@@ -36,14 +36,14 @@ public class AssociationRuleSetOperationsTests
             _abAssociationRule,
             _baAssociationRule,
             _bcAssociationRule,
-            _cdAssociationRule
+            _cdAssociationRule,
         ];
         _secondAssociationRuleSet =
         [
             _abAssociationRule,
             _baAssociationRule,
             _cbAssociationRule,
-            _dcAssociationRule
+            _dcAssociationRule,
         ];
 
         static AssociationRule CreateAssociationRule(Item lhsItem, Item rhsItem) =>

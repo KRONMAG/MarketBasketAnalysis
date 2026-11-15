@@ -21,9 +21,9 @@ namespace MarketBasketAnalysis.AssociationRuleMining
         {
             public HashSet<(Item, Item)> Create() => new HashSet<(Item, Item)>();
 
-            public bool Return(HashSet<(Item, Item)> itemsets)
+            public bool Return(HashSet<(Item, Item)> obj)
             {
-                itemsets.Clear();
+                obj.Clear();
 
                 return true;
             }

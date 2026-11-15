@@ -210,7 +210,7 @@ namespace MarketBasketAnalysis.Models
             }
         }
 
-        private (double a, double b, double c, double d) GetContingencyTable()
+        private (double, double, double, double) GetContingencyTable()
         {
             var a = _pairCount;
             var b = LeftHandSide.Count - _pairCount;

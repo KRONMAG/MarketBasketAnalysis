@@ -85,9 +85,9 @@ namespace MarketBasketAnalysis.AssociationRuleAnalysis
                 : new Func<AssociationRule, HashSet<(int, int)>, bool>((r, k) =>
                     k.Contains((r.LeftHandSide.Id, r.RightHandSide.Id)));
 
-            return isIntersection ?
-                first.Where(r => containsDelegate(r, keys)) :
-                first.Where(r => !containsDelegate(r, keys));
+            return isIntersection
+                ? first.Where(r => containsDelegate(r, keys))
+                : first.Where(r => !containsDelegate(r, keys));
         }
 
         private static void ValidateAssociationRules(IEnumerable<AssociationRule> associationRules, string paramName)
